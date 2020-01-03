@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<odoo>
+
+  <!-- CONTACTS LIST -->
+
+  <!-- Custom view_partner_tree for contacts -->
+  <record id="view_partner_tree_contacts" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='display_name']" position="after">
+        <field name="is_structure" invisible="1"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Custom action to display contacts in tree view by default instead of kanban view -->
+  <record id="action_contacts" model="ir.actions.act_window">
+    <field name="name">Contacts</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,kanban,activity</field>
+    <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    <field name="domain">[('is_structure', '=', False)]</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a contact in your address book
+      </p><p>
+        Odoo helps you to easily track all activities related to a customer.
+      </p>
+    </field>
+  </record>
+  <record id="action_contacts_view_tree" model="ir.actions.act_window.view">
+      <field name="sequence" eval="0"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_partner_tree_contacts"/>
+      <field name="act_window_id" ref="action_contacts"/>
+  </record>
+  <record id="action_contacts_view_kanban" model="ir.actions.act_window.view">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">kanban</field>
+      <field name="view_id" ref="base.res_partner_kanban_view"/>
+      <field name="act_window_id" ref="action_contacts"/>
+  </record>
+  <record id="action_contacts_view_form" model="ir.actions.act_window.view">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="base.view_partner_form"/>
+      <field name="act_window_id" ref="action_contacts"/>
+  </record>
+
+  <!-- FESTIVAL LIST -->
+
+  <!-- Custom view_partner_tree for FESTIVALS -->
+  <record id="view_partner_tree_festivals" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='display_name']" position="after">
+        <field name="is_structure" invisible="1"/>
+        <field name="show_period_date_begin"/>
+        <field name="show_capacity"/>
+      </xpath>
+      <xpath expr="//field[@name='phone']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='email']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Add a festival action -->
+  <record id="action_festivals" model="ir.actions.act_window">
+    <field name="name">Festivals</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,kanban,activity</field>
+    <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    <!-- working..-->
+    <field name="context">{'default_is_company' : True}</field>
+    <field name="domain">[('structure_type', '=', 'festival')]</field>
+
+    <!-- TODO : NOT WORKING..Why?? -->
+    <!-- <field name="context">{'is_structure' : True}</field> -->
+    <!-- <field name="context">{'default_is_structure' : True}</field> -->
+    <!-- <field name="context">{'company_type' : 'company'}</field> -->
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Create a festival in your address book
+      </p><p>
+        A festival, as a venue is a partner with special Show attributes.
+      </p><p>
+        From a festival, you can link a negociation to it, creating a Lead or an Opportunity !
+      </p>
+    </field>
+  </record>
+
+  <record id="action_festivals_view_tree" model="ir.actions.act_window.view">
+      <field name="sequence" eval="0"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_partner_tree_festivals"/>
+      <field name="act_window_id" ref="action_festivals"/>
+      <field name="arch" type="xml">
+        <tree string="Festivals">
+            <field name="display_name" string="Name"/>
+        </tree>
+      </field>
+  </record>
+
+  <record id="action_festivals_view_kanban" model="ir.actions.act_window.view">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">kanban</field>
+      <field name="view_id" ref="base.res_partner_kanban_view"/>
+      <field name="act_window_id" ref="action_festivals"/>
+  </record>
+  <record id="action_festivals_view_form" model="ir.actions.act_window.view">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="base.view_partner_form"/>
+      <field name="act_window_id" ref="action_festivals"/>
+  </record>
+
+  <!-- VENUES LIST -->
+
+  <!-- Custom view_partner_tree for VENUES -->
+  <record id="view_partner_tree_venues" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='display_name']" position="after">
+        <field name="is_structure" invisible="1"/>
+        <field name="show_capacity"/>
+      </xpath>
+      <xpath expr="//field[@name='phone']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='email']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Add a venue action -->
+  <record id="action_venues" model="ir.actions.act_window">
+    <field name="name">Venues</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form,kanban,activity</field>
+    <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    <field name="context">{'default_is_company' : True}</field>
+    <field name="domain">[('structure_type', '=', 'venue')]</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Add a venue in your address book
+      </p><p>
+        A venue, as a festival is a partner with special Show attributes.
+      </p><p>
+        From a venue, you can link a negociation to it, creating a Lead or an Opportunity !
+      </p>
+    </field>
+  </record>
+
+  <record id="action_venues_view_tree" model="ir.actions.act_window.view">
+      <field name="sequence" eval="0"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_partner_tree_venues"/>
+      <field name="act_window_id" ref="action_venues"/>
+      <field name="arch" type="xml">
+        <tree string="Venues">
+            <field name="display_name" string="Name"/>
+        </tree>
+      </field>
+  </record>
+  <record id="action_venues_view_kanban" model="ir.actions.act_window.view">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">kanban</field>
+      <field name="view_id" ref="base.res_partner_kanban_view"/>
+      <field name="act_window_id" ref="action_venues"/>
+  </record>
+  <record id="action_venues_view_form" model="ir.actions.act_window.view">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="base.view_partner_form"/>
+      <field name="act_window_id" ref="action_venues"/>
+  </record>
+
+  <!-- Add a festival menu and reorganize original contacts menus-->
+    <menuitem id="contacts.res_partner_menu_contacts"
+        name="Contacts"
+        action="action_contacts"
+        parent="contacts.menu_contacts"
+        sequence="3"/>
+    <menuitem id="res_partner_menu_festivals"
+      name="Festivals"
+      action="action_festivals"
+      parent="contacts.menu_contacts"
+      sequence="1"/>
+    <menuitem id="res_partner_menu_venues"
+        name="Venues"
+        action="action_venues"
+        parent="contacts.menu_contacts"
+        sequence="2"/>
+    <menuitem id="contacts.res_partner_menu_config"
+        name="Configuration"
+        parent="contacts.menu_contacts"
+        groups="base.group_system"
+        sequence="4"/>
+
+</odoo>
