@@ -39,7 +39,7 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
-      <!-- Hide Meeting button -->
+      <!-- HIDE Meeting button -->
       <xpath expr="//button[@name='schedule_meeting']" position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
@@ -47,12 +47,12 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
-      <!-- Hide native Smart button to Opportunities -->
+      <!-- HIDE native Smart button to Opportunities -->
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
 
-      <!-- Smart button to create lead if no one  -->
+      <!-- SMART BUTTON to create lead if no one  -->
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
         <field name="is_structure" invisible="1"/>
         <button class="oe_stat_button o_res_partner_tip_opp" type="object"
@@ -64,7 +64,7 @@
           />
       </xpath>
 
-      <!-- Smart button to related Leads if existing -->
+      <!-- SMART BUTTON to related Leads if existing -->
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
         <button class="oe_stat_button o_res_partner_tip_opp" type="object"
           attrs="{'invisible': ['|', ('customer', '=', False), ('lead_count', '&lt;', 1)]}"
@@ -76,7 +76,7 @@
       </xpath>
 
 
-      <!-- Smart button to related Opportunities if existing -->
+      <!-- SMART BUTTON to related Opportunities if existing -->
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
         <button class="oe_stat_button o_res_partner_tip_opp" type="object"
           attrs="{'invisible': ['|', ('customer', '=', False), ('opportunity_count', '&lt;', 1)]}"
@@ -88,16 +88,16 @@
       </xpath>
 
 
-      <!-- Move category_id field-->
+      <!-- MOVE category_id field-->
       <field name="category_id" position="replace"/>
       <xpath expr="//field[@name='type']/../.." position="before">
-        <group>
+        <group attrs="{'invisible': [('is_structure', '=', False)]}">
           <field name="category_id"
             widget="many2many_tags"
             options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
             placeholder="Tags..."/>
-          <!-- Special Show Structure fields-->
-          <group attrs="{'invisible': [('is_structure', '=', False)]}">
+          <!-- Special Show Structure FIELDS-->
+          <group>
             <field name="show_capacity" widget="selection"/>
             <field name="show_period_date_begin" attrs="{'invisible': [('show_period_all_year', '=', True)]}"/>
             <field name="show_period_date_end" attrs="{'invisible': [('show_period_all_year', '=', True)]}"/>
@@ -106,7 +106,7 @@
         </group>
       </xpath>
 
-      <!-- Display Related Structure if partner is NOT a structure -->
+      <!-- MANY2MANY Related Structure if partner is NOT a structure -->
       <xpath expr="//field[@name='type']/../.." position="before">
         <group>
           <field
@@ -165,21 +165,20 @@
         </group>
       </xpath>
 
-      <!-- Hide 'Contacts & Address' page if the partner is a structure or an individual -->
+      <!-- HIDE 'Contacts & Address' page if the partner is a structure or an individual -->
       <xpath expr="//field[@name='child_ids']/.." position="attributes">
         <field name="is_company" invisible="1"/>
         <!-- <attribute name="attrs">{'invisible': ['|', ('is_structure', '=', True), ('company_type', '=', 'individual')]}</attribute> -->
         <attribute name="attrs">{'invisible': ['|', ('is_structure', '=', True), ('is_company', '=', False)]}</attribute>
       </xpath>
 
-      <!-- Display 'Related Contacts' page if the partner is a structure -->
+      <!-- MANY2MANY 'Related Contacts' page if the partner is a structure -->
       <xpath expr="//field[@name='child_ids']/.." position="before">
         <page string="Related Contacts"
           attrs="{'invisible': [('is_structure', '=', False)]}"
-          autofocus="autofocus"
-          context="{'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}">
+          autofocus="autofocus">
           <group>
-            <field name="show_related_partner_ids" nolabel="1">
+            <field name="show_related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
               <tree>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
@@ -192,7 +191,7 @@
         </page>
       </xpath>
 
-      <!-- Custom partners childs creation -->
+      <!-- CUSTOM partners childs creation -->
       <xpath expr="//field[@name='child_ids']/form/sheet/field[@name='type']" position="before">
         <field name="is_structure" invisible="1"/>
         <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}" string="Is Company?"/>
