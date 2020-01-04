@@ -55,6 +55,7 @@
   <!-- Custom view_partner_tree for FESTIVALS -->
   <record id="view_partner_tree_festivals" model="ir.ui.view">
     <field name="model">res.partner</field>
+    <field name="mode">primary</field>
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='display_name']" position="after">
@@ -128,6 +129,7 @@
   <!-- Custom view_partner_tree for VENUES -->
   <record id="view_partner_tree_venues" model="ir.ui.view">
     <field name="model">res.partner</field>
+    <field name="mode">primary</field>
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='display_name']" position="after">
@@ -188,7 +190,7 @@
       <field name="act_window_id" ref="action_venues"/>
   </record>
 
-  <!-- Add a festival menu and reorganize original contacts menus-->
+  <!-- Add a Festival and a Venue menu and reorganize original contacts menus-->
     <menuitem id="contacts.res_partner_menu_contacts"
         name="Contacts"
         action="action_contacts"
@@ -209,5 +211,38 @@
         parent="contacts.menu_contacts"
         groups="base.group_system"
         sequence="4"/>
+
+    <!-- Hide Sectores of Activity, Banks and Localization menus when not in debug with assets mode -->
+    <record model="ir.ui.menu" id="contacts.res_partner_industry_menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_localisation">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_country_partner">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_country_group">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_country_state_partner">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_config_bank_accounts">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_action_res_bank_form">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_action_res_partner_bank_form">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
 
 </odoo>

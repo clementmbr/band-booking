@@ -222,7 +222,38 @@
     </field>
   </record>
 
-  <!-- Custom Filter and Group By options in Opportunities kanban view -->
+  <!-- Custom fields displayed in kanban view -->
+  <record model="ir.ui.view" id="crm_case_kanban_view_leads">
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
+    <field name="arch" type="xml">
+
+      <!-- Hide partner_id -->
+      <xpath expr="//t[@t-esc='record.partner_id.value']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//span[@t-if='record.partner_id.value']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+
+      <!-- Add City, country and Date begin -->
+      <xpath expr="//field[@name='stage_id']" position="after">
+        <field name="city"/>
+        <field name="country_code"/>
+        <field name="short_date"/>
+      </xpath>
+      <xpath expr="(//span[@t-if='record.partner_id.value']/../t)[position() = 1]" position="before">
+        <span t-if="record.short_date.value"> <t t-esc="record.short_date.value"/></span><t><span t-if="record.short_date.value"> </span></t>
+        <span t-if="record.city.value"> <t t-esc="record.city.value"/></span><t><span t-if="record.city.value"> </span></t>
+        <span t-if="record.country_code.value"> <t t-esc="record.country_code.value"/></span><t><span t-if="record.country_code.value"> </span></t>
+      </xpath>
+
+
+    </field>
+  </record>
+
+
+  <!-- Custom FILTER and GROUP BY options in Opportunities kanban view -->
   <record model="ir.ui.view" id="view_crm_case_opportunities_filter">
     <field name="model">crm.lead</field>
     <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />

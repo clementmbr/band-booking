@@ -22,6 +22,7 @@
 
         'views/res_partner_views.xml',
         'views/contact_views.xml',
+        'views/calendar_views.xml',
         'views/crm_lead_views.xml',
         'views/event_views.xml',
     ],

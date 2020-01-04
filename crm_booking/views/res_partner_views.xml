@@ -12,16 +12,11 @@
         <attribute name="style">background-color:#c6ecd9</attribute>
       </xpath> -->
 
-      <!-- Add a is_structure checkbox on top -->
+      <!-- Add a structure_type selection on top -->
       <xpath expr="//field[@name='company_type']" position="before">
         <div class="oe_edit_only">
           <field name="structure_type" options="{'horizontal': true}" class="oe_edit_only" widget="radio"/>
         </div>
-      </xpath>
-
-      <!-- Hide 'company_type' if is_structure -->
-      <xpath expr="//field[@name='company_type']" position="attributes">
-        <!-- <attribute name="attrs">{'invisible': [('is_structure', '=', True)]}</attribute> -->
       </xpath>
 
       <!-- Add social media fields to the partner -->

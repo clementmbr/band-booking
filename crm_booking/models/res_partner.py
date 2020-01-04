@@ -96,6 +96,7 @@ class Partner(models.Model):
 
             if not partner_tags:
                 partner.structure_type = False
+                partner.is_structure = False
             else:
                 # Update structure_type if it exists a partner_tag in the structure_tags
                 ptag_in_stags = [
@@ -107,11 +108,16 @@ class Partner(models.Model):
                         [('name', '=', '%s' % ptag_in_stags[0])])
                     partner.category_id = [(3, old_stag_id.id, 0)]
                     partner.structure_type = ptag_in_stags[1]
+                    partner.is_structure = True
+                    partner.company_type = 'company'
                 elif len(ptag_in_stags) == 1:
                     partner.structure_type = ptag_in_stags[0]
+                    partner.is_structure = True
+                    partner.company_type = 'company'
                 else:
                     partner.structure_type = False
                     partner.is_structure = False
+                    partner.company_type = 'company'
 
     @api.onchange('structure_type')
     def onchange_structure_type(self):

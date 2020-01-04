@@ -2,6 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import models, api, fields
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from datetime import datetime
 import logging
 
 
@@ -23,7 +25,8 @@ class Lead(models.Model):
     description = fields.Text('Notes', related='partner_id.comment')
     street = fields.Char('Street', related='partner_id.street', store=True)
     street2 = fields.Char('Street2', related='partner_id.street2', store=True)
-    zip = fields.Char('Zip', change_default=True, related='partner_id.zip', store=True)
+    zip = fields.Char('Zip', change_default=True,
+                      related='partner_id.zip', store=True)
     city = fields.Char('City', related='partner_id.city', store=True)
     state_id = fields.Many2one(
         "res.country.state", string='State', related='partner_id.state_id', store=True)
@@ -31,6 +34,11 @@ class Lead(models.Model):
         'res.country', string='Country', related='partner_id.country_id', store=True)
     website = fields.Char(
         'Website', index=True, help="Website of the contact", related='partner_id.website')
+    # To display in Opportunities kanban view
+    country_code = fields.Char(
+        string='Country Code', related='partner_id.country_id.code', store=True)
+    short_date = fields.Char(
+        string='Short Date', compute='_compute_short_date')
 
     # Special Show Structure fields related fields
     # with Customer's Show Strucure fields
@@ -63,6 +71,15 @@ class Lead(models.Model):
         readonly=False,
         store=True,
         default='False')
+
+    @api.multi
+    @api.depends('show_period_date_begin')
+    def _compute_short_date(self):
+        for lead in self:
+            if lead.show_period_date_begin:
+                date = str(lead.show_period_date_begin)
+                date_obj = datetime.strptime(date, DEFAULT_SERVER_DATE_FORMAT)
+                lead.short_date = datetime.strftime(date_obj, '%d' + '/' + '%m')
 
     @api.onchange('partner_id')
     def on_change_customer(self):
