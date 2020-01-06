@@ -67,6 +67,7 @@
                 <field name="name"/>
                 <field name="function"/>
                 <field name="phone"/>
+                <field name="mobile"/>
                 <field name="email"/>
               </tree>
             </field>
@@ -178,6 +179,7 @@
                 <field name="name"/>
                 <field name="function"/>
                 <field name="phone"/>
+                <field name="mobile"/>
                 <field name="email"/>
               </tree>
             </field>
@@ -197,6 +199,11 @@
             </field>
           </group>
         </page>
+      </xpath>
+
+      <!-- TODO HIDE Send message if not in debug mode. Following code not working... -->
+      <xpath expr="//field[@name='message_follower_ids']" position="attributes">
+        <!-- <attribute name="groups">base.group_no_one</attribute> -->
       </xpath>
 
     </field>
