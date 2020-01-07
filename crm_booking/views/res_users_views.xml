@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+
+  <!-- Depends on OCA module 'partner_external_map' -->
+  <!-- Hide Route website and Route start in User form-->
+  <record id="view_users_form" model="ir.ui.view">
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="partner_external_map.view_users_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='context_route_map_website_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//field[@name='context_route_start_partner_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+      </field>
+  </record>
+  <!-- Hide Route website and Route start in User simple modif form-->
+  <record id="view_users_form_simple_modif" model="ir.ui.view">
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="partner_external_map.view_users_form_simple_modif"/>
+      <field name="arch"  type="xml">
+        <xpath expr="//field[@name='context_route_map_website_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+        <xpath expr="//field[@name='context_route_start_partner_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+      </field>
+  </record>
+
+
+</odoo>

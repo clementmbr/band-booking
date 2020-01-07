@@ -56,7 +56,7 @@
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
         <field name="is_structure" invisible="1"/>
         <button class="oe_stat_button o_res_partner_tip_opp" type="object"
-          attrs="{'invisible': ['|', ('is_structure', '=', False), ('opportunity_count', '&gt;', 0)]}"
+          attrs="{'invisible': ['|', '|', ('is_structure', '=', False), ('opportunity_count', '&gt;', 0), ('lead_count', '&gt;', 0)]}"
           name="action_lead_from_partner"
           string="Create a Lead"
           icon="fa-star"
@@ -99,9 +99,8 @@
           <!-- Special Show Structure FIELDS-->
           <group>
             <field name="show_capacity" widget="selection"/>
-            <field name="show_period_date_begin" attrs="{'invisible': [('show_period_all_year', '=', True)]}"/>
-            <field name="show_period_date_end" attrs="{'invisible': [('show_period_all_year', '=', True)]}"/>
-            <field name="show_period_all_year" attrs="{'invisible': []}"/>
+            <field name="show_period_date_begin" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
+            <field name="show_period_date_end" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
           </group>
         </group>
       </xpath>

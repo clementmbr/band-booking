@@ -108,10 +108,18 @@ class Partner(models.Model):
                         [('name', '=', '%s' % ptag_in_stags[0])])
                     partner.category_id = [(3, old_stag_id.id, 0)]
                     partner.structure_type = ptag_in_stags[1]
+                    if partner.structure_type == 'venue':
+                        partner.show_period_all_year = True
+                    else:
+                        partner.show_period_all_year = False
                     partner.is_structure = True
                     partner.company_type = 'company'
                 elif len(ptag_in_stags) == 1:
                     partner.structure_type = ptag_in_stags[0]
+                    if partner.structure_type == 'venue':
+                        partner.show_period_all_year = True
+                    else:
+                        partner.show_period_all_year = False
                     partner.is_structure = True
                     partner.company_type = 'company'
                 else:
