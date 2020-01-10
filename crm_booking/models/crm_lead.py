@@ -47,7 +47,9 @@ class Lead(models.Model):
         related='partner_id.is_structure',
         store=True,
         default='False')
-
+    structure_type = fields.Selection(string='Structure Type',
+                                      related='partner_id.structure_type',
+                                      store=True)
     show_capacity = fields.Selection(
         string='Show Capacity',
         related='partner_id.show_capacity',
