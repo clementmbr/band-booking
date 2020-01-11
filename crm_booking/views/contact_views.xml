@@ -59,7 +59,6 @@
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='display_name']" position="after">
-        <field name="is_structure" invisible="1"/>
         <field name="show_period_date_begin"/>
         <field name="show_capacity"/>
       </xpath>
@@ -80,14 +79,8 @@
     <field name="view_type">form</field>
     <field name="view_mode">tree,form,kanban,activity</field>
     <field name="search_view_id" ref="base.view_res_partner_filter"/>
-    <!-- working..-->
-    <field name="context">{'default_is_company' : True}</field>
+    <field name="context">{'default_structure_type' : 'festival'}</field>
     <field name="domain">[('structure_type', '=', 'festival')]</field>
-
-    <!-- TODO : NOT WORKING..Why?? -->
-    <!-- <field name="context">{'is_structure' : True}</field> -->
-    <!-- <field name="context">{'default_is_structure' : True}</field> -->
-    <!-- <field name="context">{'company_type' : 'company'}</field> -->
     <field name="help" type="html">
       <p class="o_view_nocontent_smiling_face">
         Create a festival in your address book
@@ -128,7 +121,6 @@
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='display_name']" position="after">
-        <field name="is_structure" invisible="1"/>
         <field name="show_capacity"/>
       </xpath>
       <xpath expr="//field[@name='phone']" position="attributes">
@@ -148,7 +140,7 @@
     <field name="view_type">form</field>
     <field name="view_mode">tree,form,kanban,activity</field>
     <field name="search_view_id" ref="base.view_res_partner_filter"/>
-    <field name="context">{'default_is_company' : True}</field>
+    <field name="context">{'default_structure_type' : 'venue'}</field>
     <field name="domain">[('structure_type', '=', 'venue')]</field>
     <field name="help" type="html">
       <p class="o_view_nocontent_smiling_face">

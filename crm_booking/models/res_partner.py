@@ -30,7 +30,6 @@ class Partner(models.Model):
 
     is_structure = fields.Boolean(
         'Is a Festival or a Venue ?',
-        # compute='_compute_is_structure',
         store=True)
 
     structure_type = fields.Selection(string='Structure Type',
@@ -44,8 +43,6 @@ class Partner(models.Model):
 
     show_period_date_begin = fields.Date(string='Beginning Show Period')
     show_period_date_end = fields.Date(string='Ending Show Period')
-    show_period_all_year = fields.Boolean(
-        string='All year long', default='False')
 
     show_related_structure_ids = fields.Many2many(
         comodel_name='res.partner',
@@ -108,18 +105,10 @@ class Partner(models.Model):
                         [('name', '=', '%s' % ptag_in_stags[0])])
                     partner.category_id = [(3, old_stag_id.id, 0)]
                     partner.structure_type = ptag_in_stags[1]
-                    if partner.structure_type == 'venue':
-                        partner.show_period_all_year = True
-                    else:
-                        partner.show_period_all_year = False
                     partner.is_structure = True
                     partner.company_type = 'company'
                 elif len(ptag_in_stags) == 1:
                     partner.structure_type = ptag_in_stags[0]
-                    if partner.structure_type == 'venue':
-                        partner.show_period_all_year = True
-                    else:
-                        partner.show_period_all_year = False
                     partner.is_structure = True
                     partner.company_type = 'company'
                 else:

@@ -67,12 +67,6 @@ class Lead(models.Model):
         related='partner_id.show_period_date_end',
         store=True,
         readonly=False,)
-    show_period_all_year = fields.Boolean(
-        string='All year long',
-        related='partner_id.show_period_all_year',
-        readonly=False,
-        store=True,
-        default='False')
 
     @api.multi
     @api.depends('show_period_date_begin')

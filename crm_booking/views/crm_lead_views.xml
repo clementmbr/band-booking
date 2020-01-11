@@ -209,7 +209,10 @@
     </field>
   </record>
 
-  <!-- Custom Filter and Group By options in Leads tree view -->
+
+  <!-- TREE, KANBAN and MENU VIEWS -->
+
+  <!-- Custom FILTER and GROUP BY options in Leads tree view -->
   <record model="ir.ui.view" id="view_crm_case_leads_filter">
     <field name="model">crm.lead</field>
     <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
@@ -226,36 +229,26 @@
         <filter name="show_period_date_begin" string="Show Period" context="{'group_by': 'show_period_date_begin'}"/>
         <separator/>
       </xpath>
+      <!-- Add an "Opened Leads" filter -->
+      <xpath expr="//filter[@name='won']" position="before">
+        <separator/>
+        <filter string="Opened" name="opened" domain="['&amp;', ('probability', '&gt;', 0), ('active', '=', True)]"/>
+      </xpath>
     </field>
   </record>
 
-  <!-- Custom fields displayed in kanban view -->
-  <record model="ir.ui.view" id="crm_case_kanban_view_leads">
+  <!-- Custom fields displayed in Leads TREE view -->
+  <record model="ir.ui.view" id="crm_case_tree_view_leads">
     <field name="model">crm.lead</field>
-    <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
+    <field name="inherit_id" ref="crm.crm_case_tree_view_leads" />
     <field name="arch" type="xml">
-
-      <!-- Hide partner_id -->
-      <xpath expr="//t[@t-esc='record.partner_id.value']" position="attributes">
+      <!-- Hide Contact name -->
+      <xpath expr="//field[@name='contact_name']" position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
-      <xpath expr="//span[@t-if='record.partner_id.value']" position="attributes">
-        <attribute name="invisible">True</attribute>
+      <xpath expr="//field[@name='team_id']" position="before">
+        <field name="user_id"/>
       </xpath>
-
-      <!-- Add City, country and Date begin -->
-      <xpath expr="//field[@name='stage_id']" position="after">
-        <field name="city"/>
-        <field name="country_code"/>
-        <field name="short_date"/>
-      </xpath>
-      <xpath expr="(//span[@t-if='record.partner_id.value']/../t)[position() = 1]" position="before">
-        <span t-if="record.short_date.value"> <t t-esc="record.short_date.value"/></span><t><span t-if="record.short_date.value"> </span></t>
-        <span t-if="record.city.value"> <t t-esc="record.city.value"/></span><t><span t-if="record.city.value"> </span></t>
-        <span t-if="record.country_code.value"> <t t-esc="record.country_code.value"/></span><t><span t-if="record.country_code.value"> </span></t>
-      </xpath>
-
-
     </field>
   </record>
 
@@ -280,6 +273,33 @@
     </field>
   </record>
 
+  <!-- Custom fields displayed in Opportunities KANBAN view -->
+  <record model="ir.ui.view" id="crm_case_kanban_view_leads">
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
+    <field name="arch" type="xml">
+      <!-- Hide partner_id -->
+      <xpath expr="//t[@t-esc='record.partner_id.value']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//span[@t-if='record.partner_id.value']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <!-- Add City, country and Date begin -->
+      <xpath expr="//field[@name='stage_id']" position="after">
+        <field name="city"/>
+        <field name="country_code"/>
+        <field name="short_date"/>
+      </xpath>
+      <xpath expr="(//span[@t-if='record.partner_id.value']/../t)[position() = 1]" position="before">
+        <span t-if="record.short_date.value"> <t t-esc="record.short_date.value"/></span><t><span t-if="record.short_date.value"> </span></t>
+        <span t-if="record.city.value"> <t t-esc="record.city.value"/></span><t><span t-if="record.city.value"> </span></t>
+        <span t-if="record.country_code.value"> <t t-esc="record.country_code.value"/></span><t><span t-if="record.country_code.value"> </span></t>
+      </xpath>
+    </field>
+  </record>
+
+
   <!-- CUSTOM MENU ACTIONS -->
 
   <!-- Main menu "Leads" direct loading leads tree view -->
@@ -293,6 +313,11 @@
       sequence="5"
       action="crm.crm_lead_all_leads"
       groups="crm.group_use_lead"/>
+
+  <!-- Add search_default "Opened Leads" to Leads menu -->
+  <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
+      <field name="context">{'search_default_opened' : 1}</field>
+  </record>
 
   <!-- Hide Customers menu, display Festivals and Venues -->
   <record model="ir.ui.menu" id="crm.res_partner_menu_customer">
