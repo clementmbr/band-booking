@@ -19,6 +19,11 @@
         </div>
       </xpath>
 
+      <!-- Set Country field required -->
+      <xpath expr="//field[@name='country_id']" position="attributes">
+        <attribute name="required">True</attribute>
+      </xpath>
+
       <!-- Add social media fields to the partner -->
       <xpath expr="//field[@name='website']" position="after">
         <field name="facebook" widget="url" placeholder="e.g. https://www.fb.com/companyname"/>
