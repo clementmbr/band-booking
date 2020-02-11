@@ -32,6 +32,9 @@ class Partner(models.Model):
         'Is a Festival or a Venue ?',
         store=True)
 
+    # TODO (in v13) : Join structure_type and company_type with 'addselection'
+    # Not possible before v13 because of the confusion between native _compute_company_type
+    # and current onchange functions.
     structure_type = fields.Selection(string='Structure Type',
                                       selection=_get_structure_type,
                                       default=False,
@@ -164,7 +167,8 @@ class Partner(models.Model):
         xml_id = 'crm.crm_lead_all_leads'
         action = self.env.ref(xml_id).read()[0]
         if self.is_structure:
-            action['domain'] = [('partner_id', '=', self.id), ('type', '=', 'lead')]
+            action['domain'] = [
+                ('partner_id', '=', self.id), ('type', '=', 'lead')]
         else:
             action['domain'] = [
                 ('partner_id', 'in', self.show_related_structure_ids.ids),
