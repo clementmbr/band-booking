@@ -145,53 +145,6 @@ class Partner(models.Model):
                       }])
 
     @api.multi
-    def action_lead_from_partner(self):
-        """Button's action to create a lead from a Structure partner"""
-        self.ensure_one()
-
-        xml_id = 'crm.crm_lead_all_leads'
-        action = self.env.ref(xml_id).read()[0]
-        form = self.env.ref(
-            'crm.crm_case_form_view_leads')
-        action['views'] = [(form.id, 'form')]
-        action['context'] = {'default_partner_id': self.id,
-                             'default_stage_id': self.lower_stage_id.id}
-
-        return action
-
-    @api.multi
-    def action_related_lead(self):
-        """Display related Leads from Partner's smart button"""
-        self.ensure_one()
-
-        xml_id = 'crm.crm_lead_all_leads'
-        action = self.env.ref(xml_id).read()[0]
-        if self.is_structure:
-            action['domain'] = [
-                ('partner_id', '=', self.id), ('type', '=', 'lead')]
-        else:
-            action['domain'] = [
-                ('partner_id', 'in', self.show_related_structure_ids.ids),
-                ('type', '=', 'lead')]
-
-        return action
-
-    @api.multi
-    def action_related_opportunity(self):
-        """Display related opportunities from Partner's smart button"""
-        self.ensure_one()
-
-        xml_id = 'crm.crm_lead_opportunities'
-        action = self.env.ref(xml_id).read()[0]
-        if self.is_structure:
-            action['domain'] = [('partner_id', '=', self.id)]
-        else:
-            action['domain'] = [
-                ('partner_id', 'in', self.show_related_structure_ids.ids)]
-
-        return action
-
-    @api.multi
     def _compute_opportunity_count(self):
         """Override method do display a linked opportunity in partners related
         to a Structure with opportunity"""
@@ -216,6 +169,63 @@ class Partner(models.Model):
             else:
                 partner.lead_count = self.env['crm.lead'].search_count(
                     [('partner_id', 'in', partner.show_related_structure_ids.ids), ('type', '=', 'lead')])
+
+    @api.multi
+    def action_lead_from_partner(self):
+        """Button's action to create a lead from a Structure partner"""
+        self.ensure_one()
+
+        xml_id = 'crm.crm_lead_all_leads'
+        action = self.env.ref(xml_id).read()[0]
+        form = self.env.ref(
+            'crm.crm_case_form_view_leads')
+        action['views'] = [(form.id, 'form')]
+        action['context'] = {'default_partner_id': self.id,
+                             'default_stage_id': self.lower_stage_id.id}
+
+        return action
+
+    @api.multi
+    def action_related_lead(self):
+        """Display related Leads from Partner's smart button"""
+        self.ensure_one()
+
+        act_window_xml_id = 'crm.crm_lead_all_leads'
+        act_window = self.env.ref(act_window_xml_id).read()[0]
+
+        if self.is_structure:
+            domain = [('partner_id', '=', self.id)]
+        else:
+            domain = [('partner_id', 'in', self.show_related_structure_ids.ids)]
+
+        act_window['domain'] = domain
+        if self.lead_count == 1:
+            form = self.env.ref('crm.crm_case_form_view_leads')
+            act_window['views'] = [(form.id, 'form')]
+            act_window['res_id'] = self.env['crm.lead'].search(domain).id
+
+        return act_window
+
+    @api.multi
+    def action_related_opportunity(self):
+        """Display related opportunities from Partner's smart button"""
+        self.ensure_one()
+
+        act_window_xml_id = 'crm.crm_lead_opportunities'
+        act_window = self.env.ref(act_window_xml_id).read()[0]
+
+        if self.is_structure:
+            domain = [('partner_id', '=', self.id)]
+        else:
+            domain = [('partner_id', 'in', self.show_related_structure_ids.ids)]
+
+        act_window['domain'] = domain
+        if self.opportunity_count == 1:
+            form = self.env.ref('crm.crm_case_form_view_oppor')
+            act_window['views'] = [(form.id, 'form')]
+            act_window['res_id'] = self.env['crm.lead'].search(domain).id
+
+        return act_window
 
     def propagate_related_struct(self):
         for partner in self:
