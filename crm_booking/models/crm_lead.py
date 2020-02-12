@@ -23,15 +23,6 @@ class Lead(models.Model):
     tag_ids = fields.Many2many(
         'res.partner.category', related='partner_id.category_id', string='Tags')
     description = fields.Text('Notes', related='partner_id.comment')
-    street = fields.Char('Street', related='partner_id.street', store=True)
-    street2 = fields.Char('Street2', related='partner_id.street2', store=True)
-    zip = fields.Char('Zip', change_default=True,
-                      related='partner_id.zip', store=True)
-    city = fields.Char('City', related='partner_id.city', store=True)
-    state_id = fields.Many2one(
-        "res.country.state", string='State', related='partner_id.state_id', store=True)
-    country_id = fields.Many2one(
-        'res.country', string='Country', related='partner_id.country_id', store=True)
     website = fields.Char(
         'Website', index=True, help="Website of the contact", related='partner_id.website')
     # To display in Opportunities kanban view
@@ -95,19 +86,20 @@ class Lead(models.Model):
     def _address_as_string(self):
         """Necessary method to 'open_map' action"""
         self.ensure_one()
+        address = self.partner_id
         addr = []
-        if self.street:
-            addr.append(self.street)
-        if self.street2:
-            addr.append(self.street2)
-        if self.city:
-            addr.append(self.city)
-        if self.state_id:
-            addr.append(self.state_id.name)
-        if self.country_id:
-            addr.append(self.country_id.name)
+        if address.street:
+            addr.append(address.street)
+        if address.street2:
+            addr.append(address.street2)
+        if address.city:
+            addr.append(address.city)
+        if address.state_id:
+            addr.append(address.state_id.name)
+        if address.country_id:
+            addr.append(address.country_id.name)
         if not addr:
-            raise UserError(_("Address missing on partner '%s'.") % self.name)
+            raise UserError(_("Address missing on partner '%s'.") % address.name)
         return ' '.join(addr)
 
     @api.model
@@ -128,24 +120,25 @@ class Lead(models.Model):
         address to an external map site"""
         self.ensure_one()
         map_website = self.env.user.context_map_website_id
+        address = self.partner_id
         if not map_website:
             raise UserError(
                 _('Missing map provider: '
                   'you should set it in your preferences.'))
-        if (map_website.lat_lon_url and hasattr(self, 'partner_latitude') and
-                self.partner_latitude and self.partner_longitude):
-            url = self._prepare_url(
+        if (map_website.lat_lon_url and hasattr(address, 'partner_latitude') and
+                address.partner_latitude and address.partner_longitude):
+            url = address._prepare_url(
                 map_website.lat_lon_url, {
-                    '{LATITUDE}': self.partner_latitude,
-                    '{LONGITUDE}': self.partner_longitude})
+                    '{LATITUDE}': address.partner_latitude,
+                    '{LONGITUDE}': address.partner_longitude})
         else:
             if not map_website.address_url:
                 raise UserError(
                     _("Missing parameter 'URL that uses the address' "
                       "for map website '%s'.") % map_website.name)
-            url = self._prepare_url(
+            url = address._prepare_url(
                 map_website.address_url,
-                {'{ADDRESS}': self._address_as_string()})
+                {'{ADDRESS}': address._address_as_string()})
         return {
             'type': 'ir.actions.act_url',
             'url': url,

@@ -50,3 +50,66 @@ class EventEvent(models.Model):
         self.ensure_one()
         if not self.date_end:
             self.date_end = self.date_begin
+
+    @api.multi
+    def _address_as_string(self):
+        """Necessary method to 'open_map' action"""
+        self.ensure_one()
+        address = self.address_id
+        addr = []
+        if address.street:
+            addr.append(self.street)
+        if address.street2:
+            addr.append(self.street2)
+        if address.city:
+            addr.append(self.city)
+        if address.state_id:
+            addr.append(self.state_id.name)
+        if address.country_id:
+            addr.append(self.country_id.name)
+        if not addr:
+            raise UserError(_("Address missing on partner '%s'.") % address.name)
+        return ' '.join(addr)
+
+    @api.model
+    def _prepare_url(self, url, replace):
+        """Necessary method to 'open_map' action"""
+        assert url, 'Missing URL'
+        for key, value in replace.items():
+            if not isinstance(value, str):
+                # for latitude and longitude which are floats
+                value = str(value)
+            url = url.replace(key, value)
+        logger.debug('Final URL: %s', url)
+        return url
+
+    @api.multi
+    def open_map(self):
+        """Copy action from module 'partner_external_map' to link Opportunities
+        address to an external map site"""
+        self.ensure_one()
+        address = self.address_id
+        map_website = self.env.user.context_map_website_id
+        if not map_website:
+            raise UserError(
+                _('Missing map provider: '
+                  'you should set it in your preferences.'))
+        if (map_website.lat_lon_url and hasattr(address, 'partner_latitude') and
+                address.partner_latitude and address.partner_longitude):
+            url = address._prepare_url(
+                map_website.lat_lon_url, {
+                    '{LATITUDE}': address.partner_latitude,
+                    '{LONGITUDE}': address.partner_longitude})
+        else:
+            if not map_website.address_url:
+                raise UserError(
+                    _("Missing parameter 'URL that uses the address' "
+                      "for map website '%s'.") % map_website.name)
+            url = address._prepare_url(
+                map_website.address_url,
+                {'{ADDRESS}': address._address_as_string()})
+        return {
+            'type': 'ir.actions.act_url',
+            'url': url,
+            'target': 'new',
+        }

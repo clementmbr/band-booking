@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-  <!-- CUSTOM LEAD VIEW -->
+  <!--
+    ==================CUSTOM LEAD VIEW==============================
+  -->
   <record id="crm_case_form_view_leads" model="ir.ui.view">
     <field name="model">crm.lead</field>
     <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
@@ -16,7 +18,6 @@
       <xpath expr="//div[@name='button_box']" position="inside">
           <button class="oe_inline oe_stat_button"
               name="open_map" type="object" string="Map"
-              attrs="{'invisible': [('city', '=', False)]}"
               icon="fa-map-marker">
           </button>
       </xpath>
@@ -44,7 +45,16 @@
         <attribute name="invisible">True</attribute>
       </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
-        <field name="partner_id" readonly="0" widget="res_partner_many2one" domain="[('customer', '=', True), ('is_structure', '=', True)]" context="{'search_default_customer': 1, 'show_vat': True}"/>
+        <field name="partner_id"
+          readonly="0"
+          widget="res_partner_many2one"
+          domain="[('customer', '=', True), ('is_structure', '=', True)]"
+          context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
+          options="{'always_reload': True}"/>
+      </xpath>
+      <!-- Hide native street field -->
+      <xpath expr="//label[@for='street']" position="attributes">
+        <attribute name="invisible">True</attribute>
       </xpath>
 
       <!-- Strong related link with Customer's fields -->
@@ -78,7 +88,9 @@
     </field>
   </record>
 
-  <!-- CUSTOM OPPORTUNITY VIEW -->
+  <!--
+    =================CUSTOM OPPORTUNITY VIEW========================
+  -->
   <record id="crm_case_form_view_oppor" model="ir.ui.view">
     <field name="model">crm.lead</field>
     <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
@@ -101,11 +113,10 @@
         <attribute name="invisible">True</attribute>
       </xpath> -->
 
-      <!-- Add external map button in Lead view -->
+      <!-- Add external map button in Opportunity view -->
       <xpath expr="//div[@name='button_box']" position="inside">
           <button class="oe_inline oe_stat_button"
               name="open_map" type="object" string="Map"
-              attrs="{'invisible': [('city', '=', False)]}"
               icon="fa-map-marker">
           </button>
       </xpath>
@@ -114,17 +125,12 @@
         <attribute name="domain">[('customer', '=', True), ('is_structure', '=', True)]</attribute>
       </xpath>
 
-      <!-- Add address field after Customer, same as Lead view -->
+      <!-- Display Customer with full address and add website -->
+      <xpath expr="//field[@name='partner_id']" position="attributes">
+        <attribute name="context">{'show_address': 1}</attribute>
+        <attribute name="options">{"always_reload": True}</attribute>
+      </xpath>
       <xpath expr="//field[@name='partner_id']" position="after">
-        <label for="street" string="Address"/>
-        <div class="o_address_format">
-            <field name="street" placeholder="Street..." class="o_address_street"/>
-            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
-            <field name="city" placeholder="City" class="o_address_city"/>
-            <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}"/>
-            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
-            <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
-        </div>
         <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
       </xpath>
 
@@ -210,7 +216,7 @@
   </record>
 
 
-  <!-- TREE, KANBAN and MENU VIEWS -->
+  <!-- ===============TREE, KANBAN and MENU VIEWS========================= -->
 
   <!-- Custom FILTER and GROUP BY options in Leads tree view -->
   <record model="ir.ui.view" id="view_crm_case_leads_filter">
@@ -300,7 +306,7 @@
   </record>
 
 
-  <!-- CUSTOM MENU ACTIONS -->
+  <!-- ====================CUSTOM MENU ACTIONS ========================-->
 
   <!-- Main menu "Leads" direct loading leads tree view -->
   <record model="ir.ui.menu" id="crm.crm_menu_leads">
@@ -333,8 +339,5 @@
     parent="crm.crm_menu_sales"
     action="crm_booking.action_venues"
     sequence="5"/>
-
-
-
 
 </odoo>

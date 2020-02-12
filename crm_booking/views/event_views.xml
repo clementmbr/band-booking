@@ -61,16 +61,24 @@
         <field name="lead_type" invisible="True"/>
         <field name="stage_id" widget="statusbar" domain="[('team_id', 'in', [team_id, False]), ('lead_type', '=', 'opportunity')]"/>
       </xpath>
+      <!-- Add external map button-->
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button class="oe_inline oe_stat_button"
+            name="open_map" type="object" string="Map"
+            icon="fa-map-marker">
+        </button>
+      </xpath>
       <!-- Add Opportunity field-->
       <xpath expr="//field[@name='organizer_id']" position="before">
         <field name="lead_id" />
       </xpath>
-      <!-- Add show_capacity and tags fields -->
+      <!-- Add show_capacity and tags fields, replace Responsible-->
+      <field name="user_id" position="replace"/>
       <xpath expr="//field[@name='date_begin']/.." position="before">
         <group>
           <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
           <field name="show_capacity" widget="selection"/>
-          <field name="city"/>
+          <field name="user_id"/>
         </group>
       </xpath>
 
