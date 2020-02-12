@@ -10,7 +10,8 @@ class EventEvent(models.Model):
     lead_id = fields.Many2one('crm.lead',
                               ondelete='cascade', string="Opportunity")
 
-    lead_type = fields.Selection(string="Opportunity's Type",related='lead_id.type', readonly='True')
+    lead_type = fields.Selection(
+        string="Opportunity's Type", related='lead_id.type', readonly='True')
 
     stage_id = fields.Many2one(
         'crm.stage', string="Opportunity's Stage",
@@ -28,12 +29,17 @@ class EventEvent(models.Model):
         store=True,
         help="Average audience expected in this venue or festival")
 
+    event_link = fields.Char(
+        'Event link', index=True, help="Facebook event or other web link to the event infos")
+
     tag_ids = fields.Many2many(
-        'res.partner.category', related='lead_id.tag_ids', string='Tags') # TODO : store=True impossible...
+        'res.partner.category', related='lead_id.tag_ids', string='Tags')  # TODO : store=True impossible...
 
-    city = fields.Char('City', related='address_id.city', store=True, readonly=True)
+    city = fields.Char('City', related='address_id.city',
+                       store=True, readonly=True)
 
-    subtitle = fields.Char('Event Subtitle', compute='_compute_event_subtitle', store=True)
+    subtitle = fields.Char(
+        'Event Subtitle', compute='_compute_event_subtitle', store=True)
 
     @api.multi
     @api.depends('stage_id', 'city')
@@ -72,7 +78,8 @@ class EventEvent(models.Model):
         if address.country_id:
             addr.append(self.country_id.name)
         if not addr:
-            raise UserError(_("Address missing on partner '%s'.") % address.name)
+            raise UserError(
+                _("Address missing on partner '%s'.") % address.name)
         return ' '.join(addr)
 
     @api.model

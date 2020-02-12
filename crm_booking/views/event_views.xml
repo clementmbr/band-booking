@@ -78,6 +78,7 @@
         <group>
           <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
           <field name="show_capacity" widget="selection"/>
+          <field name="event_link" widget="url" placeholder="e.g. https://www.facebook.com/events/450471162302496/"/>
           <field name="user_id"/>
         </group>
       </xpath>

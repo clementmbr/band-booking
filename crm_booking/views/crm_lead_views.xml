@@ -2,7 +2,7 @@
 <odoo>
 
   <!--
-    ==================CUSTOM LEAD VIEW==============================
+    ==================CUSTOM LEAD FORM VIEW==============================
   -->
   <record id="crm_case_form_view_leads" model="ir.ui.view">
     <field name="model">crm.lead</field>
@@ -89,7 +89,7 @@
   </record>
 
   <!--
-    =================CUSTOM OPPORTUNITY VIEW========================
+    =================CUSTOM OPPORTUNITY FORM VIEW========================
   -->
   <record id="crm_case_form_view_oppor" model="ir.ui.view">
     <field name="model">crm.lead</field>
