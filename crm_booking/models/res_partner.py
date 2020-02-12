@@ -53,6 +53,7 @@ class Partner(models.Model):
         relation='rel_struct_partner',
         column1='show_related_structure_ids',
         column2='show_related_partner_ids',
+        store=True,
     )
     show_related_partner_ids = fields.Many2many(
         comodel_name='res.partner',
@@ -61,8 +62,8 @@ class Partner(models.Model):
         column1='show_related_partner_ids',
         column2='show_related_structure_ids')
 
-    # TODO : Add field 'display_related_structure_names' to add related_structure_names
-    # to view_partner_tree_contacts columns
+    display_related_structure_names = fields.Char("Related Structures",
+        compute='_compute_display_related_structure_names', store=True, index=True)
 
     facebook = fields.Char(help="Must begin by 'http://' to activate URL link")
     instagram = fields.Char(
@@ -74,6 +75,18 @@ class Partner(models.Model):
 
     # Compute leads number related to partner
     lead_count = fields.Integer("Leads", compute='_compute_lead_count')
+
+    @api.multi
+    @api.depends('show_related_structure_ids')
+    def _compute_display_related_structure_names(self):
+        for partner in self:
+            for structure in partner.show_related_structure_ids:
+                if not partner.display_related_structure_names:
+                    partner.display_related_structure_names = str(
+                        structure.name)
+                else:
+                    partner.display_related_structure_names += ", " + \
+                        str(structure.name)
 
     @api.multi
     def _compute_lower_stage_id(self):

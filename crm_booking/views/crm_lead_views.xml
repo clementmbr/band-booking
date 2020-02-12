@@ -305,6 +305,11 @@
     </field>
   </record>
 
+  <!-- Add search_default "Opened Leads" to Leads menu -->
+  <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
+      <field name="context">{'search_default_opened' : 1, 'group_by': 'stage_id', 'default_type': 'lead'}</field>
+  </record>
+
 
   <!-- ====================CUSTOM MENU ACTIONS ========================-->
 
@@ -319,11 +324,6 @@
       sequence="5"
       action="crm.crm_lead_all_leads"
       groups="crm.group_use_lead"/>
-
-  <!-- Add search_default "Opened Leads" to Leads menu -->
-  <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
-      <field name="context">{'search_default_opened' : 1, 'group_by': 'stage_id', 'default_type': 'lead'}</field>
-  </record>
 
   <!-- Hide Customers menu, display Festivals and Venues -->
   <record model="ir.ui.menu" id="crm.res_partner_menu_customer">
