@@ -25,6 +25,7 @@ class Lead(models.Model):
     description = fields.Text('Notes', related='partner_id.comment')
     website = fields.Char(
         'Website', index=True, help="Website of the contact", related='partner_id.website')
+
     # To display in Opportunities kanban view
     country_code = fields.Char(
         string='Country Code', related='partner_id.country_id.code', store=True)

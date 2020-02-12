@@ -39,10 +39,14 @@ class EventEvent(models.Model):
     @api.depends('stage_id', 'city')
     def _compute_event_subtitle(self):
         for event in self:
-            if event.city:
-                event.subtitle = str(event.city) + " - " + str(event.stage_id.name)
+            city = event.city or ''
+            stage = event.stage_id.name or ''
+            if city and stage:
+                event.subtitle = str(city) + " - " + str(stage)
+            elif city and not stage:
+                event.subtitle = str(city)
             else:
-                event.subtitle = str(event.stage_id.name)
+                event.subtitle = str(stage)
 
     @api.onchange('date_begin')
     def onchange_date_begin(self):
