@@ -25,9 +25,6 @@ class Partner(models.Model):
     def _get_show_capacity(self):
         return SHOW_CAPACITY
 
-    def _default_category(self):
-        return self.env['res.partner.category'].browse(self._context.get('category_id'))
-
     is_structure = fields.Boolean(
         'Is a Festival or a Venue ?',
         store=True)
@@ -99,6 +96,9 @@ class Partner(models.Model):
         self.lower_stage_id = self.env['crm.stage'].browse(
             [min(dict_sequences, key=dict_sequences.get)])
 
+    # ---------------------------------------------------------------------
+    # Onchange Relations between category_id, structure_type and company_type
+    # ---------------------------------------------------------------------
     @api.onchange('category_id')
     def onchange_category_id(self):
         """Set structure_type dependind on Partner's tags"""
@@ -157,6 +157,16 @@ class Partner(models.Model):
                       'color': 2,
                       }])
 
+    @api.onchange('company_type')
+    def onchange_company_type(self):
+        for partner in self:
+            if partner.company_type == 'person':
+                partner.structure_type = False
+                partner.is_structure = False
+
+    # ---------------------------------------------------------------------
+    # Button to link (or create) leads from partner
+    # ---------------------------------------------------------------------
     @api.multi
     def _compute_opportunity_count(self):
         """Override method do display a linked opportunity in partners related
@@ -240,6 +250,9 @@ class Partner(models.Model):
 
         return act_window
 
+    # ---------------------------------------------------------------------
+    # Relation between Structure and non-Structure partners
+    # ---------------------------------------------------------------------
     def propagate_related_struct(self):
         for partner in self:
             for child in partner.child_ids:
@@ -263,6 +276,9 @@ class Partner(models.Model):
 
         return res
 
+    # ---------------------------------------------------------------------
+    # Show period festival fields
+    # ---------------------------------------------------------------------
     @api.one
     @api.constrains('show_period_date_begin', 'show_period_date_end')
     def _check_closing_date(self):
