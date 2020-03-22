@@ -18,6 +18,8 @@
 
     ],
     'data': [
+        'security/crm_booking_security.xml',
+
         'wizard/crm_lead_to_opportunity_views.xml',
 
         'views/res_partner_views.xml',

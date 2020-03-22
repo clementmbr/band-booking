@@ -17,7 +17,11 @@ class Lead(models.Model):
                                      related='partner_id.show_related_partner_ids',
                                      string='Lead Partners')
     lead_event_ids = fields.One2many('event.event', 'lead_id',
-                                     string='Events', context={'state': 'confirm'})
+                                     string='Events',
+                                     context={
+                                         'state': 'confirm',
+                                         'company_id': lambda self: self.env.user.company_id,
+                                     })
 
     # Relate Lead Tags, Description and Addres to Customer's
     tag_ids = fields.Many2many(
@@ -67,7 +71,8 @@ class Lead(models.Model):
             if lead.show_period_date_begin:
                 date = str(lead.show_period_date_begin)
                 date_obj = datetime.strptime(date, DEFAULT_SERVER_DATE_FORMAT)
-                lead.short_date = datetime.strftime(date_obj, '%d' + '/' + '%m')
+                lead.short_date = datetime.strftime(
+                    date_obj, '%d' + '/' + '%m')
 
     @api.onchange('partner_id')
     def on_change_customer(self):
@@ -83,6 +88,9 @@ class Lead(models.Model):
         if not self.show_period_date_end:
             self.show_period_date_end = self.show_period_date_begin
 
+    # ---------------------------------------------------------------------
+    # MAP button methods
+    # ---------------------------------------------------------------------
     @api.multi
     def _address_as_string(self):
         """Necessary method to 'open_map' action"""
@@ -100,7 +108,8 @@ class Lead(models.Model):
         if address.country_id:
             addr.append(address.country_id.name)
         if not addr:
-            raise UserError(_("Address missing on partner '%s'.") % address.name)
+            raise UserError(
+                _("Address missing on partner '%s'.") % address.name)
         return ' '.join(addr)
 
     @api.model

@@ -61,6 +61,9 @@ class EventEvent(models.Model):
         if not self.date_end:
             self.date_end = self.date_begin
 
+    # ---------------------------------------------------------------------
+    # MAP button methods
+    # ---------------------------------------------------------------------
     @api.multi
     def _address_as_string(self):
         """Necessary method to 'open_map' action"""
@@ -124,3 +127,4 @@ class EventEvent(models.Model):
             'url': url,
             'target': 'new',
         }
+    # ---------------------------------------------------------------------

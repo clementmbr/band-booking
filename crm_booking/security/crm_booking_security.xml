@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The noupdate="0" is necessary in our case in order to update a rule record
+(crm.crm_lead_company_rule) which has a noupdate="1" attribute -->
+<odoo noupdate="0">
+
+  <!-- Overide the Global "CRM Lead Multi-Company" rule that allows users to
+  Read/Write/Create/Delete only the leads from their company (or with comnay_id = False)
+
+  Setting the "Apply fo Write" to False for this global rule make every user allowed
+  to write on leads fields (even if they are still able to read/create/delete only their own leads)
+
+  Useful in our case to allow any user to modify any partner even if the partner is linked
+  to a lead. Because we created related fields between partner and lead, modifying a partner
+  will modify all the linked leads. -->
+  <record id="crm.crm_lead_company_rule" model="ir.rule">
+    <field name="perm_write" eval="0"/>
+  </record>
+
+</odoo>

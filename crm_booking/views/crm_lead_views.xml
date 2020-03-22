@@ -57,7 +57,12 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
-      <!-- Strong related link with Customer's fields -->
+      <!-- Add compnay_id field -->
+      <xpath expr="//field[@name='team_id']" position="after">
+        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+      </xpath>
+
+      <!-- Add Strong related link with Customer's fields -->
       <xpath expr="//field[@name='tag_ids']/.." position="after">
         <field name="is_structure" invisible="1"/>
         <group attrs="{'invisible': [('is_structure', '=', False)]}">
@@ -165,7 +170,12 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
-      <!-- Customer 'Show' fields -->
+      <!-- Add compnay_id field -->
+      <xpath expr="//field[@name='team_id']" position="after">
+        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+      </xpath>
+
+      <!-- Add Customer 'Show' fields -->
       <xpath expr="//field[@name='tag_ids']/.." position="after">
         <field name="is_structure" invisible="1"/>
         <group attrs="{'invisible': [('is_structure', '=', False)]}">
