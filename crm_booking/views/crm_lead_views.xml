@@ -66,7 +66,7 @@
       <xpath expr="//field[@name='tag_ids']/.." position="after">
         <field name="is_structure" invisible="1"/>
         <group attrs="{'invisible': [('is_structure', '=', False)]}">
-          <field name="show_capacity" widget="selection"/>
+          <field name="structure_capacity" widget="selection"/>
           <field name="structure_type" invisible="1"/>
           <field name="show_period_date_begin" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
           <field name="show_period_date_end" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
@@ -180,7 +180,7 @@
         <field name="is_structure" invisible="1"/>
         <group attrs="{'invisible': [('is_structure', '=', False)]}">
           <field name="structure_type" invisible="1"/>
-          <field name="show_capacity" widget="selection"/>
+          <field name="structure_capacity" widget="selection"/>
           <field name="show_period_date_begin" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
           <field name="show_period_date_end" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
         </group>

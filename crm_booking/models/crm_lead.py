@@ -14,7 +14,7 @@ class Lead(models.Model):
     _inherit = 'crm.lead'
 
     lead_partners = fields.Many2many(comodel_name='res.partner',
-                                     related='partner_id.show_related_partner_ids',
+                                     related='partner_id.related_partner_ids',
                                      string='Lead Partners')
     lead_event_ids = fields.One2many('event.event', 'lead_id',
                                      string='Events',
@@ -46,9 +46,9 @@ class Lead(models.Model):
     structure_type = fields.Selection(string='Structure Type',
                                       related='partner_id.structure_type',
                                       store=True)
-    show_capacity = fields.Selection(
+    structure_capacity = fields.Selection(
         string='Show Capacity',
-        related='partner_id.show_capacity',
+        related='partner_id.structure_capacity',
         readonly=False,
         store=True,
         help="Average audience expected in this venue or festival")

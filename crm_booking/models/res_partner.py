@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 # TODO : Allow to define this parameters in Partner's Configuration
 STRUCTURE_TYPE = [('festival', 'Festival'), ('venue', 'Venue')]
-SHOW_CAPACITY = [('inf1k', '< 1000'), ('sup1k', '> 1000'),
+STRUCTURE_CAPACITY = [('inf1k', '< 1000'), ('sup1k', '> 1000'),
                  ('sup5k', '> 5k'), ('sup10k', '> 10k'),
                  ('sup30k', '> 30k'), ('sup100k', '> 100k')]
 
@@ -22,8 +22,8 @@ class Partner(models.Model):
     def _get_structure_tags(self):
         return [t[0] for t in STRUCTURE_TYPE]
 
-    def _get_show_capacity(self):
-        return SHOW_CAPACITY
+    def _get_structure_capacity(self):
+        return STRUCTURE_CAPACITY
 
     is_structure = fields.Boolean(
         'Is a Festival or a Venue ?',
@@ -37,27 +37,27 @@ class Partner(models.Model):
                                       default=False,
                                       store=True)
 
-    show_capacity = fields.Selection(_get_show_capacity,
-                                     string='Show Capacity',
+    structure_capacity = fields.Selection(_get_structure_capacity,
+                                     string='Structure Capacity',
                                      help="Average audience expected in this venue or festival")
 
     show_period_date_begin = fields.Date(string='Beginning Show Period')
     show_period_date_end = fields.Date(string='Ending Show Period')
 
-    show_related_structure_ids = fields.Many2many(
+    related_structure_ids = fields.Many2many(
         comodel_name='res.partner',
         string='Related Structure',
         relation='rel_struct_partner',
-        column1='show_related_structure_ids',
-        column2='show_related_partner_ids',
+        column1='related_structure_ids',
+        column2='related_partner_ids',
         store=True,
     )
-    show_related_partner_ids = fields.Many2many(
+    related_partner_ids = fields.Many2many(
         comodel_name='res.partner',
         string='Related Contacts',
         relation='rel_struct_partner',
-        column1='show_related_partner_ids',
-        column2='show_related_structure_ids')
+        column1='related_partner_ids',
+        column2='related_structure_ids')
 
     display_related_structure_names = fields.Char("Related Structures",
         compute='_compute_display_related_structure_names', store=True, index=True)
@@ -74,10 +74,10 @@ class Partner(models.Model):
     lead_count = fields.Integer("Leads", compute='_compute_lead_count')
 
     @api.multi
-    @api.depends('show_related_structure_ids')
+    @api.depends('related_structure_ids')
     def _compute_display_related_structure_names(self):
         for partner in self:
-            for structure in partner.show_related_structure_ids:
+            for structure in partner.related_structure_ids:
                 if not partner.display_related_structure_names:
                     partner.display_related_structure_names = str(
                         structure.name)
@@ -178,7 +178,7 @@ class Partner(models.Model):
                     [('partner_id', '=', partner.id), ('type', '=', 'opportunity')])
             else:
                 partner.opportunity_count = self.env['crm.lead'].search_count(
-                    [('partner_id', 'in', partner.show_related_structure_ids.ids), ('type', '=', 'opportunity')])
+                    [('partner_id', 'in', partner.related_structure_ids.ids), ('type', '=', 'opportunity')])
 
         return res
 
@@ -191,7 +191,7 @@ class Partner(models.Model):
                     [('partner_id', '=', partner.id), ('type', '=', 'lead')])
             else:
                 partner.lead_count = self.env['crm.lead'].search_count(
-                    [('partner_id', 'in', partner.show_related_structure_ids.ids), ('type', '=', 'lead')])
+                    [('partner_id', 'in', partner.related_structure_ids.ids), ('type', '=', 'lead')])
 
     @api.multi
     def action_lead_from_partner(self):
@@ -219,7 +219,7 @@ class Partner(models.Model):
         if self.is_structure:
             domain = [('partner_id', '=', self.id)]
         else:
-            domain = [('partner_id', 'in', self.show_related_structure_ids.ids)]
+            domain = [('partner_id', 'in', self.related_structure_ids.ids)]
 
         act_window['domain'] = domain
         if self.lead_count == 1:
@@ -240,7 +240,7 @@ class Partner(models.Model):
         if self.is_structure:
             domain = [('partner_id', '=', self.id)]
         else:
-            domain = [('partner_id', 'in', self.show_related_structure_ids.ids)]
+            domain = [('partner_id', 'in', self.related_structure_ids.ids)]
 
         act_window['domain'] = domain
         if self.opportunity_count == 1:
@@ -256,20 +256,20 @@ class Partner(models.Model):
     def propagate_related_struct(self):
         for partner in self:
             for child in partner.child_ids:
-                if child.show_related_structure_ids != partner.show_related_structure_ids:
-                    child.show_related_structure_ids = partner.show_related_structure_ids
+                if child.related_structure_ids != partner.related_structure_ids:
+                    child.related_structure_ids = partner.related_structure_ids
 
             for parent in partner.parent_id:
-                if parent.show_related_structure_ids != partner.show_related_structure_ids:
-                    parent.show_related_structure_ids = partner.show_related_structure_ids
+                if parent.related_structure_ids != partner.related_structure_ids:
+                    parent.related_structure_ids = partner.related_structure_ids
 
     @api.multi
     def write(self, values):
-        """ Propagate the related structure from parent to childs"""
+        """ Propagate the partner's related structures from parent to childs"""
         res = super().write(values)
 
         if self.is_structure == True:
-            for partner in self.show_related_partner_ids:
+            for partner in self.related_partner_ids:
                 partner.propagate_related_struct()
         else:
             self.propagate_related_struct()

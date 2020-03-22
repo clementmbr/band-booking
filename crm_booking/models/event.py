@@ -22,9 +22,9 @@ class EventEvent(models.Model):
     team_id = fields.Many2one(
         'crm.team', string='Sales Team', oldname='section_id', related='lead_id.team_id')
 
-    show_capacity = fields.Selection(
+    structure_capacity = fields.Selection(
         string='Show Capacity',
-        related='lead_id.show_capacity',
+        related='lead_id.structure_capacity',
         readonly=True,
         store=True,
         help="Average audience expected in this venue or festival")

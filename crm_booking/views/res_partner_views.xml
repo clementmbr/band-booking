@@ -105,7 +105,7 @@
             placeholder="Tags..."/>
           <!-- ADD Special Show Structure fields-->
           <group>
-            <field name="show_capacity" widget="selection"/>
+            <field name="structure_capacity" widget="selection"/>
             <field name="show_period_date_begin" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
             <field name="show_period_date_end" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
           </group>
@@ -116,7 +116,7 @@
       <xpath expr="//field[@name='type']/../.." position="before">
         <group>
           <field
-            name="show_related_structure_ids"
+            name="related_structure_ids"
             mode="kanban"
             domain="[('is_structure', '=', 'True')]"
             attrs="{'invisible': [('is_structure', '=', True)]}"
@@ -184,7 +184,7 @@
           attrs="{'invisible': [('is_structure', '=', False)]}"
           autofocus="autofocus">
           <group>
-            <field name="show_related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
+            <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
               <tree>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>

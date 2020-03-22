@@ -72,12 +72,12 @@
       <xpath expr="//field[@name='organizer_id']" position="before">
         <field name="lead_id" />
       </xpath>
-      <!-- Add show_capacity and tags fields, replace Responsible-->
+      <!-- Add structure_capacity and tags fields, replace Responsible-->
       <field name="user_id" position="replace"/>
       <xpath expr="//field[@name='date_begin']/.." position="before">
         <group>
           <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
-          <field name="show_capacity" widget="selection"/>
+          <field name="structure_capacity" widget="selection"/>
           <field name="event_link" widget="url" placeholder="e.g. https://www.facebook.com/events/450471162302496/"/>
           <field name="user_id"/>
         </group>
