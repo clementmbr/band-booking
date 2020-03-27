@@ -194,6 +194,12 @@
               </tree>
             </field>
           </group>
+          <!-- TODO : [WIP] Add a button to add Related Contact without clicking on 'Edit'  -->
+          <!-- <button
+            type="object"
+            name="action_add_related_partner"
+            string="Add a Related Contact"
+            /> -->
         </page>
       </xpath>
 

@@ -48,16 +48,17 @@ class Partner(models.Model):
         comodel_name='res.partner',
         string='Related Structure',
         relation='rel_struct_partner',
-        column1='related_structure_ids',
-        column2='related_partner_ids',
+        column1='related_partner_id',
+        column2='related_structure_id',
         store=True,
     )
     related_partner_ids = fields.Many2many(
         comodel_name='res.partner',
         string='Related Contacts',
         relation='rel_struct_partner',
-        column1='related_partner_ids',
-        column2='related_structure_ids')
+        column1='related_structure_id',
+        column2='related_partner_id',
+    )
 
     display_related_structure_names = fields.Char("Related Structures",
         compute='_compute_display_related_structure_names', store=True, index=True)
@@ -249,6 +250,26 @@ class Partner(models.Model):
             act_window['res_id'] = self.env['crm.lead'].search(domain).id
 
         return act_window
+
+    # ---------------------------------------------------------------------
+    # Add related_structure button
+    # ---------------------------------------------------------------------
+
+    # vvvvv TODO - WORK IN PROGRESS vvvvvvv
+    # @api.multi
+    # def action_add_related_partner(self):
+    #     """Button's action to add a new Partner to Many2many related_partner_ids
+    #     in Structure field"""
+    #     self.ensure_one()
+    #
+    #     xml_id = 'crm_booking.action_contacts'
+    #     action = self.env.ref(xml_id).read()[0]
+    #     # form = self.env.ref('crm_booking.view_partner_tree_contacts')
+    #     # action['views'] = [(form.id, 'form')]
+    #     action['target'] = 'new'
+    #     # action['context'] = {'default_related_structure_ids' : self.}
+    #
+    #     return action
 
     # ---------------------------------------------------------------------
     # Relation between Structure and non-Structure partners

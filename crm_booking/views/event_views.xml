@@ -46,7 +46,7 @@
       <xpath expr="//field[@name='event_type_id']/.." position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
-      <!-- Hide Minèmax attendees group-->
+      <!-- Hide Min/max attendees group-->
       <xpath expr="//field[@name='seats_min']/.." position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>

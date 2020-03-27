@@ -88,6 +88,26 @@ class Lead(models.Model):
         if not self.show_period_date_end:
             self.show_period_date_end = self.show_period_date_begin
 
+    @api.multi
+    def action_add_new_related_event(self):
+        """Button's action to add a new Event to lead_event_ids"""
+        self.ensure_one()
+
+        xml_id = 'event.action_event_view'
+        action = self.env.ref(xml_id).read()[0]
+        form = self.env.ref('event.view_event_form')
+        action['views'] = [(form.id, 'form')]
+        action['target'] = 'new'
+        action['context'] = {
+            'default_lead_id': self.id,
+            'default_name': self.name,
+            'default_address_id': self.partner_id.id,
+            'default_date_begin': self.show_period_date_begin,
+            'default_date_end': self.show_period_date_end,
+        }
+
+        return action
+
     # ---------------------------------------------------------------------
     # MAP button methods
     # ---------------------------------------------------------------------

@@ -187,7 +187,7 @@
       </xpath>
 
       <xpath expr="//page[1]" position="before">
-        <!-- Add partner Many2many in opportunities-->
+        <!-- Add Partners MANY2MANY in opportunities-->
         <page string="Contacts">
           <group>
             <field name="lead_partners" widget="many2many" nolabel="1" context="{}">
@@ -201,7 +201,7 @@
             </field>
           </group>
         </page>
-        <!-- Add Events One2many in opportunities-->
+        <!-- Add Events ONE2MANY in opportunities-->
         <page string="Events">
           <group>
             <field name="lead_event_ids" nolabel="1" context="{'default_lead_id': id, 'default_name': name, 'default_address_id': partner_id, 'default_date_begin': show_period_date_begin, 'default_date_end': show_period_date_begin}">
@@ -214,6 +214,12 @@
               </tree>
             </field>
           </group>
+          <button
+            class="oe_inline oe_stat_button"
+            type="object"
+            name="action_add_new_related_event"
+            string="Add an Event"
+            />
         </page>
       </xpath>
 
