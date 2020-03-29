@@ -81,7 +81,7 @@
     <field name="view_type">form</field>
     <field name="view_mode">tree,form,kanban,activity</field>
     <field name="search_view_id" ref="base.view_res_partner_filter"/>
-    <field name="context">{'default_structure_type' : 'festival'}</field>
+    <field name="context">{'default_structure_type' : 'festival', 'default_is_company' : True}</field>
     <field name="domain">[('structure_type', '=', 'festival')]</field>
     <field name="help" type="html">
       <p class="o_view_nocontent_smiling_face">
@@ -142,7 +142,7 @@
     <field name="view_type">form</field>
     <field name="view_mode">tree,form,kanban,activity</field>
     <field name="search_view_id" ref="base.view_res_partner_filter"/>
-    <field name="context">{'default_structure_type' : 'venue'}</field>
+    <field name="context">{'default_structure_type' : 'venue', 'default_is_company' : True}</field>
     <field name="domain">[('structure_type', '=', 'venue')]</field>
     <field name="help" type="html">
       <p class="o_view_nocontent_smiling_face">

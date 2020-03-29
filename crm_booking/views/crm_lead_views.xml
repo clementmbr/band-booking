@@ -232,7 +232,7 @@
   </record>
 
 
-  <!-- ===============TREE, KANBAN and MENU VIEWS========================= -->
+  <!-- ===============TREE, KANBAN, FILTER and MENU VIEWS========================= -->
 
   <!-- Custom FILTER and GROUP BY options in Leads tree view -->
   <record model="ir.ui.view" id="view_crm_case_leads_filter">
