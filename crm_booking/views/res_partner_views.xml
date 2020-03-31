@@ -59,6 +59,8 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
+      <!--===================== Views for STRUCTURE ONLY ========================== -->
+
       <!-- SMART BUTTON to create lead if no one  -->
       <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
         <field name="is_structure" invisible="1"/>
@@ -170,36 +172,39 @@
         </group>
       </xpath>
 
-      <!-- HIDE 'Contacts & Address' page if the partner is a structure or an individual -->
-      <xpath expr="//field[@name='child_ids']/.." position="attributes">
-        <field name="is_company" invisible="1"/>
-        <attribute name="attrs">{'invisible': ['|', ('is_structure', '=', True), ('is_company', '=', False)]}</attribute>
-      </xpath>
-
       <!-- MANY2MANY 'Related Contacts' page if the partner is a structure -->
       <xpath expr="//field[@name='child_ids']/.." position="before">
         <page string="Related Contacts"
           attrs="{'invisible': [('is_structure', '=', False)]}"
           autofocus="autofocus">
           <group>
-            <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
-              <tree>
+            <field name="related_partner_ids" nolabel="1">
+              <tree widget="handle">
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
                 <field name="email"/>
                 <field name="phone"/>
                 <field name="mobile"/>
+                <control> <create string="Add a Contact"/> </control>
               </tree>
             </field>
           </group>
           <!-- TODO : [WIP] Add a button to add Related Contact without clicking on 'Edit'  -->
-          <!-- <button
+          <button
             type="object"
-            name="action_add_related_partner"
-            string="Add a Related Contact"
-            /> -->
+            name="button_display_partners_to_be_related"
+            string="Add Related Contacts"
+            />
         </page>
       </xpath>
+
+      <!-- HIDE 'Contacts & Address' page if the partner is a structure or an individual -->
+      <xpath expr="//field[@name='child_ids']/.." position="attributes">
+        <field name="is_company" invisible="1"/>
+        <attribute name="attrs">{'invisible': ['|', ('is_structure', '=', True), ('is_company', '=', False)]}</attribute>
+      </xpath>
+
+      <!--===================== Views for CONTACTS ONLY ========================== -->
 
       <!-- CUSTOM partners childs creation -->
       <xpath expr="//field[@name='child_ids']/form/sheet/field[@name='type']" position="before">

@@ -211,6 +211,7 @@
                 <field name="date_end"/>
                 <field name="address_id"/>
                 <field name="stage_id"/>
+                <control> <create string="Add an Event"/> </control>
               </tree>
             </field>
           </group>

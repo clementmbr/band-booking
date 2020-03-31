@@ -51,6 +51,7 @@ class Partner(models.Model):
         column1='related_partner_id',
         column2='related_structure_id',
         store=True,
+        domain="[('is_structure', '=', True )]",
     )
     related_partner_ids = fields.Many2many(
         comodel_name='res.partner',
@@ -58,6 +59,7 @@ class Partner(models.Model):
         relation='rel_struct_partner',
         column1='related_structure_id',
         column2='related_partner_id',
+        domain="[('is_structure', '=', False )]",
     )
 
     display_related_structure_names = fields.Char("Related Structures",
@@ -256,20 +258,50 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
 
     # vvvvv TODO - WORK IN PROGRESS vvvvvvv
-    # @api.multi
-    # def action_add_related_partner(self):
-    #     """Button's action to add a new Partner to Many2many related_partner_ids
-    #     in Structure field"""
-    #     self.ensure_one()
-    #
-    #     xml_id = 'crm_booking.action_contacts'
-    #     action = self.env.ref(xml_id).read()[0]
-    #     # form = self.env.ref('crm_booking.view_partner_tree_contacts')
-    #     # action['views'] = [(form.id, 'form')]
-    #     action['target'] = 'new'
-    #     # action['context'] = {'default_related_structure_ids' : self.}
-    #
-    #     return action
+    @api.multi
+    def button_display_partners_to_be_related(self):
+        """Button's action show a list of partners to be selected and added to
+        related_partner_ids"""
+        self.ensure_one()
+        m2m_field_name = 'related_partner_ids'
+        no_create = False
+        return {
+            'type' : 'ir.actions.act_m2m_list_row_add',
+            'res_model' : self._name,
+            'no_create' : no_create,
+            'field' : {
+                'name' : m2m_field_name,
+                'domain' : self.fields_get(m2m_field_name)[m2m_field_name]['domain'],
+                'string' : self.fields_get(m2m_field_name)[m2m_field_name]['string'],
+                'value' : {
+                    'res_ids' : self[m2m_field_name].ids,
+                }
+            }
+        }
+
+
+
+        # Solution to display the contacts tree view (main menu) without possibility to select anything
+        #-----------------------------------------------------------------------------
+        # action_contacts = self.env.ref('crm_booking.action_contacts')
+        #
+        # action_display_partners = action_contacts.read()[0]
+        # action_display_partners['target'] = 'current'
+
+        # Solution that display all the partners Contact in a many2many wizard field :
+        #-----------------------------------------------------------------------------
+        # view = self.env.ref('crm_booking.add_related_partner_view')
+        # action_display_partners = {
+        #     "name": "Add Related Contacts",
+        #     "res_model": 'add.related.partner',
+        #     "view_type": "form",
+        #     "target": "new",
+        #     "view_id": view.id,
+        #     "type": "ir.actions.act_window",
+        #     "view_mode": "form",
+        # }
+        #
+        # return action_display_partners
 
     # ---------------------------------------------------------------------
     # Relation between Structure and non-Structure partners
