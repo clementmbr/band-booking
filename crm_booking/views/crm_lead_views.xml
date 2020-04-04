@@ -78,7 +78,7 @@
       <xpath expr="//page[1]" position="before">
         <page string="Contacts">
           <group>
-            <field name="lead_partners" widget="many2many" nolabel="1" context="{}">
+            <field name="lead_partners" widget="many2many" nolabel="1">
               <tree>
                 <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>

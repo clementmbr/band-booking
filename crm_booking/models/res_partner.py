@@ -314,9 +314,10 @@ class Partner(models.Model):
     @api.one
     @api.constrains('show_period_date_begin', 'show_period_date_end')
     def _check_closing_date(self):
-        if self.show_period_date_end < self.show_period_date_begin:
-            raise ValidationError('The ending date cannot be earlier\
-                than the beginning date.')
+        if self.show_period_date_end and self.show_period_date_begin:
+            if self.show_period_date_end < self.show_period_date_begin:
+                raise ValidationError('The ending date cannot be earlier\
+                    than the beginning date.')
 
     @api.onchange('show_period_date_begin')
     def onchange_date_begin(self):

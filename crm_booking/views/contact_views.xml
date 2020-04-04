@@ -41,6 +41,10 @@
       <xpath expr="//field[@name='parent_id']" position="after">
         <filter string="Creation Date" name="creation_date" date="create_date"/>
       </xpath>
+      <!-- Add Filter for Qualified Contacts -->
+      <xpath expr="//filter[@name='inactive']" position="before">
+        <filter string="Qualified" name="is_qualified" domain="[('is_qualified', '=', True)]"/>
+      </xpath>
 
     </field>
   </record>

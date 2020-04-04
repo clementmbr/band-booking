@@ -15,7 +15,8 @@ class Lead(models.Model):
 
     lead_partners = fields.Many2many(comodel_name='res.partner',
                                      related='partner_id.related_partner_ids',
-                                     string='Lead Partners')
+                                     string='Lead Partners',
+                                     store=True)
     lead_event_ids = fields.One2many('event.event', 'lead_id',
                                      string='Events',
                                      context={
