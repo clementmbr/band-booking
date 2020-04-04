@@ -11,6 +11,8 @@
         <attribute name="style">background-color:#ebf9f2</attribute>
       </xpath>
 
+      <!-- ================ HIDE FIELDS ==================== -->
+
       <!-- Hide State status bar and related buttons-->
       <xpath expr="//field[@name='state']" position="attributes">
         <attribute name="invisible">True</attribute>
@@ -55,6 +57,8 @@
         <attribute name="invisible">True</attribute>
       </xpath>
 
+      <!-- ================ HEADER FIELDS ==================== -->
+
       <!-- Add Stage Status bar-->
       <xpath expr="//button[@name='button_confirm']" position="before">
         <field name="team_id" invisible="True"/>
@@ -68,10 +72,21 @@
             icon="fa-map-marker">
         </button>
       </xpath>
+
+      <!-- ================ ADD FIELDS ==================== -->
+
       <!-- Add Opportunity field-->
       <xpath expr="//field[@name='organizer_id']" position="before">
         <field name="lead_id" />
+        <field name="company_currency" invisible="1"/>
+        <field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+        <!-- TODO : Add a "for X shows" to notify that the revenue is for all the related events, if many -->
       </xpath>
+
+      <xpath expr="//field[@name='address_id']" position="attributes">
+        <attribute name="domain">[('is_structure', '=', True)]</attribute>
+      </xpath>
+
       <!-- Add structure_capacity and tags fields, replace Responsible-->
       <field name="user_id" position="replace"/>
       <xpath expr="//field[@name='date_begin']/.." position="before">
@@ -85,6 +100,8 @@
 
     </field>
   </record>
+
+  <!-- ===================== CUSTOM VIEW AND MENU ================================ -->
 
   <!-- Custom Filter and Group By options in Event view -->
   <record model="ir.ui.view" id="view_event_search">

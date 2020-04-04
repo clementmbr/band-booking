@@ -17,17 +17,41 @@ class EventEvent(models.Model):
         'crm.stage', string="Opportunity's Stage",
         ondelete='restrict', index=True, copy=False, related='lead_id.stage_id',
         store=True,
-        readonly='True')
+        readonly='True'
+    )
 
     team_id = fields.Many2one(
         'crm.team', string='Sales Team', oldname='section_id', related='lead_id.team_id')
+
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        index=True,
+        default=lambda self: self.env.user.company_id.id,
+        related='lead_id.company_id'
+    )
+
+    company_currency = fields.Many2one(
+        string='Currency',
+        related='company_id.currency_id',
+        readonly=True,
+        relation="res.currency",
+    )
+
+    planned_revenue = fields.Monetary(
+        string='Expected Revenue',
+        currency_field='company_currency',
+        readonly=True,
+        related='lead_id.planned_revenue',
+    )
 
     structure_capacity = fields.Selection(
         string='Show Capacity',
         related='lead_id.structure_capacity',
         readonly=True,
         store=True,
-        help="Average audience expected in this venue or festival")
+        help="Average audience expected in this venue or festival",
+    )
 
     event_link = fields.Char(
         'Event link', index=True, help="Facebook event or other web link to the event details")

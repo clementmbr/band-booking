@@ -197,6 +197,7 @@
                 <field name="phone"/>
                 <field name="mobile"/>
                 <field name="email"/>
+                <control> <create string="Add a Contact"/> </control>
               </tree>
             </field>
           </group>
@@ -211,6 +212,7 @@
                 <field name="date_end"/>
                 <field name="address_id"/>
                 <field name="stage_id"/>
+                <control> <create string="Add an Event"/> </control>
               </tree>
             </field>
           </group>

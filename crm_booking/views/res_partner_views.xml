@@ -189,6 +189,7 @@
                 <field name="email"/>
                 <field name="phone"/>
                 <field name="mobile"/>
+                <control> <create string="Add a Contact"/> </control>
               </tree>
             </field>
           </group>
