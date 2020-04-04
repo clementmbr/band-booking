@@ -16,6 +16,35 @@
     </field>
   </record>
 
+  <!-- Custom Search Contacts View -->
+  <record id="view_res_partner_filter" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_res_partner_filter" />
+    <field name="arch" type="xml">
+      <!-- Hide filter options -->
+      <xpath expr="//filter[@name='filter_my_partners']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//filter[@name='type_person']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//filter[@name='type_company']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//filter[@name='customer']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//filter[@name='supplier']" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <!-- Add Filter by Creation date -->
+      <xpath expr="//field[@name='parent_id']" position="after">
+        <filter string="Creation Date" name="creation_date" date="create_date"/>
+      </xpath>
+
+    </field>
+  </record>
+
   <!-- Custom action to display contacts in tree view by default instead of kanban view -->
   <record id="action_contacts" model="ir.actions.act_window">
     <field name="name">Contacts</field>

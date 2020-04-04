@@ -58,8 +58,8 @@
       </xpath>
 
       <!-- Add compnay_id field -->
-      <xpath expr="//field[@name='team_id']" position="after">
-        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+      <xpath expr="//field[@name='partner_id']" position="before">
+        <field name="company_id" string="Band" groups="base.group_multi_company" options="{'no_create': True}"/>
       </xpath>
 
       <!-- Add Strong related link with Customer's fields -->
@@ -171,8 +171,8 @@
       </xpath>
 
       <!-- Add compnay_id field -->
-      <xpath expr="//field[@name='team_id']" position="after">
-        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+      <xpath expr="//field[@name='partner_id']" position="before">
+        <field name="company_id" string="Band" groups="base.group_multi_company" options="{'no_create': True}"/>
       </xpath>
 
       <!-- Add Customer 'Show' fields -->

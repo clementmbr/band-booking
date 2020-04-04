@@ -74,6 +74,14 @@ class Partner(models.Model):
     # Compute leads number related to partner
     lead_count = fields.Integer("Leads", compute='_compute_lead_count')
 
+    # Qualified ?
+    is_qualified = fields.Boolean(string="Qualified", default=False)
+
+    @api.multi
+    def toogle_qualified(self):
+        for partner in self:
+            partner.is_qualified = not partner.is_qualified
+
     @api.multi
     @api.depends('related_structure_ids')
     def _compute_display_related_structure_names(self):

@@ -76,7 +76,9 @@
       <!-- ================ ADD FIELDS ==================== -->
 
       <!-- Add Opportunity field-->
+      <field name="company_id" position="replace"/>
       <xpath expr="//field[@name='organizer_id']" position="before">
+        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
         <field name="lead_id" />
         <field name="company_currency" invisible="1"/>
         <field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>

@@ -25,7 +25,7 @@ class EventEvent(models.Model):
 
     company_id = fields.Many2one(
         'res.company',
-        string='Company',
+        string='Band',
         index=True,
         default=lambda self: self.env.user.company_id.id,
         related='lead_id.company_id'
