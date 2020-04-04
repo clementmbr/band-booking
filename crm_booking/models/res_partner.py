@@ -77,6 +77,9 @@ class Partner(models.Model):
     # Qualified ?
     is_qualified = fields.Boolean(string="Qualified", default=False)
 
+    # Sequence integer to handle partner order in m2m tree views
+    sequence = fields.Integer()
+
     @api.multi
     def toogle_qualified(self):
         for partner in self:

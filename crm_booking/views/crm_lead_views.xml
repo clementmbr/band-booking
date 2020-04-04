@@ -35,9 +35,6 @@
       <xpath expr="//field[@name='date_open']/.." position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
-      <xpath expr="//field[@name='date_open']/.." position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
 
       <!-- Original Customer field is only visible in deubg mode.
         Set invisible the original Customer field and add another field-->
@@ -53,12 +50,16 @@
           options="{'always_reload': True}"/>
       </xpath>
       <!-- Hide native street field -->
+      <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+
       <xpath expr="//label[@for='street']" position="attributes">
         <attribute name="invisible">True</attribute>
       </xpath>
 
       <!-- Add compnay_id field -->
-      <xpath expr="//field[@name='partner_id']" position="before">
+      <xpath expr="//field[@name='user_id']" position="before">
         <field name="company_id" string="Band" groups="base.group_multi_company" options="{'no_create': True}"/>
       </xpath>
 
@@ -79,11 +80,13 @@
           <group>
             <field name="lead_partners" widget="many2many" nolabel="1" context="{}">
               <tree>
-                <field name="name"/>
+                <field name="sequence" widget="handle"/>
+                <field name="display_name" string="Name"/>
                 <field name="function"/>
                 <field name="phone"/>
                 <field name="mobile"/>
                 <field name="email"/>
+                <control> <create string="Add a Contact"/> </control>
               </tree>
             </field>
           </group>
@@ -171,7 +174,7 @@
       </xpath>
 
       <!-- Add compnay_id field -->
-      <xpath expr="//field[@name='partner_id']" position="before">
+      <xpath expr="//field[@name='user_id']" position="before">
         <field name="company_id" string="Band" groups="base.group_multi_company" options="{'no_create': True}"/>
       </xpath>
 
@@ -186,13 +189,14 @@
         </group>
       </xpath>
 
+      <!-- Add Partners MANY2MANY in opportunities-->
       <xpath expr="//page[1]" position="before">
-        <!-- Add Partners MANY2MANY in opportunities-->
         <page string="Contacts">
           <group>
             <field name="lead_partners" widget="many2many" nolabel="1" context="{}">
               <tree>
-                <field name="name"/>
+                <field name="sequence" widget="handle"/>
+                <field name="display_name" string="Name"/>
                 <field name="function"/>
                 <field name="phone"/>
                 <field name="mobile"/>

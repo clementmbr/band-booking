@@ -203,6 +203,7 @@
           <group>
             <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
               <tree>
+                <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
                 <field name="email"/>
