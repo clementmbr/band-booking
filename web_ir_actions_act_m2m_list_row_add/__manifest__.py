@@ -3,15 +3,13 @@
 # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 {
-    "name": "Web Actions View Reload",
-    "summary": "Enables reload of the current view via ActionManager",
+    "name": "Web Action Add Item to M2M",
+    "summary": "Enables to create action windows to Add idem to Many2many fields",
     "category": "Web",
-    "version": "12.0.1.0.0",
+    "version": "12.0.0.1.0",
     "license": "LGPL-3",
-    "author": "Modoolar, "
-              "Brainbean Apps, "
-              "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/",
+    "author": "Clément Mombereau",
+    "website": "https://github.com/clementmbr/crm-booking",
     "depends": [
         "web"
     ],
