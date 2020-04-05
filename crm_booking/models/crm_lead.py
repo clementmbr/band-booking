@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 class Lead(models.Model):
     _inherit = 'crm.lead'
 
-    lead_partners = fields.Many2many(comodel_name='res.partner',
+    lead_partner_ids = fields.Many2many(comodel_name='res.partner',
                                      related='partner_id.related_partner_ids',
                                      string='Lead Partners',
-                                     store=True)
+                                     readonly=False)
     lead_event_ids = fields.One2many('event.event', 'lead_id',
                                      string='Events',
                                      context={

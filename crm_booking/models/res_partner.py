@@ -25,13 +25,11 @@ class Partner(models.Model):
     def _get_structure_capacity(self):
         return STRUCTURE_CAPACITY
 
-    is_structure = fields.Boolean(
-        'Is a Festival or a Venue ?',
-        store=True)
+    is_structure = fields.Boolean(help='Is a Festival or a Venue ?', store=True)
 
     # TODO (in v13) : Join structure_type and company_type with 'addselection'
-    # Not possible before v13 because of the confusion between native _compute_company_type
-    # and current onchange functions.
+    # Not possible before v13 because of the confusion between native
+    # _compute_company_type and current onchange functions.
     structure_type = fields.Selection(string='Structure Type',
                                       selection=_get_structure_type,
                                       default=False,
@@ -60,6 +58,7 @@ class Partner(models.Model):
         column2='related_partner_id',
     )
 
+    # Used structures names for Contacts tree view
     display_related_structure_names = fields.Char("Related Structures",
         compute='_compute_display_related_structure_names', store=True, index=True)
 
@@ -96,17 +95,6 @@ class Partner(models.Model):
                 else:
                     partner.display_related_structure_names += ", " + \
                         str(structure.name)
-
-    @api.multi
-    def _compute_lower_stage_id(self):
-        """Find the Lead's stage_id with the lower sequence to create
-        a lead from partner with this default stage"""
-        stages = self.env['crm.stage'].search([])
-        dict_sequences = {}
-        for stage in stages:
-            dict_sequences.setdefault(stage.id, stage.sequence)
-        self.lower_stage_id = self.env['crm.stage'].browse(
-            [min(dict_sequences, key=dict_sequences.get)])
 
     # ---------------------------------------------------------------------
     # Onchange Relations between category_id, structure_type and company_type
@@ -179,6 +167,17 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
     # Button to link (or create) leads from partner
     # ---------------------------------------------------------------------
+    @api.multi
+    def _compute_lower_stage_id(self):
+        """Find the Lead's stage_id with the lower sequence to create
+        a lead from partner with this default stage"""
+        stages = self.env['crm.stage'].search([])
+        dict_sequences = {}
+        for stage in stages:
+            dict_sequences.setdefault(stage.id, stage.sequence)
+        self.lower_stage_id = self.env['crm.stage'].browse(
+            [min(dict_sequences, key=dict_sequences.get)])
+
     @api.multi
     def _compute_opportunity_count(self):
         """Override method do display a linked opportunity in partners related
@@ -283,22 +282,18 @@ class Partner(models.Model):
     #     return action
 
     # ---------------------------------------------------------------------
-    # Relation between Structure and non-Structure partners
+    # Propagate 'related_structure_ids' to Contact's childs and parents
     # ---------------------------------------------------------------------
     def propagate_related_struct(self):
         for partner in self:
-            for child in partner.child_ids:
-                if child.related_structure_ids != partner.related_structure_ids:
-                    child.related_structure_ids = partner.related_structure_ids
-
-            for parent in partner.parent_id:
-                if parent.related_structure_ids != partner.related_structure_ids:
-                    parent.related_structure_ids = partner.related_structure_ids
+            for p in partner.child_ids | partner.parent_id:
+                if p.related_structure_ids != partner.related_structure_ids:
+                    p.related_structure_ids = partner.related_structure_ids
 
     @api.multi
-    def write(self, values):
+    def write(self, vals):
         """ Propagate the partner's related structures from parent to childs"""
-        res = super().write(values)
+        res = super().write(vals)
 
         if self.is_structure == True:
             for partner in self.related_partner_ids:

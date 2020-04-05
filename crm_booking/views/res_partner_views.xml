@@ -202,7 +202,9 @@
           autofocus="autofocus">
           <group>
             <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
-              <tree>
+              <tree decoration-primary="is_qualified == True">
+                <field name="active" invisible="1"/>
+                <field name="is_qualified" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
