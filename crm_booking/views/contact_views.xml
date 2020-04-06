@@ -3,20 +3,22 @@
 
   <!-- ==================== CONTACTS LIST ============================= -->
 
-  <!-- Custom view_partner_tree for contacts -->
+  <!-- Custom TREE partner view for contacts -->
   <record id="view_partner_tree_contacts" model="ir.ui.view">
     <field name="model">res.partner</field>
     <field name="mode">primary</field>
     <field name="inherit_id" ref="base.view_partner_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='display_name']" position="after">
-        <field name="is_structure" invisible="1"/>
         <field name="display_related_structure_names"/>
+      </xpath>
+      <xpath expr="//field[@name='country_id']" position="after">
+        <field name="is_confirmed"/>
       </xpath>
     </field>
   </record>
 
-  <!-- Custom Search Contacts View -->
+  <!-- Custom SEARCH partner Views for every kind of partner -->
   <record id="view_res_partner_filter" model="ir.ui.view">
     <field name="model">res.partner</field>
     <field name="inherit_id" ref="base.view_res_partner_filter" />
@@ -41,9 +43,9 @@
       <xpath expr="//field[@name='parent_id']" position="after">
         <filter string="Creation Date" name="creation_date" date="create_date"/>
       </xpath>
-      <!-- Add Filter for Qualified Contacts -->
+      <!-- Add Filter for Confirmed Contacts -->
       <xpath expr="//filter[@name='inactive']" position="before">
-        <filter string="Qualified" name="is_qualified" domain="[('is_qualified', '=', True)]"/>
+        <filter string="Confirmed" name="is_confirmed" domain="[('is_confirmed', '=', True)]"/>
       </xpath>
 
     </field>
@@ -83,6 +85,20 @@
       <field name="view_mode">form</field>
       <field name="view_id" ref="base.view_partner_form"/>
       <field name="act_window_id" ref="action_contacts"/>
+  </record>
+
+  <!-- 'Tree Menu Action' to confirm many Contacts at once -->
+  <record id="confirm_contact_fields_lines" model="ir.server.object.lines">
+    <field name="col1" ref="crm_booking.field_res_partner__is_confirmed"/>
+    <field name="value">True if record.is_structure == False else False</field>
+    <field name="type">equation</field>
+  </record>
+
+  <record id="action_confirm_contact" model="ir.actions.server">
+      <field name="name">Confirm Contacts</field>
+      <field name="model_id" ref="crm_booking.model_res_partner"/>
+      <field name="state">object_write</field>
+      <field name="fields_lines" eval="[(6, 0, [ref('crm_booking.confirm_contact_fields_lines')])]"/>
   </record>
 
   <!-- ================= FESTIVAL LIST ========================-->

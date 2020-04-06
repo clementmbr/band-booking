@@ -114,16 +114,17 @@
         </button>
       </xpath>
 
-      <!-- BUTTON Qualified ? -->
+      <!-- BUTTON to Confirm a Contact-->
       <xpath expr="//button[@name='toggle_active']" position="before">
-          <button name="toogle_qualified" type="object"
-                  class="oe_stat_button" icon="fa-check-square">
-              <field name="is_qualified" widget="boolean_button"
+          <button name="toogle_confirmed" type="object"
+                  class="oe_stat_button" icon="fa-check-square"
+                  attrs="{'invisible' : [('is_structure', '=', True)]}">
+              <field name="is_confirmed" widget="boolean_button"
                   options="{'terminology': {
-                    'string_true': 'Qualified',
-                    'hover_true': &quot;Disqualify&quot;,
-                    'string_false': 'Not Qualified',
-                    'hover_false': &quot;Qualify&quot;,
+                    'string_true': 'Confirmed',
+                    'hover_true': &quot;Cancel&quot;,
+                    'string_false': 'Not Confirmed',
+                    'hover_false': &quot;Confirm&quot;,
                   }}"
               />
           </button>
@@ -202,9 +203,9 @@
           autofocus="autofocus">
           <group>
             <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
-              <tree decoration-primary="is_qualified == True">
+              <tree decoration-primary="is_confirmed == True">
                 <field name="active" invisible="1"/>
-                <field name="is_qualified" invisible="1"/>
+                <field name="is_confirmed" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>

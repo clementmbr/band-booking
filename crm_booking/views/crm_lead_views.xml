@@ -79,9 +79,9 @@
         <page string="Contacts">
           <group>
             <field name="lead_partner_ids" widget="many2many" nolabel="1">
-              <tree decoration-primary="is_qualified == True">
+              <tree decoration-primary="is_confirmed == True">
                 <field name="active" invisible="1"/>
-                <field name="is_qualified" invisible="1"/>
+                <field name="is_confirmed" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
@@ -196,9 +196,9 @@
         <page string="Contacts">
           <group>
             <field name="lead_partner_ids" widget="many2many" nolabel="1" context="{}">
-              <tree decoration-primary="is_qualified == True">
+              <tree decoration-primary="is_confirmed == True">
                 <field name="active" invisible="1"/>
-                <field name="is_qualified" invisible="1"/>
+                <field name="is_confirmed" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="display_name" string="Name"/>
                 <field name="function"/>
