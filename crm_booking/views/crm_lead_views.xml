@@ -11,6 +11,27 @@
             <xpath expr="//div[hasclass('oe_title')]" position="attributes">
                 <attribute name="style">background-color:#f2e6ff</attribute>
             </xpath>
+            <!-- Override 'Convert to Opportunity' button to force the creation of a new
+            opportunity, always -->
+            <xpath
+                expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']"
+                position="after"
+            >
+                <button
+                    name="action_lead_to_new_opportunity"
+                    string="Convert to Opportunity"
+                    type="object"
+                    help="Convert to Opportunity"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('type', '=', 'opportunity')]}"
+                />
+            </xpath>
             <!-- Add external map button in Lead view -->
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button

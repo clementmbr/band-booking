@@ -17,7 +17,10 @@ STRUCTURE_CAPACITY = [
 
 
 class Partner(models.Model):
-    """
+    """In res.partner, make the difference between classic Contacts and Structures
+    (i.e. Venues and Festivals for the moment).
+    Thus, Venues and Festivals will be linked to classic 'partners' and will display
+    special fields about the Structure.
     """
 
     _inherit = "res.partner"

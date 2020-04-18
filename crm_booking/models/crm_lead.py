@@ -123,6 +123,15 @@ class Lead(models.Model):
 
         return action
 
+    @api.multi
+    def action_lead_to_new_opportunity(self):
+        """Override the 'lead2opportunity.partner' wizard.
+        Force the creation of a new opportunity."""
+        self.ensure_one()
+        self.convert_opportunity(self.partner_id.id, [self.user_id.id], self.team_id.id)
+
+        return self.redirect_opportunity_view()
+
     # ---------------------------------------------------------------------
     # MAP button methods
     # ---------------------------------------------------------------------
