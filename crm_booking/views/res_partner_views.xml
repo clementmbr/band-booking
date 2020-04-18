@@ -1,251 +1,334 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-  <!--
+    <!--
     ==================CUSTOM PARTNER FORM VIEW==============================
   -->
-  <record id="view_partner_form" model="ir.ui.view">
-    <field name="model">res.partner</field>
-    <field name="inherit_id" ref="base.view_partner_form"/>
-    <field name="arch" type="xml">
-
-      <!-- Define background color -->
-      <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <!-- Define background color -->
+            <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
         <attribute name="style">background-color:#c6ecd9</attribute>
       </xpath> -->
-
-      <!-- ======================== CUSTOM FIELDS ============================= -->
-
-      <!-- Add a structure_type selection on top -->
-      <xpath expr="//field[@name='company_type']" position="before">
-        <div class="oe_edit_only">
-          <field name="structure_type" options="{'horizontal': true}" class="oe_edit_only" widget="radio"/>
-        </div>
-      </xpath>
-
-      <!-- Set Country field required -->
-      <xpath expr="//field[@name='country_id']" position="attributes">
-        <attribute name="required">True</attribute>
-      </xpath>
-
-      <!-- Add social media fields to the partner -->
-      <xpath expr="//field[@name='website']" position="after">
-        <field name="facebook" widget="url" placeholder="e.g. https://www.fb.com/companyname"/>
-        <field name="instagram" widget="url" placeholder="e.g. https://www.instagram.com/companyname"/>
-      </xpath>
-
-      <!-- MOVE category_id field-->
-      <field name="category_id" position="replace"/>
-      <xpath expr="//field[@name='type']/../.." position="before">
-        <group attrs="{'invisible': [('is_structure', '=', False)]}">
-          <field name="category_id"
-            widget="many2many_tags"
-            options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
-            placeholder="Tags..."/>
-          <!-- ADD Special Show Structure fields-->
-          <group>
-            <field name="structure_capacity" widget="selection"/>
-            <field name="show_period_date_begin" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
-            <field name="show_period_date_end" attrs="{'invisible': [('structure_type', '=', 'venue')]}"/>
-          </group>
-        </group>
-      </xpath>
-
-      <!-- Hide vat and lang field, purchase group and Misc group-->
-      <xpath expr="//field[@name='vat']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-      <xpath expr="//field[@name='lang']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-      <xpath expr="//group[@name='purchase']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-      <xpath expr="//page[@name='sales_purchases']/group/group[3]" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-
-      <!-- ======================== CUSTOM BUTTONS ============================= -->
-
-      <!-- HIDE Meeting button -->
-      <xpath expr="//button[@name='schedule_meeting']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-      <xpath expr="//button[@name='open_route_map']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-
-      <!-- HIDE native Smart button to Opportunities -->
-      <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-
-      <!-- SMART BUTTON to create lead if no one  -->
-      <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
-        <field name="is_structure" invisible="1"/>
-        <button class="oe_stat_button o_res_partner_tip_opp" type="object"
-          attrs="{'invisible': ['|', '|', ('is_structure', '=', False), ('opportunity_count', '&gt;', 0), ('lead_count', '&gt;', 0)]}"
-          name="action_lead_from_partner"
-          string="Create a Lead"
-          icon="fa-star"
-          groups="sales_team.group_sale_salesman"
-          />
-      </xpath>
-
-      <!-- SMART BUTTON to related Leads if existing -->
-      <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
-        <button class="oe_stat_button o_res_partner_tip_opp" type="object"
-          attrs="{'invisible': ['|', ('customer', '=', False), ('lead_count', '&lt;', 1)]}"
-          name="action_related_lead"
-          icon="fa-star"
-          groups="sales_team.group_sale_salesman">
-          <field string="Lead" name="lead_count" widget="statinfo"/>
-        </button>
-      </xpath>
-
-      <!-- SMART BUTTON to related Opportunities if existing -->
-      <xpath expr="//button[@name='%(crm.crm_lead_opportunities)d']" position="after">
-        <button class="oe_stat_button o_res_partner_tip_opp" type="object"
-          attrs="{'invisible': ['|', ('customer', '=', False), ('opportunity_count', '&lt;', 1)]}"
-          name="action_related_opportunity"
-          icon="fa-star"
-          groups="sales_team.group_sale_salesman">
-          <field string="Opportunity" name="opportunity_count" widget="statinfo"/>
-        </button>
-      </xpath>
-
-      <!-- BUTTON to Confirm a Contact-->
-      <xpath expr="//button[@name='toggle_active']" position="before">
-          <button name="toogle_confirmed" type="object"
-                  class="oe_stat_button" icon="fa-check-square"
-                  attrs="{'invisible' : [('is_structure', '=', True)]}">
-              <field name="is_confirmed" widget="boolean_button"
-                  options="{'terminology': {
+            <!-- ======================== CUSTOM FIELDS ============================= -->
+            <!-- Add a structure_type selection on top -->
+            <xpath expr="//field[@name='company_type']" position="before">
+                <div class="oe_edit_only">
+                    <field
+                        name="structure_type"
+                        options="{'horizontal': true}"
+                        class="oe_edit_only"
+                        widget="radio"
+                    />
+                </div>
+            </xpath>
+            <!-- Set Country field required -->
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="required">True</attribute>
+            </xpath>
+            <!-- Add social media fields to the partner -->
+            <xpath expr="//field[@name='website']" position="after">
+                <field
+                    name="facebook"
+                    widget="url"
+                    placeholder="e.g. https://www.fb.com/companyname"
+                />
+                <field
+                    name="instagram"
+                    widget="url"
+                    placeholder="e.g. https://www.instagram.com/companyname"
+                />
+            </xpath>
+            <!-- MOVE category_id field-->
+            <field name="category_id" position="replace" />
+            <xpath expr="//field[@name='type']/../.." position="before">
+                <group attrs="{'invisible': [('is_structure', '=', False)]}">
+                    <field
+                        name="category_id"
+                        widget="many2many_tags"
+                        options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
+                        placeholder="Tags..."
+                    />
+                    <!-- ADD Special Show Structure fields-->
+                    <group>
+                        <field name="structure_capacity" widget="selection" />
+                        <field
+                            name="show_period_date_begin"
+                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        />
+                        <field
+                            name="show_period_date_end"
+                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        />
+                    </group>
+                </group>
+            </xpath>
+            <!-- Hide vat and lang field, purchase group and Misc group-->
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lang']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//group[@name='purchase']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//page[@name='sales_purchases']/group/group[3]"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- ======================== CUSTOM BUTTONS ============================= -->
+            <!-- HIDE Meeting button -->
+            <xpath expr="//button[@name='schedule_meeting']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='open_route_map']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- HIDE native Smart button to Opportunities -->
+            <xpath
+                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- SMART BUTTON to create lead if no one  -->
+            <xpath
+                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                position="after"
+            >
+                <field name="is_structure" invisible="1" />
+                <button
+                    class="oe_stat_button o_res_partner_tip_opp"
+                    type="object"
+                    attrs="{'invisible': ['|', '|', ('is_structure', '=', False), ('opportunity_count', '&gt;', 0), ('lead_count', '&gt;', 0)]}"
+                    name="action_lead_from_partner"
+                    string="Create a Lead"
+                    icon="fa-star"
+                    groups="sales_team.group_sale_salesman"
+                />
+            </xpath>
+            <!-- SMART BUTTON to related Leads if existing -->
+            <xpath
+                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                position="after"
+            >
+                <button
+                    class="oe_stat_button o_res_partner_tip_opp"
+                    type="object"
+                    attrs="{'invisible': ['|', ('customer', '=', False), ('lead_count', '&lt;', 1)]}"
+                    name="action_related_lead"
+                    icon="fa-star"
+                    groups="sales_team.group_sale_salesman"
+                >
+                    <field string="Lead" name="lead_count" widget="statinfo" />
+                </button>
+            </xpath>
+            <!-- SMART BUTTON to related Opportunities if existing -->
+            <xpath
+                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                position="after"
+            >
+                <button
+                    class="oe_stat_button o_res_partner_tip_opp"
+                    type="object"
+                    attrs="{'invisible': ['|', ('customer', '=', False), ('opportunity_count', '&lt;', 1)]}"
+                    name="action_related_opportunity"
+                    icon="fa-star"
+                    groups="sales_team.group_sale_salesman"
+                >
+                    <field
+                        string="Opportunity"
+                        name="opportunity_count"
+                        widget="statinfo"
+                    />
+                </button>
+            </xpath>
+            <!-- BUTTON to Confirm a Contact-->
+            <xpath expr="//button[@name='toggle_active']" position="before">
+                <button
+                    name="toogle_confirmed"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-check-square"
+                    attrs="{'invisible' : [('is_structure', '=', True)]}"
+                >
+                    <field
+                        name="is_confirmed"
+                        widget="boolean_button"
+                        options="{'terminology': {
                     'string_true': 'Confirmed',
                     'hover_true': &quot;Cancel&quot;,
                     'string_false': 'Not Confirmed',
                     'hover_false': &quot;Confirm&quot;,
                   }}"
-              />
-          </button>
-      </xpath>
-
-      <!-- ===================== CUSTOM M2M, PAGE and CHILDS ======================= -->
-
-      <!-- MANY2MANY Related Structure if partner is NOT a structure -->
-      <xpath expr="//field[@name='type']/../.." position="before">
-        <group attrs="{'invisible': [('is_structure', '=', True)]}">
-          <field
-            name="related_structure_ids"
-            mode="kanban"
-            domain="[('is_structure', '=', 'True')]"
-            context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}">
-            <kanban>
-              <field name="id"/>
-              <field name="category_id"/>
-              <field name="color"/>
-              <field name="name"/>
-              <field name="title"/>
-              <field name="type"/>
-              <field name="is_company"/>
-              <field name="city"/>
-              <field name="country_id"/>
-              <field name="website"/>
-              <field name="image_small"/>
-              <templates>
-                <t t-name="kanban-box">
-                  <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
-                  <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
-                    <div class="o_kanban_image">
-                      <img alt="" t-if="record.image_small.raw_value" t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)"/>
-                      <t t-if="!record.image_small.raw_value">
-                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
-                          <img alt="Logo" t-if="record.is_company.raw_value === true" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
-                          <img alt="Avatar" t-if="record.is_company.raw_value === false" t-att-src="_s + &quot;/base/static/img/avatar.png&quot;"/>
-                        </t>
-                      </t>
-                    </div>
-                    <div class="oe_kanban_details">
-                      <field name="name"/>
-                      <div t-if="record.category_id.raw_value">
-                        <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"/>
-                      </div>
-                      <div class="o_row">
-                        <div t-if="record.city.raw_value">
-                          <field name="city"/>
-                        </div>
-                        <div t-if="record.country_id.raw_value">
-                          <field name="country_id"/>
-                        </div>
-                      </div>
-                      <div t-if="record.website.raw_value">
-                        <field name="website" widget="url"/>
-                      </div>
-                    </div>
-                  </div>
-                </t>
-              </templates>
-            </kanban>
-          </field>
-        </group>
-      </xpath>
-
-      <!-- HIDE 'Contacts & Address' page if the partner is a structure or an individual -->
-      <xpath expr="//field[@name='child_ids']/.." position="attributes">
-        <field name="is_company" invisible="1"/>
-        <attribute name="attrs">{'invisible': ['|', ('is_structure', '=', True), ('is_company', '=', False)]}</attribute>
-      </xpath>
-
-      <!-- MANY2MANY 'Related Contacts' page if the partner is a structure -->
-      <xpath expr="//field[@name='child_ids']/.." position="before">
-        <page string="Related Contacts"
-          attrs="{'invisible': [('is_structure', '=', False)]}"
-          autofocus="autofocus">
-          <group>
-            <field name="related_partner_ids" nolabel="1" domain="[('is_structure', '=', False )]">
-              <tree decoration-primary="is_confirmed == True">
-                <field name="active" invisible="1"/>
-                <field name="is_confirmed" invisible="1"/>
-                <field name="sequence" widget="handle"/>
-                <field name="display_name" string="Name"/>
-                <field name="function"/>
-                <field name="email"/>
-                <field name="phone"/>
-                <field name="mobile"/>
-                <control> <create string="Add a Contact"/> </control>
-              </tree>
-            </field>
-          </group>
-          <!-- TODO : [WIP] Add a button to add Related Contact without clicking on 'Edit'  -->
-          <!-- <button
+                    />
+                </button>
+            </xpath>
+            <!-- ===================== CUSTOM M2M, PAGE and CHILDS ======================= -->
+            <!-- MANY2MANY Related Structure if partner is NOT a structure -->
+            <xpath expr="//field[@name='type']/../.." position="before">
+                <group attrs="{'invisible': [('is_structure', '=', True)]}">
+                    <field
+                        name="related_structure_ids"
+                        mode="kanban"
+                        domain="[('is_structure', '=', 'True')]"
+                        context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}"
+                    >
+                        <kanban>
+                            <field name="id" />
+                            <field name="category_id" />
+                            <field name="color" />
+                            <field name="name" />
+                            <field name="title" />
+                            <field name="type" />
+                            <field name="is_company" />
+                            <field name="city" />
+                            <field name="country_id" />
+                            <field name="website" />
+                            <field name="image_small" />
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <t
+                                        t-set="color"
+                                        t-value="kanban_color(record.color.raw_value)"
+                                    />
+                                    <div
+                                        t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'"
+                                    >
+                                        <div class="o_kanban_image">
+                                            <img
+                                                alt=""
+                                                t-if="record.image_small.raw_value"
+                                                t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)"
+                                            />
+                                            <t t-if="!record.image_small.raw_value">
+                                                <t
+                                                    t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'"
+                                                >
+                                                    <img
+                                                        alt="Logo"
+                                                        t-if="record.is_company.raw_value === true"
+                                                        t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"
+                                                    />
+                                                    <img
+                                                        alt="Avatar"
+                                                        t-if="record.is_company.raw_value === false"
+                                                        t-att-src="_s + &quot;/base/static/img/avatar.png&quot;"
+                                                    />
+                                                </t>
+                                            </t>
+                                        </div>
+                                        <div class="oe_kanban_details">
+                                            <field name="name" />
+                                            <div t-if="record.category_id.raw_value">
+                                                <field
+                                                    name="category_id"
+                                                    widget="many2many_tags"
+                                                    options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
+                                                />
+                                            </div>
+                                            <div class="o_row">
+                                                <div t-if="record.city.raw_value">
+                                                    <field name="city" />
+                                                </div>
+                                                <div t-if="record.country_id.raw_value">
+                                                    <field name="country_id" />
+                                                </div>
+                                            </div>
+                                            <div t-if="record.website.raw_value">
+                                                <field name="website" widget="url" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </group>
+            </xpath>
+            <!-- HIDE 'Contacts & Address' page if the partner is a structure or an individual -->
+            <xpath expr="//field[@name='child_ids']/.." position="attributes">
+                <field name="is_company" invisible="1" />
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', ('is_structure', '=', True), ('is_company', '=', False)]}</attribute>
+            </xpath>
+            <!-- MANY2MANY 'Related Contacts' page if the partner is a structure -->
+            <xpath expr="//field[@name='child_ids']/.." position="before">
+                <page
+                    string="Related Contacts"
+                    attrs="{'invisible': [('is_structure', '=', False)]}"
+                    autofocus="autofocus"
+                >
+                    <group>
+                        <field
+                            name="related_partner_ids"
+                            nolabel="1"
+                            domain="[('is_structure', '=', False )]"
+                        >
+                            <tree decoration-primary="is_confirmed == True">
+                                <field name="active" invisible="1" />
+                                <field name="is_confirmed" invisible="1" />
+                                <field name="sequence" widget="handle" />
+                                <field name="display_name" string="Name" />
+                                <field name="function" />
+                                <field name="email" />
+                                <field name="phone" />
+                                <field name="mobile" />
+                                <control>
+                                    <create string="Add a Contact" />
+                                </control>
+                            </tree>
+                        </field>
+                    </group>
+                    <!-- TODO : [WIP] Add a button to add Related Contact without clicking on 'Edit'  -->
+                    <!-- <button
             type="object"
             name="action_add_related_partner"
             string="Add a Related Contact"
             /> -->
-        </page>
-      </xpath>
-
-      <!-- CUSTOM partners childs creation -->
-      <xpath expr="//field[@name='child_ids']/form/sheet/field[@name='type']" position="before">
-        <field name="is_structure" invisible="1"/>
-        <field name="company_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}" string="Is Company?"/>
-        <hr class="oe_edit_only"/>
-      </xpath>
-      <xpath expr="//field[@name='child_ids']" position="attributes">
-        <attribute name="context">
+                </page>
+            </xpath>
+            <!-- CUSTOM partners childs creation -->
+            <xpath
+                expr="//field[@name='child_ids']/form/sheet/field[@name='type']"
+                position="before"
+            >
+                <field name="is_structure" invisible="1" />
+                <field
+                    name="company_type"
+                    widget="radio"
+                    class="oe_edit_only"
+                    options="{'horizontal': true}"
+                    string="Is Company?"
+                />
+                <hr class="oe_edit_only" />
+            </xpath>
+            <xpath expr="//field[@name='child_ids']" position="attributes">
+                <attribute name="context">
           {'default_parent_id': active_id, 'default_is_structure': False, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}
         </attribute>
-      </xpath>
-
-      <xpath expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='title']" position="attributes">
-        <attribute name="attrs">{'invisible': [('company_type', '=', 'company')]}</attribute>
-      </xpath>
-      <xpath expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='function']" position="attributes">
-        <attribute name="attrs">{'invisible': [('company_type', '=', 'company')]}</attribute>
-      </xpath>
-
-
-    </field>
-  </record>
-
+            </xpath>
+            <xpath
+                expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='title']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('company_type', '=', 'company')]}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='function']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('company_type', '=', 'company')]}</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
