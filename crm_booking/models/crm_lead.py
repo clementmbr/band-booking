@@ -133,6 +133,28 @@ class Lead(models.Model):
         return self.redirect_opportunity_view()
 
     # ---------------------------------------------------------------------
+    # Link with related Events
+    # ---------------------------------------------------------------------
+
+    @api.multi
+    def action_set_lost(self):
+        """Archive related Events when lost"""
+        res = super(Lead, self).action_set_lost()
+        for lead in self:
+            for event in lead.lead_event_ids:
+                event.write({"active": False})
+        return res
+
+    def toggle_active(self):
+        """Active related Events when restore"""
+        res = super(Lead, self).toggle_active()
+        for lead in self:
+            for event in self.env["event.event"].search([("active", "=", False)]):
+                if event.lead_id.id == lead.id:
+                    event.write({"active": True})
+        return res
+
+    # ---------------------------------------------------------------------
     # MAP button methods
     # ---------------------------------------------------------------------
     @api.multi

@@ -56,7 +56,12 @@
             <xpath expr="//field[@name='date_open']/.." position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Original Customer field is only visible in deubg mode.
+            <!-- Hide Extra Info page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='extra']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Original Customer field is only visible in debug mode.
         Set invisible the original Customer field and add another field-->
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="invisible">True</attribute>
@@ -66,9 +71,10 @@
                     name="partner_id"
                     readonly="0"
                     widget="res_partner_many2one"
-                    domain="[('customer', '=', True), ('is_structure', '=', True)]"
+                    domain="[('is_structure', '=', True)]"
                     context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
                     options="{'always_reload': True}"
+                    required="1"
                 />
             </xpath>
             <!-- Hide native street field -->
@@ -78,7 +84,8 @@
             <xpath expr="//label[@for='street']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Add compnay_id field -->
+            <!-- Move compnay_id field to the top of the screen-->
+            <field name="company_id" position="replace" />
             <xpath expr="//field[@name='user_id']" position="before">
                 <field
                     name="company_id"
@@ -164,9 +171,8 @@
           </button>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute
-                    name="domain"
-                >[('customer', '=', True), ('is_structure', '=', True)]</attribute>
+                <attribute name="domain">[('is_structure', '=', True)]</attribute>
+                <attribute name="required">True</attribute>
             </xpath>
             <!-- Display Customer with full address and add website -->
             <xpath expr="//field[@name='partner_id']" position="attributes">
@@ -209,7 +215,12 @@
             <xpath expr="//group[@name='Misc']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Add compnay_id field -->
+            <!-- Hide 'Follow Up' page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='lead']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add compnay_id field on top of the screen-->
             <xpath expr="//field[@name='user_id']" position="before">
                 <field
                     name="company_id"
@@ -404,6 +415,36 @@
                 <t>
                     <span t-if="record.country_code.value"> </span>
                 </t>
+            </xpath>
+        </field>
+    </record>
+    <!-- Custom KANBAN Quick create opportunity -->
+    <record id="quick_create_opportunity_form" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form" />
+        <field name="arch" type="xml">
+            <!-- Replace Customer field -->
+            <field name="partner_id" position="replace" />
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="partner_id" required="True" />
+            </xpath>
+            <!-- Add domain in customer -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_structure', '=', True)]</attribute>
+            </xpath>
+            <!-- Rename Opportunity's name label -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Opportunity's name</attribute>
+            </xpath>
+            <!-- Set Band field visible-->
+            <field name="company_id" position="replace" />
+            <xpath expr="//field[@name='name']" position="after">
+                <field
+                    name="company_id"
+                    string="Band"
+                    groups="base.group_multi_company"
+                    options="{'no_create_edit': True, 'no_open': True}"
+                />
             </xpath>
         </field>
     </record>
