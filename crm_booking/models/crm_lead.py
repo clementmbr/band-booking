@@ -42,7 +42,7 @@ class Lead(models.Model):
         related="partner_id.website",
     )
 
-    # To display in Opportunities kanban view
+    # Fields to display in Opportunities kanban view
     country_code = fields.Char(
         string="Country Code", related="partner_id.country_id.code", store=True
     )
@@ -79,6 +79,9 @@ class Lead(models.Model):
         store=True,
         readonly=False,
     )
+
+    # Compute Lead stage's name to be displayed in Customer and Related partners buttons
+    stage_name = fields.Char("Lead stage name", related="stage_id.name")
 
     @api.multi
     @api.depends("show_period_date_begin")

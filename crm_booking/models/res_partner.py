@@ -89,6 +89,8 @@ class Partner(models.Model):
 
     # Compute leads number related to partner
     lead_count = fields.Integer("Leads", compute="_compute_lead_count")
+    opp_done_count = fields.Integer("Done", compute="_compute_opp_done_count")
+    opp_lost_count = fields.Integer("Done", compute="_compute_opp_lost_count")
 
     # Confirmed partner ?
     is_confirmed = fields.Boolean(string="Confirmed", default=False)
@@ -245,13 +247,18 @@ class Partner(models.Model):
         for partner in self:
             if partner.is_structure:
                 partner.opportunity_count = self.env["crm.lead"].search_count(
-                    [("partner_id", "=", partner.id), ("type", "=", "opportunity")]
+                    [
+                        ("partner_id", "=", partner.id),
+                        ("type", "=", "opportunity"),
+                        ("stage_name", "!=", "Done"),
+                    ]
                 )
             else:
                 partner.opportunity_count = self.env["crm.lead"].search_count(
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
                         ("type", "=", "opportunity"),
+                        ("stage_name", "!=", "Done"),
                     ]
                 )
 
@@ -270,6 +277,43 @@ class Partner(models.Model):
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
                         ("type", "=", "lead"),
+                    ]
+                )
+
+    @api.multi
+    def _compute_opp_done_count(self):
+        """Count how many opportunities are in Stage which name is "Done" """
+        for partner in self:
+            if partner.is_structure:
+                partner.opp_done_count = self.env["crm.lead"].search_count(
+                    [("partner_id", "=", partner.id), ("stage_name", "=", "Done")]
+                )
+            else:
+                partner.opp_done_count = self.env["crm.lead"].search_count(
+                    [
+                        ("partner_id", "in", partner.related_structure_ids.ids),
+                        ("stage_name", "=", "Done"),
+                    ]
+                )
+
+    @api.multi
+    def _compute_opp_lost_count(self):
+        """Count how many opportunities were Lost"""
+        for partner in self:
+            if partner.is_structure:
+                partner.opp_lost_count = self.env["crm.lead"].search_count(
+                    [
+                        ("partner_id", "=", partner.id),
+                        ("probability", "=", 0),
+                        ("active", "=", False),
+                    ]
+                )
+            else:
+                partner.opp_lost_count = self.env["crm.lead"].search_count(
+                    [
+                        ("partner_id", "in", partner.related_structure_ids.ids),
+                        ("probability", "=", 0),
+                        ("active", "=", False),
                     ]
                 )
 
@@ -319,12 +363,69 @@ class Partner(models.Model):
         act_window = self.env.ref(act_window_xml_id).read()[0]
 
         if self.is_structure:
-            domain = [("partner_id", "=", self.id)]
+            domain = [("partner_id", "=", self.id), ("stage_name", "!=", "Done")]
         else:
-            domain = [("partner_id", "in", self.related_structure_ids.ids)]
+            domain = [
+                ("partner_id", "in", self.related_structure_ids.ids),
+                ("stage_name", "!=", "Done"),
+            ]
 
         act_window["domain"] = domain
         if self.opportunity_count == 1:
+            form = self.env.ref("crm.crm_case_form_view_oppor")
+            act_window["views"] = [(form.id, "form")]
+            act_window["res_id"] = self.env["crm.lead"].search(domain).id
+
+        return act_window
+
+    @api.multi
+    def action_done_opportunity(self):
+        """Display Done opportunities from Partner's smart button"""
+        self.ensure_one()
+
+        act_window_xml_id = "crm.crm_lead_opportunities"
+        act_window = self.env.ref(act_window_xml_id).read()[0]
+
+        if self.is_structure:
+            domain = [("partner_id", "=", self.id), ("stage_name", "=", "Done")]
+        else:
+            domain = [
+                ("partner_id", "in", self.related_structure_ids.ids),
+                ("stage_name", "=", "Done"),
+            ]
+
+        act_window["domain"] = domain
+        if self.opp_done_count == 1:
+            form = self.env.ref("crm.crm_case_form_view_oppor")
+            act_window["views"] = [(form.id, "form")]
+            act_window["res_id"] = self.env["crm.lead"].search(domain).id
+
+        return act_window
+
+    @api.multi
+    def action_lost_opportunity(self):
+        """Display Lost opportunities from Partner's smart button"""
+        self.ensure_one()
+
+        act_window_xml_id = "crm.crm_lead_opportunities"
+        act_window = self.env.ref(act_window_xml_id).read()[0]
+
+        if self.is_structure:
+            domain = [
+                ("partner_id", "=", self.id),
+                ("probability", "=", 0),
+                ("active", "=", False),
+            ]
+        else:
+            domain = [
+                ("partner_id", "in", self.related_structure_ids.ids),
+                ("probability", "=", 0),
+                ("active", "=", False),
+            ]
+
+        # act_window["context"] = {"search_default_lost": 1}
+        act_window["domain"] = domain
+        if self.opp_lost_count == 1:
             form = self.env.ref("crm.crm_case_form_view_oppor")
             act_window["views"] = [(form.id, "form")]
             act_window["res_id"] = self.env["crm.lead"].search(domain).id

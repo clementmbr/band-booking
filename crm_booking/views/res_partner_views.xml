@@ -110,12 +110,7 @@
                     icon="fa-star"
                     groups="sales_team.group_sale_salesman"
                 />
-            </xpath>
-            <!-- SMART BUTTON to related Leads if existing -->
-            <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
-                position="after"
-            >
+                <!-- SMART BUTTON to related Leads if existing -->
                 <button
                     class="oe_stat_button o_res_partner_tip_opp"
                     type="object"
@@ -126,12 +121,7 @@
                 >
                     <field string="Lead" name="lead_count" widget="statinfo" />
                 </button>
-            </xpath>
-            <!-- SMART BUTTON to related Opportunities if existing -->
-            <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
-                position="after"
-            >
+                <!-- SMART BUTTON to related Opportunities if existing -->
                 <button
                     class="oe_stat_button o_res_partner_tip_opp"
                     type="object"
@@ -145,6 +135,28 @@
                         name="opportunity_count"
                         widget="statinfo"
                     />
+                </button>
+                <!-- SMART BUTTON to DONE Opportunities -->
+                <button
+                    class="oe_stat_button o_res_partner_tip_opp"
+                    type="object"
+                    attrs="{'invisible': ['|', ('customer', '=', False), ('opp_done_count', '&lt;', 1)]}"
+                    name="action_done_opportunity"
+                    icon="fa-star"
+                    groups="sales_team.group_sale_salesman"
+                >
+                    <field string="Done" name="opp_done_count" widget="statinfo" />
+                </button>
+                <!-- SMART BUTTON to LOST Opportunities -->
+                <button
+                    class="oe_stat_button o_res_partner_tip_opp"
+                    type="object"
+                    attrs="{'invisible': ['|', ('customer', '=', False), ('opp_lost_count', '&lt;', 1)]}"
+                    name="action_lost_opportunity"
+                    icon="fa-star"
+                    groups="sales_team.group_sale_salesman"
+                >
+                    <field string="Lost" name="opp_lost_count" widget="statinfo" />
                 </button>
             </xpath>
             <!-- BUTTON to Confirm a Contact-->
@@ -160,11 +172,11 @@
                         name="is_confirmed"
                         widget="boolean_button"
                         options="{'terminology': {
-                    'string_true': 'Confirmed',
-                    'hover_true': &quot;Cancel&quot;,
-                    'string_false': 'Not Confirmed',
-                    'hover_false': &quot;Confirm&quot;,
-                  }}"
+                          'string_true': 'Confirmed',
+                          'hover_true': &quot;Cancel&quot;,
+                          'string_false': 'Not Confirmed',
+                          'hover_false': &quot;Confirm&quot;,
+                        }}"
                     />
                 </button>
             </xpath>
