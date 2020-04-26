@@ -8,6 +8,11 @@
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='display_name']" position="after">
+                <field
+                    name="display_category_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                />
                 <field name="display_related_structure_names" />
             </xpath>
             <xpath expr="//field[@name='country_id']" position="after">
@@ -119,6 +124,11 @@
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='display_name']" position="after">
+                <field
+                    name="display_category_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                />
                 <field name="show_period_date_begin" />
                 <field name="structure_capacity" />
             </xpath>
@@ -184,6 +194,11 @@
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='display_name']" position="after">
+                <field
+                    name="display_category_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                />
                 <field name="structure_capacity" />
             </xpath>
             <xpath expr="//field[@name='phone']" position="attributes">

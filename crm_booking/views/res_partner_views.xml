@@ -42,15 +42,18 @@
             </xpath>
             <!-- MOVE category_id field-->
             <field name="category_id" position="replace" />
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field
+                    name="category_id"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
+                    placeholder="Tags..."
+                    class="col-12"
+                />
+            </xpath>
+            <!-- ADD Special Structure fields-->
             <xpath expr="//field[@name='type']/../.." position="before">
                 <group>
-                    <field
-                        name="category_id"
-                        widget="many2many_tags"
-                        options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
-                        placeholder="Tags..."
-                    />
-                    <!-- ADD Special Structure fields-->
                     <group attrs="{'invisible': [('is_structure', '=', False)]}">
                         <field name="structure_capacity" widget="selection" />
                         <field

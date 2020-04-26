@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 # TODO : Allow to define this parameters in Partner's Configuration
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
+PARTNER_TAG = "partner"
 STRUCTURE_CAPACITY = [
     ("inf1k", "< 1000"),
     ("sup1k", "> 1000"),
@@ -78,6 +79,10 @@ class Partner(models.Model):
         store=True,
         index=True,
     )
+    # Used to disply Tags in tree views
+    display_category_ids = fields.Many2many(
+        "res.partner.category", string="Tags", compute="_compute_display_category_ids",
+    )
 
     facebook = fields.Char(help="Must begin by 'http://' to activate URL link")
     instagram = fields.Char(help="Must begin by 'http://' to activate URL link")
@@ -114,6 +119,15 @@ class Partner(models.Model):
                     partner.display_related_structure_names += ", " + str(
                         structure.name
                     )
+
+    @api.multi
+    def _compute_display_category_ids(self):
+        for partner in self:
+            partner.display_category_ids = partner.category_id
+
+            for tag in partner.display_category_ids:
+                if tag.name in [PARTNER_TAG] + self._get_structure_type_tags():
+                    partner.display_category_ids -= tag
 
     # ---------------------------------------------------------------------
     # Onchange Relations between category_id, structure_type and company_type
@@ -157,7 +171,6 @@ class Partner(models.Model):
                     # No structure_type tag, so the partner can not be a Structure
                     partner.structure_type = False
                     partner.is_structure = False
-                    partner.is_company = True
 
     @api.onchange("structure_type")
     def onchange_structure_type(self):
@@ -182,7 +195,7 @@ class Partner(models.Model):
                 self.category_id |= structure_tag_id  # Call onchange_category_id
             else:
                 # Or create Structure tag if it doesn't exist
-                color = 2 if self.structure_type == "festival" else 3
+                color = 2 if self.structure_type == STRUCTURE_TYPE[0][0] else 3
                 self.category_id |= self.env["res.partner.category"].create(
                     [
                         {
