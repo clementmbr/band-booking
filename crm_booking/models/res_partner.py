@@ -42,11 +42,13 @@ class Partner(models.Model):
     def _domain_category(self):
         """ Catch context category_domain passed in related act_windows and
         add a condition to avoid displaying partner's tag in category domain"""
-        domain = self._context.get("category_domain", [])
-        tuplet_name = ("name", "!=", PARTNER_TAG)
-        if tuplet_name not in domain:
-            domain.append(tuplet_name)
-        return domain
+        category_type = self._context.get("category_type", "")
+        if category_type == "contact":
+            return [("category_type", "=", category_type), ("name", "!=", PARTNER_TAG)]
+        elif category_type == "structure":
+            return [("category_type", "=", category_type)]
+        else:
+            return []
 
     is_structure = fields.Boolean(help="Is a Festival or a Venue ?", store=True)
 
@@ -254,6 +256,9 @@ class Partner(models.Model):
     def onchange_is_structure(self):
         """Change Tags value and domain when switching from Structure to Contact and
         vice-versa"""
+        # TODO : it would be awesome to also change dynamically the
+        # 'default_category_type' CONTEXT in 'category_id' when switching from Structure
+        # to Contact type
         if len(self) == 1:
             res = {}
             structure_tags = self.env["res.partner.category"].search(

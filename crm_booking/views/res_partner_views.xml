@@ -46,9 +46,10 @@
                 <field
                     name="category_id"
                     widget="many2many_tags"
-                    options="{'color_field': 'color', 'no_create_edit': True, 'no_create': True}"
+                    options="{'color_field': 'color'}"
                     placeholder="Tags..."
                     class="col-12"
+                    context="{'default_category_type': context.get('category_type')}"
                 />
             </xpath>
             <!-- ADD Special Structure fields-->

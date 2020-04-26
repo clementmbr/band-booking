@@ -72,7 +72,7 @@
             {
                 "default_is_company": False,
                 "default_is_structure": False,
-                "category_domain": [("category_type", "=", "contact")],
+                "category_type": "contact",
             }
         </field>
         <field name="help" type="html">
@@ -154,7 +154,7 @@
                 'default_structure_type': 'festival',
                 'default_is_company': True,
                 'default_is_structure': True,
-                "category_domain": [("category_type", "=", "structure")],
+                "category_type": "structure",
             }
         </field>
         <field name="domain">[('structure_type', '=', 'festival')]</field>
@@ -224,7 +224,7 @@
                 'default_structure_type': 'venue',
                 'default_is_company': True,
                 'default_is_structure': True,
-                "category_domain": [("category_type", "=", "structure")],
+                "category_type": "structure",
             }
         </field>
         <field name="domain">[('structure_type', '=', 'venue')]</field>
