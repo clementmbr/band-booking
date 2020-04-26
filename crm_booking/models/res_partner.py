@@ -4,7 +4,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-# TODO : Allow to define this parameters in Partner's Configuration
+# TODO : allow translation of these tags
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
 PARTNER_TAG = "partner"
 STRUCTURE_CAPACITY = [
@@ -35,7 +35,30 @@ class Partner(models.Model):
     def _get_structure_capacity(self):
         return STRUCTURE_CAPACITY
 
+    # Rewrite original category_id method in order to rewrite original 'category_id'
+    def _default_category(self):
+        return self.env["res.partner.category"].browse(self._context.get("category_id"))
+
+    def _domain_category(self):
+        """ Catch context category_domain passed in related act_windows and
+        add a condition to avoid displaying partner's tag in category domain"""
+        domain = self._context.get("category_domain", [])
+        tuplet_name = ("name", "!=", PARTNER_TAG)
+        if tuplet_name not in domain:
+            domain.append(tuplet_name)
+        return domain
+
     is_structure = fields.Boolean(help="Is a Festival or a Venue ?", store=True)
+
+    # Rewrite original 'category_id' field in order to add custom conditional 'domain'
+    category_id = fields.Many2many(
+        "res.partner.category",
+        column1="partner_id",
+        column2="category_id",
+        string="Tags",
+        default=_default_category,
+        domain=lambda self: self._domain_category(),
+    )
 
     # TODO (in v13) : Join structure_type and company_type with 'addselection'
     # Not possible before v13 because of the confusion between native
@@ -79,7 +102,7 @@ class Partner(models.Model):
         store=True,
         index=True,
     )
-    # Used to disply Tags in tree views
+    # Used to display Tags in tree views
     display_category_ids = fields.Many2many(
         "res.partner.category", string="Tags", compute="_compute_display_category_ids",
     )
@@ -120,8 +143,21 @@ class Partner(models.Model):
                         structure.name
                     )
 
+    @api.onchange("related_structure_ids")
+    def onchange_related_structure_ids(self):
+        for partner in [p for p in self if not p.is_structure]:
+            if partner.related_structure_ids:
+                partner.category_id |= self.env["res.partner.category"].search(
+                    [("name", "=", PARTNER_TAG)]
+                )
+            else:
+                partner.category_id -= self.env["res.partner.category"].search(
+                    [("name", "=", PARTNER_TAG)]
+                )
+
     @api.multi
     def _compute_display_category_ids(self):
+        """Display tags except 'festival', 'venue' and 'partner' ones in tree view"""
         for partner in self:
             partner.display_category_ids = partner.category_id
 
@@ -208,11 +244,6 @@ class Partner(models.Model):
 
     @api.onchange("company_type")
     def onchange_company_type(self):
-        # TODO : When clicking on 'Individual' when a Structure type is checked
-        # the _onchange_eval() make 'structure_type' False but set 'company_type'
-        # to 'company' instead of 'person'.
-        # For the moment it is needed to click twice on 'Individual' in order to
-        # go from 'Festival' to 'Individual'
         for partner in self:
             if partner.company_type == "person":
                 partner.is_company = False
@@ -221,6 +252,8 @@ class Partner(models.Model):
 
     @api.onchange("is_structure")
     def onchange_is_structure(self):
+        """Change Tags value and domain when switching from Structure to Contact and
+        vice-versa"""
         if len(self) == 1:
             res = {}
             structure_tags = self.env["res.partner.category"].search(
@@ -230,11 +263,18 @@ class Partner(models.Model):
                 [("category_type", "=", "contact")]
             )
             if self.is_structure:
-                self.category_id = self.category_id & structure_tags
+                self.category_id &= structure_tags
                 res = {"domain": {"category_id": [("category_type", "=", "structure")]}}
             else:
-                self.category_id = self.category_id & contact_tags
-                res = {"domain": {"category_id": [("category_type", "=", "contact")]}}
+                self.category_id &= contact_tags
+                res = {
+                    "domain": {
+                        "category_id": [
+                            ("category_type", "=", "contact"),
+                            ("name", "!=", PARTNER_TAG),
+                        ]
+                    }
+                }
             return res
 
     # ---------------------------------------------------------------------
@@ -478,12 +518,12 @@ class Partner(models.Model):
     def write(self, vals):
         """ Propagate the partner's related structures from parent to childs"""
         res = super().write(vals)
-
-        if self.is_structure:
-            for partner in self.related_partner_ids:
+        for partner in self:
+            if partner.is_structure:
+                for rel_partner in partner.related_partner_ids:
+                    rel_partner.propagate_related_struct()
+            else:
                 partner.propagate_related_struct()
-        else:
-            self.propagate_related_struct()
 
         return res
 
