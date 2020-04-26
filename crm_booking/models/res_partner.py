@@ -44,7 +44,7 @@ class Partner(models.Model):
         add a condition to avoid displaying partner's tag in category domain"""
         category_type = self._context.get("category_type", "")
         if category_type == "contact":
-            return [("category_type", "=", category_type), ("name", "!=", PARTNER_TAG)]
+            return [("category_type", "=", category_type)]
         elif category_type == "structure":
             return [("category_type", "=", category_type)]
         else:
@@ -147,6 +147,7 @@ class Partner(models.Model):
 
     @api.onchange("related_structure_ids")
     def onchange_related_structure_ids(self):
+        """Add or remove 'partner' tag if Contact related to structures"""
         for partner in [p for p in self if not p.is_structure]:
             if partner.related_structure_ids:
                 partner.category_id |= self.env["res.partner.category"].search(
@@ -272,14 +273,7 @@ class Partner(models.Model):
                 res = {"domain": {"category_id": [("category_type", "=", "structure")]}}
             else:
                 self.category_id &= contact_tags
-                res = {
-                    "domain": {
-                        "category_id": [
-                            ("category_type", "=", "contact"),
-                            ("name", "!=", PARTNER_TAG),
-                        ]
-                    }
-                }
+                res = {"domain": {"category_id": [("category_type", "=", "contact")]}}
             return res
 
     # ---------------------------------------------------------------------
