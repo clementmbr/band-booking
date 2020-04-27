@@ -49,6 +49,7 @@
                     options="{'color_field': 'color'}"
                     placeholder="Tags..."
                     class="col-12"
+                    domain="[('category_type', '=', context.get('category_type'))]"
                     context="{'default_category_type': context.get('category_type')}"
                 />
             </xpath>
@@ -287,6 +288,7 @@
                             name="related_partner_ids"
                             nolabel="1"
                             domain="[('is_structure', '=', False )]"
+                            context="{'partner_tag': True}"
                         >
                             <tree decoration-primary="is_confirmed == True">
                                 <field name="active" invisible="1" />

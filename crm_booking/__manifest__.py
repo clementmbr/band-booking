@@ -13,8 +13,12 @@
         "partner_external_map",  # https://github.com/OCA/partner-contact
     ],
     "data": [
+        # Data
+        "data/res_partner_category.xml",
         "security/crm_booking_security.xml",
+        # Wizards
         "wizard/crm_lead_to_opportunity_views.xml",
+        # Views
         "views/res_partner_views.xml",
         "views/res_users_views.xml",
         "views/contact_views.xml",

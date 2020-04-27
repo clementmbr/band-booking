@@ -39,28 +39,7 @@ class Partner(models.Model):
     def _default_category(self):
         return self.env["res.partner.category"].browse(self._context.get("category_id"))
 
-    def _domain_category(self):
-        """ Catch context category_domain passed in related act_windows and
-        add a condition to avoid displaying partner's tag in category domain"""
-        category_type = self._context.get("category_type", "")
-        if category_type == "contact":
-            return [("category_type", "=", category_type)]
-        elif category_type == "structure":
-            return [("category_type", "=", category_type)]
-        else:
-            return []
-
     is_structure = fields.Boolean(help="Is a Festival or a Venue ?", store=True)
-
-    # Rewrite original 'category_id' field in order to add custom conditional 'domain'
-    category_id = fields.Many2many(
-        "res.partner.category",
-        column1="partner_id",
-        column2="category_id",
-        string="Tags",
-        default=_default_category,
-        domain=lambda self: self._domain_category(),
-    )
 
     # TODO (in v13) : Join structure_type and company_type with 'addselection'
     # Not possible before v13 because of the confusion between native
@@ -525,6 +504,20 @@ class Partner(models.Model):
                 partner.propagate_related_struct()
 
         return res
+
+    @api.model
+    def create(self, vals):
+        """Override create to fill tags following given context"""
+        # TODO : We use this way to add the partner's tag overriding the create method
+        # because with try to do it by classical ways like a
+        # `context={'default_category_id': [(4, %(crm_booking.partner_tag)d)]}`
+        # ...these kind of cache values will be erased by all the other compute and
+        # onchange Partner's methods.
+        # Thus this present solution is not ideal because it doesn't display the tag
+        # durgin the creation. But it's better than nothing.
+        if self._context.get("partner_tag"):
+            vals["category_id"] = [(4, self.env.ref("crm_booking.partner_tag").id)]
+        return super(Partner, self).create(vals)
 
     # ---------------------------------------------------------------------
     # Show period festival fields
