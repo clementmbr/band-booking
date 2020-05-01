@@ -491,17 +491,37 @@ class Partner(models.Model):
             for p in partner.child_ids | partner.parent_id:
                 if p.related_structure_ids != partner.related_structure_ids:
                     p.related_structure_ids = partner.related_structure_ids
+                    # Add the partner_tag to all the propagated related contacts
+                    p.category_id = [(4, self.env.ref("crm_booking.partner_tag").id)]
 
     @api.multi
     def write(self, vals):
-        """ Propagate the partner's related structures from parent to childs"""
+        """ Add/Remove the partner_tag to new/old related Contacts and
+        Propagate the partner's related structures from parent to childs"""
+        # Catch the removed partners before saving the values
+        removed_partners = self.env["res.partner"]
+        if vals.get("related_partner_ids") and vals["related_partner_ids"][0][0] == 6:
+            removed_partners = self.related_partner_ids - self.env[
+                "res.partner"
+            ].browse(vals["related_partner_ids"][0][2])
+
+        # Change the values on self
         res = super().write(vals)
         for partner in self:
             if partner.is_structure:
                 for rel_partner in partner.related_partner_ids:
+                    # Add the partner_tag to all the related Contacts
+                    rel_partner.category_id = [
+                        (4, self.env.ref("crm_booking.partner_tag").id)
+                    ]
+                    # Add the childs and parent to the m2m
                     rel_partner.propagate_related_struct()
             else:
                 partner.propagate_related_struct()
+        # Remove the partner_tag on the removed contacts
+        for partner in removed_partners:
+            if not partner.related_structure_ids:
+                partner.category_id = [(3, self.env.ref("crm_booking.partner_tag").id)]
 
         return res
 

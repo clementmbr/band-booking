@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- 'partner' Tag for Contacts related to a Structure -->
+    <record id="partner_tag" model="res.partner.category">
+        <field name="name">partner</field>
+        <field name="category_type">contact</field>
+        <field name="color">7</field>
+    </record>
+    <!-- 'festival' Tag for Festivals -->
+    <record id="festival_tag" model="res.partner.category">
+        <field name="name">festival</field>
+        <field name="category_type">structure</field>
+        <field name="color">2</field>
+    </record>
+    <!-- 'venue' Tag for Venues -->
+    <record id="venue_tag" model="res.partner.category">
+        <field name="name">venue</field>
+        <field name="category_type">structure</field>
+        <field name="color">3</field>
+    </record>
+</odoo>
