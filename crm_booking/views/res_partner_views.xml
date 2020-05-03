@@ -23,22 +23,11 @@
                     />
                 </div>
             </xpath>
-            <!-- Set Country field required -->
-            <xpath expr="//field[@name='country_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
-            <!-- Add social media fields to the partner -->
-            <xpath expr="//field[@name='website']" position="after">
-                <field
-                    name="facebook"
-                    widget="url"
-                    placeholder="e.g. https://www.fb.com/companyname"
-                />
-                <field
-                    name="instagram"
-                    widget="url"
-                    placeholder="e.g. https://www.instagram.com/companyname"
-                />
+            <!-- Change parent_id's domain to avoid Structures -->
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute
+                    name="domain"
+                >[('is_structure', '=', False), ('is_company', '=', True)]</attribute>
             </xpath>
             <!-- MOVE category_id field-->
             <field name="category_id" position="replace" />
@@ -52,6 +41,28 @@
                     domain="[('category_type_id', 'in', context.get('category_domain'))]"
                     context="{'default_category_type_id': context.get('default_category_type')}"
                 />
+            </xpath>
+            <!-- MOVE Job Position and HIDE Contact type in non-edit mode -->
+            <field name="function" position="replace" />
+            <xpath expr="//field[@name='type']" position="before">
+                <field
+                    name="function"
+                    placeholder="e.g. Programmer"
+                    attrs="{'invisible': [('is_company','=', True)]}"
+                />
+                <label
+                    for="type"
+                    class="oe_edit_only"
+                    attrs="{'invisible': [('parent_id','=', False)]}"
+                />
+            </xpath>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="class">oe_edit_only</attribute>
+                <attribute name="nolabel">1</attribute>
+            </xpath>
+            <!-- Set Country field required -->
+            <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="required">True</attribute>
             </xpath>
             <!-- ADD Special Structure fields-->
             <xpath expr="//field[@name='type']/../.." position="before">
@@ -67,8 +78,11 @@
                     />
                 </group>
             </xpath>
-            <!-- Hide vat and lang field, purchase group and Misc group-->
+            <!-- Hide vat, title and lang field, purchase group and Misc group-->
             <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//field[@name='lang']" position="attributes">
@@ -82,6 +96,19 @@
                 position="attributes"
             >
                 <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add social media fields to the partner -->
+            <xpath expr="//field[@name='website']" position="after">
+                <field
+                    name="facebook"
+                    widget="url"
+                    placeholder="e.g. https://www.fb.com/companyname"
+                />
+                <field
+                    name="instagram"
+                    widget="url"
+                    placeholder="e.g. https://www.instagram.com/companyname"
+                />
             </xpath>
             <!-- ======================== CUSTOM BUTTONS ============================= -->
             <!-- HIDE Meeting button -->

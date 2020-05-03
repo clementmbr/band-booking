@@ -364,9 +364,12 @@ class Partner(models.Model):
         act_window = self.env.ref(act_window_xml_id).read()[0]
 
         if self.is_structure:
-            domain = [("partner_id", "=", self.id)]
+            domain = [("partner_id", "=", self.id), ("type", "=", "lead")]
         else:
-            domain = [("partner_id", "in", self.related_structure_ids.ids)]
+            domain = [
+                ("partner_id", "in", self.related_structure_ids.ids),
+                ("type", "=", "lead"),
+            ]
 
         act_window["domain"] = domain
         if self.lead_count == 1:
@@ -385,11 +388,16 @@ class Partner(models.Model):
         act_window = self.env.ref(act_window_xml_id).read()[0]
 
         if self.is_structure:
-            domain = [("partner_id", "=", self.id), ("stage_name", "!=", "Done")]
+            domain = [
+                ("partner_id", "=", self.id),
+                ("stage_name", "!=", "Done"),
+                ("type", "=", "opportunity"),
+            ]
         else:
             domain = [
                 ("partner_id", "in", self.related_structure_ids.ids),
                 ("stage_name", "!=", "Done"),
+                ("type", "=", "opportunity"),
             ]
 
         act_window["domain"] = domain
