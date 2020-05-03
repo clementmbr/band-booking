@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- Define available category types : Structure, Contact, Contact Type and Structure Type
+    no other category type must be created by the user-->
+    <record id="structure_categ_type" model="res.partner.category.type">
+        <field name="name">Structure</field>
+        <field name="is_for_partner_type">False</field>
+    </record>
+    <record id="contact_categ_type" model="res.partner.category.type">
+        <field name="name">Contact</field>
+        <field name="is_for_partner_type">False</field>
+    </record>
+    <record id="contact_type_categ_type" model="res.partner.category.type">
+        <field name="name">Contact Type</field>
+        <field name="is_for_partner_type">True</field>
+    </record>
+    <record id="structure_type_categ_type" model="res.partner.category.type">
+        <field name="name">Structure Type</field>
+        <field name="is_for_partner_type">True</field>
+    </record>
     <!-- 'partner' Tag for Contacts related to a Structure -->
     <record id="partner_tag" model="res.partner.category">
         <field name="name">partner</field>
-        <field name="category_type">contact</field>
+        <field name="category_type_id" ref="contact_type_categ_type" />
         <field name="color">7</field>
+        <field name="sequence">0</field>
     </record>
     <!-- 'festival' Tag for Festivals -->
     <record id="festival_tag" model="res.partner.category">
         <field name="name">festival</field>
-        <field name="category_type">structure</field>
+        <field name="category_type_id" ref="structure_type_categ_type" />
         <field name="color">2</field>
+        <field name="sequence">0</field>
     </record>
     <!-- 'venue' Tag for Venues -->
     <record id="venue_tag" model="res.partner.category">
         <field name="name">venue</field>
-        <field name="category_type">structure</field>
+        <field name="category_type_id" ref="structure_type_categ_type" />
         <field name="color">3</field>
+        <field name="sequence">0</field>
     </record>
 </odoo>

@@ -2,11 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import MissingError, ValidationError
 
 # TODO : allow translation of these tags
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
-PARTNER_TAG = "partner"
 STRUCTURE_CAPACITY = [
     ("inf1k", "< 1000"),
     ("sup1k", "> 1000"),
@@ -26,18 +25,29 @@ class Partner(models.Model):
 
     _inherit = "res.partner"
 
-    def _get_structure_type(self):
-        return STRUCTURE_TYPE
-
     def _get_structure_type_tags(self):
-        return [t[0] for t in STRUCTURE_TYPE]
+        struct_type_categ_type = self.env.ref("crm_booking.structure_type_categ_type")
+        return self.env["res.partner.category"].search(
+            [("category_type_id", "=", struct_type_categ_type.id,)]
+        )
+
+    def _get_structure_type(self):
+        """ Check if the structure types have all their related tag with the same name
+        and return them"""
+        for struc_type in STRUCTURE_TYPE:
+            if struc_type[0] not in [t.name for t in self._get_structure_type_tags()]:
+                raise MissingError(
+                    _(
+                        """The Struture type {} is not related to any Tag.
+                        It is necessary to add one before continuing.""".format(
+                            struc_type[0]
+                        )
+                    )
+                )
+        return STRUCTURE_TYPE
 
     def _get_structure_capacity(self):
         return STRUCTURE_CAPACITY
-
-    # Rewrite original category_id method in order to rewrite original 'category_id'
-    def _default_category(self):
-        return self.env["res.partner.category"].browse(self._context.get("category_id"))
 
     is_structure = fields.Boolean(help="Is a Festival or a Venue ?", store=True)
 
@@ -45,14 +55,14 @@ class Partner(models.Model):
     # Not possible before v13 because of the confusion between native
     # _compute_company_type and current onchange functions.
     structure_type = fields.Selection(
-        string="Structure Type",
         selection=_get_structure_type,
+        string="Structure Type",
         default=False,
         store=True,
     )
 
     structure_capacity = fields.Selection(
-        _get_structure_capacity,
+        selection=_get_structure_capacity,
         string="Structure Capacity",
         help="Average audience expected in this venue or festival",
     )
@@ -99,7 +109,7 @@ class Partner(models.Model):
     # Compute leads number related to partner
     lead_count = fields.Integer("Leads", compute="_compute_lead_count")
     opp_done_count = fields.Integer("Done", compute="_compute_opp_done_count")
-    opp_lost_count = fields.Integer("Done", compute="_compute_opp_lost_count")
+    opp_lost_count = fields.Integer("Lost", compute="_compute_opp_lost_count")
 
     # Confirmed partner ?
     is_confirmed = fields.Boolean(string="Confirmed", default=False)
@@ -124,28 +134,24 @@ class Partner(models.Model):
                         structure.name
                     )
 
+    @api.multi
+    def _compute_display_category_ids(self):
+        """Display tags in tree view except special ones made to distinguish the type
+        of Structure or Contact, like 'festival', 'venue' or 'partner' """
+        for partner in self:
+            special_type_tags = self.env["res.partner.category"].search(
+                [("is_partner_type_categ", "=", True)]
+            )
+            partner.display_category_ids = partner.category_id - special_type_tags
+
     @api.onchange("related_structure_ids")
     def onchange_related_structure_ids(self):
         """Add or remove 'partner' tag if Contact related to structures"""
         for partner in [p for p in self if not p.is_structure]:
             if partner.related_structure_ids:
-                partner.category_id |= self.env["res.partner.category"].search(
-                    [("name", "=", PARTNER_TAG)]
-                )
+                partner.category_id |= self.env.ref("crm_booking.partner_tag")
             else:
-                partner.category_id -= self.env["res.partner.category"].search(
-                    [("name", "=", PARTNER_TAG)]
-                )
-
-    @api.multi
-    def _compute_display_category_ids(self):
-        """Display tags except 'festival', 'venue' and 'partner' ones in tree view"""
-        for partner in self:
-            partner.display_category_ids = partner.category_id
-
-            for tag in partner.display_category_ids:
-                if tag.name in [PARTNER_TAG] + self._get_structure_type_tags():
-                    partner.display_category_ids -= tag
+                partner.category_id -= self.env.ref("crm_booking.partner_tag")
 
     # ---------------------------------------------------------------------
     # Onchange Relations between category_id, structure_type and company_type
@@ -153,36 +159,33 @@ class Partner(models.Model):
     @api.onchange("category_id")
     def onchange_category_id(self):
         """Set structure_type dependind on Partner's tags"""
-        structure_type_tags = self._get_structure_type_tags()
 
         for partner in self:
-            partner_tags = [category.name for category in self.category_id]
-
-            if not partner_tags:
+            if not partner.category_id:
                 partner.structure_type = False
                 partner.is_structure = False
             else:
                 # Update structure_type depending on the structure_type's tags in the
-                # partner's tags
-                stags_in_ptags = [
-                    tag for tag in partner_tags if tag in structure_type_tags
-                ]
+                # current partner's tags
+                stags_in_ptags = partner.category_id.filtered(
+                    lambda tag: tag.category_type_id
+                    == self.env.ref("crm_booking.structure_type_categ_type")
+                )
+
                 if len(stags_in_ptags) > 1:
                     # In this case, it means that the onchange added a structure_type's
                     # tag to another one already present in the partner's tags.
                     # So we delete the old one (i.e. the first one of the list)
                     # and match structure_type with the new one (i.e. the second one)
-                    old_stag_id = self.env["res.partner.category"].search(
-                        [("name", "=", "%s" % stags_in_ptags[0])]
-                    )
+                    old_stag_id = stags_in_ptags[0]
                     partner.category_id = [(3, old_stag_id.id, 0)]
-                    partner.structure_type = stags_in_ptags[1]
+                    partner.structure_type = stags_in_ptags[1].name
                     partner.is_structure = True
                     partner.is_company = True
                 elif len(stags_in_ptags) == 1:
                     # In this case, there was no structure_type's tag, so we just set
                     # the partner as a (new) structure
-                    partner.structure_type = stags_in_ptags[0]
+                    partner.structure_type = stags_in_ptags.name
                     partner.is_structure = True
                     partner.is_company = True
                 else:
@@ -195,34 +198,16 @@ class Partner(models.Model):
         """Set related structure tag (i.e. the tag with the same name
         as structure_type's)"""
         self.ensure_one()
-        # Remove current structure tags
-        for structure_tag in self._get_structure_type_tags():
-            structure_tag_id = self.env["res.partner.category"].search(
-                [("name", "=", "%s" % structure_tag)]
-            )
-            self.category_id = [(3, structure_tag_id.id, 0)]
+        # Remove current structure_type tags
+        self.category_id -= self._get_structure_type_tags()
 
         if self.structure_type:
             self.is_structure = True
             self.is_company = True
-            structure_tag_id = self.env["res.partner.category"].search(
+            # Add selected structure_type tag
+            self.category_id |= self.env["res.partner.category"].search(
                 [("name", "=", "%s" % self.structure_type)]
             )
-            if structure_tag_id:
-                # Add selected structure_type tag
-                self.category_id |= structure_tag_id  # Call onchange_category_id
-            else:
-                # Or create Structure tag if it doesn't exist
-                color = 2 if self.structure_type == STRUCTURE_TYPE[0][0] else 3
-                self.category_id |= self.env["res.partner.category"].create(
-                    [
-                        {
-                            "name": self.structure_type,
-                            "category_type": "structure",
-                            "color": color,
-                        }
-                    ]
-                )
 
     @api.onchange("company_type")
     def onchange_company_type(self):
@@ -240,20 +225,26 @@ class Partner(models.Model):
         # 'default_category_type' CONTEXT in 'category_id' when switching from Structure
         # to Contact type
         if len(self) == 1:
-            res = {}
-            structure_tags = self.env["res.partner.category"].search(
-                [("category_type", "=", "structure")]
-            )
-            contact_tags = self.env["res.partner.category"].search(
-                [("category_type", "=", "contact")]
-            )
+            struc_tags_types = [
+                self.env.ref("crm_booking.structure_categ_type").id,
+                self.env.ref("crm_booking.structure_type_categ_type").id,
+            ]
+            contact_tags_types = [
+                self.env.ref("crm_booking.contact_categ_type").id,
+                self.env.ref("crm_booking.contact_type_categ_type").id,
+            ]
+            struc_tags_domain = [("category_type_id", "in", struc_tags_types)]
+            contact_tags_domain = [("category_type_id", "in", contact_tags_types)]
+
+            structure_tags = self.env["res.partner.category"].search(struc_tags_domain)
+            contact_tags = self.env["res.partner.category"].search(contact_tags_domain)
+
             if self.is_structure:
                 self.category_id &= structure_tags
-                res = {"domain": {"category_id": [("category_type", "=", "structure")]}}
+                return {"domain": {"category_id": struc_tags_domain}}
             else:
                 self.category_id &= contact_tags
-                res = {"domain": {"category_id": [("category_type", "=", "contact")]}}
-            return res
+                return {"domain": {"category_id": contact_tags_domain}}
 
     # ---------------------------------------------------------------------
     # Button to link (or create) leads from partner
@@ -527,14 +518,14 @@ class Partner(models.Model):
 
     @api.model
     def create(self, vals):
-        """Override create to fill tags following given context"""
+        """Fill partner tags on creation following given context"""
         # TODO : We use this way to add the partner's tag overriding the create method
-        # because with try to do it by classical ways like a
+        # because we cannot do it by a classical ways like a
         # `context={'default_category_id': [(4, %(crm_booking.partner_tag)d)]}`
-        # ...these kind of cache values will be erased by all the other compute and
+        # These kind of cache values will be erased by all the other compute and
         # onchange Partner's methods.
         # Thus this present solution is not ideal because it doesn't display the tag
-        # durgin the creation. But it's better than nothing.
+        # during the creation... But it's better than nothing.
         if self._context.get("partner_tag"):
             vals["category_id"] = [(4, self.env.ref("crm_booking.partner_tag").id)]
         return super(Partner, self).create(vals)
@@ -573,12 +564,40 @@ class PartnerCategory(models.Model):
     _inherit = "res.partner.category"
     _order = "sequence"
 
-    sequence = fields.Integer("Sequence", help="The order a Tag will be displayed")
-
-    category_type = fields.Selection(
-        [("structure", "Structure"), ("contact", "Contact")],
-        string="Category type",
-        help="""'Structure' : the tag will only be available in Structures
-                'Contact' : the tag will only be availble in Contacts""",
-        required=True,
+    sequence = fields.Integer(
+        "Sequence", help="The order a Tag will be displayed when searching"
     )
+
+    category_type_id = fields.Many2one(
+        comodel_name="res.partner.category.type",
+        domain="[('is_for_partner_type', '=', False)]",
+        help="""- 'Structure' : the tag will only be available in Structures
+        - 'Contact' : the tag will only be availble in Contacts
+
+        The category types 'Structure Type' and 'Contact Type' are only present for
+        technical purpose with special tags like 'partner', 'festival' or 'venue'.""",
+        store=True,
+    )
+
+    is_partner_type_categ = fields.Boolean(
+        related="category_type_id.is_for_partner_type",
+    )
+
+
+class PartnerCategoryType(models.Model):
+    """The available Category Types are defined in ../data/res_partner_category.xml
+    and the user should not create new ones.
+
+    The 2 main category types "Structure" and "Contact" allow to display Tags depending
+    if it is a Contact or a Structure tag.
+
+    The 2 other category types "Structure Type" and "Contact Type" are used for special
+    tags that should not be modified by the user.
+    Their related tags will inform for instance if a Structure partner is from the type
+    "festival" or "venue" and if a Contact partner is from the type "partner"."""
+
+    _name = "res.partner.category.type"
+    _description = "Distinguish categories for Contacts or for Structures"
+
+    name = fields.Char()
+    is_for_partner_type = fields.Boolean()

@@ -68,13 +68,18 @@
         <field name="view_mode">tree,form,kanban,activity</field>
         <field name="search_view_id" ref="base.view_res_partner_filter" />
         <field name="domain">[('is_structure', '=', False)]</field>
-        <field name="context">
-            {
-                "default_is_company": False,
-                "default_is_structure": False,
-                "category_type": "contact",
-            }
-        </field>
+        <field
+            name="context"
+            eval="{
+                        'default_is_company': False,
+                        'default_is_structure': False,
+                        'category_domain': [
+                              ref('crm_booking.contact_categ_type'),
+                              ref('crm_booking.contact_type_categ_type'),
+                        ],
+                        'default_category_type': ref('crm_booking.contact_categ_type'),
+                      }"
+        />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
         Create a contact in your address book
@@ -102,7 +107,7 @@
         <field name="view_id" ref="base.view_partner_form" />
         <field name="act_window_id" ref="action_contacts" />
     </record>
-    <!-- 'Tree Menu Action' to confirm many Contacts at once -->
+    <!-- ====== 'Tree Menu Action' to confirm many Contacts at once =====-->
     <record id="confirm_contact_fields_lines" model="ir.server.object.lines">
         <field name="col1" ref="crm_booking.field_res_partner__is_confirmed" />
         <field name="value">True if record.is_structure == False else False</field>
@@ -149,24 +154,30 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,kanban,activity</field>
         <field name="search_view_id" ref="base.view_res_partner_filter" />
-        <field name="context">
-            {
-                'default_structure_type': 'festival',
-                'default_is_company': True,
-                'default_is_structure': True,
-                "category_type": "structure",
-            }
-        </field>
         <field name="domain">[('structure_type', '=', 'festival')]</field>
+        <field
+            name="context"
+            eval="{
+                        'default_structure_type': 'festival',
+                        'default_is_company': True,
+                        'default_is_structure': True,
+                        'category_type': 'structure',
+                        'category_domain': [
+                              ref('crm_booking.structure_categ_type'),
+                              ref('crm_booking.structure_type_categ_type'),
+                        ],
+                        'default_category_type': ref('crm_booking.structure_categ_type'),
+                      }"
+        />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
         Create a festival in your address book
       </p>
             <p>
-        A festival, as a venue is a partner with special Show attributes.
+        A festival, as a venue is a partner with special fields for Shows.
       </p>
             <p>
-        From a festival, you can link a negociation to it, creating a Lead or an Opportunity !
+        From a venue, you can link a negociation to it, creating a Lead or an Opportunity.
       </p>
         </field>
     </record>
@@ -219,24 +230,30 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,kanban,activity</field>
         <field name="search_view_id" ref="base.view_res_partner_filter" />
-        <field name="context">
-            {
-                'default_structure_type': 'venue',
-                'default_is_company': True,
-                'default_is_structure': True,
-                "category_type": "structure",
-            }
-        </field>
+        <field
+            name="context"
+            eval="{
+                        'default_structure_type': 'venue',
+                        'default_is_company': True,
+                        'default_is_structure': True,
+                        'category_type': 'structure',
+                        'category_domain': [
+                              ref('crm_booking.structure_categ_type'),
+                              ref('crm_booking.structure_type_categ_type'),
+                        ],
+                        'default_category_type': ref('crm_booking.structure_categ_type'),
+                      }"
+        />
         <field name="domain">[('structure_type', '=', 'venue')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
         Add a venue in your address book
       </p>
             <p>
-        A venue, as a festival is a partner with special Show attributes.
+        A venue, as a festival is a partner with special fields for Shows.
       </p>
             <p>
-        From a venue, you can link a negociation to it, creating a Lead or an Opportunity !
+        From a venue, you can link a negociation to it, creating a Lead or an Opportunity.
       </p>
         </field>
     </record>
