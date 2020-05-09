@@ -5,7 +5,7 @@
     <!-- Overide the Global "CRM Lead Multi-Company" rule that allows users to
   Read/Write/Create/Delete only the leads from their company (or with comnay_id = False)
 
-  Setting the "Apply fo Write" to False for this global rule make every user allowed
+  Setting the "Apply for Write" to False for this global rule make every user allowed
   to write on leads fields (even if they are still able to read/create/delete only their own leads)
 
   Useful in our case to allow any user to modify any partner even if the partner is linked

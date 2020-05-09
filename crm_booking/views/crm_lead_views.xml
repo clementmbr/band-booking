@@ -71,7 +71,6 @@
                     name="partner_id"
                     readonly="0"
                     widget="res_partner_many2one"
-                    domain="[('is_structure', '=', True)]"
                     context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
                     options="{'always_reload': True}"
                     required="1"
@@ -171,7 +170,6 @@
           </button>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="domain">[('is_structure', '=', True)]</attribute>
                 <attribute name="required">True</attribute>
             </xpath>
             <!-- Display Customer with full address and add website -->
@@ -183,7 +181,7 @@
                 <field
                     name="website"
                     widget="url"
-                    placeholder="e.g. https://www.odoo.com"
+                    placeholder="e.g. https://www.akretion.com"
                 />
             </xpath>
             <!-- Hide Customer's phone and mail -->
@@ -427,10 +425,6 @@
             <field name="partner_id" position="replace" />
             <xpath expr="//field[@name='name']" position="before">
                 <field name="partner_id" required="True" />
-            </xpath>
-            <!-- Add domain in customer -->
-            <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="domain">[('is_structure', '=', True)]</attribute>
             </xpath>
             <!-- Rename Opportunity's name label -->
             <xpath expr="//field[@name='name']" position="attributes">
