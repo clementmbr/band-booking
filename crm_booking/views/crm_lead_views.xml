@@ -479,4 +479,12 @@
         action="crm_booking.action_venues"
         sequence="5"
     />
+    <!-- Hide Lead tags menu as they are related (and readonly) to the Customer's -->
+    <record model="ir.ui.menu" id="crm.menu_crm_lead_categ">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
+    </record>
+    <!-- Display Stage menu for Sales Managers instead of only debug mode-->
+    <record model="ir.ui.menu" id="crm.menu_crm_lead_stage_act">
+        <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager')])]" />
+    </record>
 </odoo>
