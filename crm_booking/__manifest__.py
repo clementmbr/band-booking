@@ -16,6 +16,8 @@
         # Data
         "data/res_partner_category.xml",
         "data/crm_stage.xml",
+        "data/crm_lost_reason.xml",
+        # Security
         "security/crm_booking_security.xml",
         "security/ir.model.access.csv",
         # Wizards
@@ -28,6 +30,7 @@
         "views/crm_lead_views.xml",
         "views/event_views.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,
 }

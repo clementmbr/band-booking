@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="lost_reason_1" model="crm.lost.reason">
+        <field name="name">Impossible to make contact</field>
+    </record>
+    <record id="lost_reason_2" model="crm.lost.reason">
+        <field name="name">Will never be interested in the project</field>
+    </record>
+    <record id="lost_reason_3" model="crm.lost.reason">
+        <field name="name">Will never have the budget for the project</field>
+    </record>
+    <record id="lost_reason_4" model="crm.lost.reason">
+        <field name="name">The structure doesn't exist anymore</field>
+    </record>
+</odoo>
