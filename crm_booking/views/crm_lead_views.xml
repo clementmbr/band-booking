@@ -76,6 +76,12 @@
                     required="1"
                 />
             </xpath>
+            <!-- Hide Customer's related website if False -->
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('website', '=', False)]}</attribute>
+            </xpath>
             <!-- Hide native street field -->
             <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
                 <attribute name="invisible">True</attribute>
@@ -182,6 +188,7 @@
                     name="website"
                     widget="url"
                     placeholder="e.g. https://www.akretion.com"
+                    attrs="{'invisible': [('website', '=', False)]}"
                 />
             </xpath>
             <!-- Hide Customer's phone and mail -->

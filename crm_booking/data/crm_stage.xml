@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="stage_done" model="crm.stage">
+        <field name="name">Done</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">100</field>
+        <field name="fold">True</field>
+        <field name="on_change">True</field>
+        <field name="probability">100.00</field>
+        <field name="requirements">
+    > The show is done and all the financial and logistical questions are resolved.
+        </field>
+    </record>
+    <record id="stage_hold" model="crm.stage">
+        <field name="name">On Hold</field>
+        <field name="lead_type">both</field>
+        <field name="sequence">99</field>
+        <field name="fold">True</field>
+        <field name="on_change">True</field>
+        <field name="probability">0.00</field>
+        <field name="requirements">
+    > The negociation is on hold.
+    >> No actions are needed for the next months.
+
+    TIP : It is a useful Stage for a negociation which is lost for a festival's
+    current edition but is still opened for next year's.
+        </field>
+    </record>
+    <record id="stage_to_contact" model="crm.stage">
+        <field name="name">To contact</field>
+        <field name="lead_type">lead</field>
+        <field name="sequence">0</field>
+        <field name="on_change">True</field>
+        <field name="probability">1.00</field>
+        <field name="requirements">
+    > No email send yet.
+    >> The customer need to be contacted.
+        </field>
+    </record>
+    <record id="stage_first_contact" model="crm.stage">
+        <field name="name">1st contact</field>
+        <field name="lead_type">lead</field>
+        <field name="sequence">1</field>
+        <field name="on_change">True</field>
+        <field name="probability">2.00</field>
+        <field name="requirements">
+    > 1st email sent to public contact.
+    >> The Curator's contact need to be confirmed.
+
+    TIP : It is a good practice to stay in stage '1st contact' if you only filled an
+    online form for instance.
+        </field>
+    </record>
+    <record id="stage_contact_confirmed" model="crm.stage">
+        <field name="name">Contact confirmed</field>
+        <field name="lead_type">lead</field>
+        <field name="sequence">2</field>
+        <field name="on_change">True</field>
+        <field name="probability">3.00</field>
+        <field name="requirements">
+    > The Curator's contact is confirmed by a third party.
+    >> But he didn't answer yet.
+
+    TIP : The Curator's contact is an identified way to get in touch with the "human"
+    that will make the real decision to select your project.
+
+    At this stage, you only "think" this contact is the Curator's. It is a good practice
+    to change the Curator's "Odoo Contact" form status to "Confirmed" only when you
+    receive a real answer from this contact.
+        </field>
+    </record>
+    <record id="stage_received_by_curator" model="crm.stage">
+        <field name="name">Received by Curator</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">3</field>
+        <field name="on_change">True</field>
+        <field name="probability">10.00</field>
+        <field name="requirements">
+    > The Curator confirmed he/she received your presentation.
+    >> But he didn't gave any feedback yet.
+
+    TIP : The famous "I will return you back if I am interested", but sent by a real
+    person. It is a good practice to avoid moving to "Received by Curator" if the
+    received answer is obviously sent by an automatic mail.
+
+    If the answer is trustworthy, the Curator's "Odoo Contact" form status should be
+    changed to "Confirmed".
+        </field>
+    </record>
+    <record id="stage_interest" model="crm.stage">
+        <field name="name">Interest</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">4</field>
+        <field name="on_change">True</field>
+        <field name="probability">40.00</field>
+        <field name="requirements">
+    > The Curator made a first positive artistic feedback
+    >> But he didn't tell you what would be his budget
+
+    TIP : The famous "Are you free on this date ?". The Curator could have asked
+    for your financial conditions but it is a good practice to stay on "Interest" until
+    you know if his/her budget is suitable with yours.
+        </field>
+    </record>
+    <record id="stage_option" model="crm.stage">
+        <field name="name">Option</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">5</field>
+        <field name="on_change">True</field>
+        <field name="probability">70.00</field>
+        <field name="requirements">
+    > The Curator asked to reserve the date and didn't make a negative feedback about money.
+    >> The deal is not closed, but it looks great !
+
+    TIP : It is a (very) good practice to stay on stage "Option" until both
+    the financial AND schedule terms are defined by the Curator.
+        </field>
+    </record>
+    <record id="stage_ready_to_confirm" model="crm.stage">
+        <field name="name">Ready to confirm</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">6</field>
+        <field name="on_change">True</field>
+        <field name="probability">95.00</field>
+        <field name="requirements">
+    > The Curator confirmed his/her proposition with both show date and fee defined.
+    >> You still need to answer positively to win the deal.
+        </field>
+    </record>
+    <record id="stage_confirmed" model="crm.stage">
+        <field name="name">Confirmed</field>
+        <field name="lead_type">opportunity</field>
+        <field name="sequence">7</field>
+        <field name="on_change">True</field>
+        <field name="probability">100.00</field>
+        <field name="requirements">
+    > The deal is closed !
+    >> You still have to perform AND receive the payment.
+
+    TIP : It is a good practice to avoid moving to "Done" before the payment is
+    received... even if the event already occured.
+        </field>
+    </record>
+</odoo>

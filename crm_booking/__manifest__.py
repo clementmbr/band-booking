@@ -15,6 +15,7 @@
     "data": [
         # Data
         "data/res_partner_category.xml",
+        "data/crm_stage.xml",
         "security/crm_booking_security.xml",
         "security/ir.model.access.csv",
         # Wizards

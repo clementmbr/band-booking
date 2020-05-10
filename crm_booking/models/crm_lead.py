@@ -80,9 +80,6 @@ class Lead(models.Model):
         readonly=False,
     )
 
-    # Compute Lead stage's name to be displayed in Customer and Related partners buttons
-    stage_name = fields.Char("Lead stage name", related="stage_id.name")
-
     @api.multi
     @api.depends("show_period_date_begin")
     def _compute_short_date(self):

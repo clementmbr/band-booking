@@ -272,7 +272,7 @@ class Partner(models.Model):
                     [
                         ("partner_id", "=", partner.id),
                         ("type", "=", "opportunity"),
-                        ("stage_name", "!=", "Done"),
+                        ("stage_id", "!=", self.env.ref("crm_booking.stage_done").id),
                     ]
                 )
             else:
@@ -280,7 +280,7 @@ class Partner(models.Model):
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
                         ("type", "=", "opportunity"),
-                        ("stage_name", "!=", "Done"),
+                        ("stage_id", "!=", self.env.ref("crm_booking.stage_done").id),
                     ]
                 )
 
@@ -308,19 +308,23 @@ class Partner(models.Model):
         for partner in self:
             if partner.is_structure:
                 partner.opp_done_count = self.env["crm.lead"].search_count(
-                    [("partner_id", "=", partner.id), ("stage_name", "=", "Done")]
+                    [
+                        ("partner_id", "=", partner.id),
+                        ("stage_id", "=", self.env.ref("crm_booking.stage_done").id),
+                    ]
                 )
             else:
                 partner.opp_done_count = self.env["crm.lead"].search_count(
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
-                        ("stage_name", "=", "Done"),
+                        ("stage_id", "=", self.env.ref("crm_booking.stage_done").id),
                     ]
                 )
 
     @api.multi
     def _compute_opp_lost_count(self):
-        """Count how many opportunities were Lost"""
+        """Count how many opportunities were Lost (i.e. inactives with
+        a null probability)"""
         for partner in self:
             if partner.is_structure:
                 partner.opp_lost_count = self.env["crm.lead"].search_count(
@@ -390,13 +394,13 @@ class Partner(models.Model):
         if self.is_structure:
             domain = [
                 ("partner_id", "=", self.id),
-                ("stage_name", "!=", "Done"),
+                ("stage_id", "!=", self.env.ref("crm_booking.stage_done").id),
                 ("type", "=", "opportunity"),
             ]
         else:
             domain = [
                 ("partner_id", "in", self.related_structure_ids.ids),
-                ("stage_name", "!=", "Done"),
+                ("stage_id", "!=", self.env.ref("crm_booking.stage_done").id),
                 ("type", "=", "opportunity"),
             ]
 
@@ -417,11 +421,14 @@ class Partner(models.Model):
         act_window = self.env.ref(act_window_xml_id).read()[0]
 
         if self.is_structure:
-            domain = [("partner_id", "=", self.id), ("stage_name", "=", "Done")]
+            domain = [
+                ("partner_id", "=", self.id),
+                ("stage_id", "=", self.env.ref("crm_booking.stage_done").id),
+            ]
         else:
             domain = [
                 ("partner_id", "in", self.related_structure_ids.ids),
-                ("stage_name", "=", "Done"),
+                ("stage_id", "=", self.env.ref("crm_booking.stage_done").id),
             ]
 
         act_window["domain"] = domain
