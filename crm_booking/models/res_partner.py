@@ -585,7 +585,6 @@ class PartnerCategory(models.Model):
 
     category_type_id = fields.Many2one(
         comodel_name="res.partner.category.type",
-        domain="[('is_for_partner_type', '=', False)]",
         help="""- 'Structure' : the tag will only be available in Structures
         - 'Contact' : the tag will only be availble in Contacts
 

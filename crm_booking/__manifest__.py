@@ -15,6 +15,7 @@
     "data": [
         # Data
         "data/res_partner_category.xml",
+        "data/res_partner_category_noupdate.xml",
         "data/crm_stage.xml",
         "data/crm_lost_reason.xml",
         # Security

@@ -18,6 +18,7 @@
         <field name="name">Structure Type</field>
         <field name="is_for_partner_type">True</field>
     </record>
+    <!-- ================== MANDATORY TAGS ======================== -->
     <!-- 'partner' Tag for Contacts related to a Structure -->
     <record id="partner_tag" model="res.partner.category">
         <field name="name">partner</field>

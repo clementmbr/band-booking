@@ -392,13 +392,7 @@
     <!--
         ================== Add  CATEGORY TYPE ===========================
     -->
-    <!-- customize act_window to add some Domain -->
-    <record id="base.action_partner_category_form" model="ir.actions.act_window">
-        <field
-            name="domain"
-            eval="[('category_type_id', 'not in', [ref('crm_booking.contact_type_categ_type'), ref('crm_booking.structure_type_categ_type')] )]"
-        />
-    </record>
+    <!-- FORM -->
     <record id="view_partner_category_form" model="ir.ui.view">
         <field name="model">res.partner.category</field>
         <field name="inherit_id" ref="base.view_partner_category_form" />
@@ -413,6 +407,7 @@
                     attrs="{'readonly': [('is_partner_type_categ', '=', True)]}"
                     options="{'no_create_edit': True}"
                     required="True"
+                    domain="[('is_for_partner_type', '=', False)]"
                 />
             </xpath>
             <!-- Make all the fields readonly if it's a category for partner's type -->
@@ -433,18 +428,28 @@
             </xpath>
         </field>
     </record>
+    <!-- TREE VIEW -->
     <record id="view_partner_category_list" model="ir.ui.view">
         <field name="model">res.partner.category</field>
         <field name="inherit_id" ref="base.view_partner_category_list" />
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute
+                    name="decoration-muted"
+                >is_partner_type_categ == True</attribute>
+            </xpath>
+            <!-- Add sequence -->
             <xpath expr="//field[@name='display_name']" position="before">
                 <field name="sequence" widget="handle" />
+                <field name="is_partner_type_categ" invisible="1" />
             </xpath>
+            <!-- Add category type -->
             <xpath expr="//field[@name='display_name']" position="after">
                 <field name="category_type_id" />
             </xpath>
         </field>
     </record>
+    <!-- SEARCH VIEW -->
     <record id="view_partner_category_filter" model="ir.ui.view">
         <field name="name">res.partner.category.search</field>
         <field name="model">res.partner.category</field>
