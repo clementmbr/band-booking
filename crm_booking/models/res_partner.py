@@ -1,6 +1,8 @@
 # © 2019 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
+import ast
+
 from odoo import _, api, fields, models
 from odoo.exceptions import MissingError, ValidationError
 
@@ -470,6 +472,30 @@ class Partner(models.Model):
         return act_window
 
     # ---------------------------------------------------------------------
+    # Show period festival fields
+    # ---------------------------------------------------------------------
+    @api.multi
+    @api.constrains("show_period_date_begin", "show_period_date_end")
+    def _check_closing_date(self):
+        self.ensure_one()
+        if self.show_period_date_end and self.show_period_date_begin:
+            if self.show_period_date_end < self.show_period_date_begin:
+                raise ValidationError(
+                    _(
+                        "The ending date cannot be earlier\
+                    than the beginning date."
+                    )
+                )
+
+    @api.onchange("show_period_date_begin")
+    def onchange_date_begin(self):
+        """Pre-fill show_period_date_end with show_period_date_begin
+        if no show_period_date_end"""
+        self.ensure_one()
+        if not self.show_period_date_end:
+            self.show_period_date_end = self.show_period_date_begin
+
+    # ---------------------------------------------------------------------
     # Add related_structure button
     # ---------------------------------------------------------------------
 
@@ -488,6 +514,22 @@ class Partner(models.Model):
     #     # action['context'] = {'default_related_structure_ids' : self.}
     #
     #     return action
+
+    # ---------------------------------------------------------------------
+    # Custom Partner Autocomplete
+    # ---------------------------------------------------------------------
+
+    def _build_additional_contact(self, additional_info):
+        """Build comment from additional emails and phone numbers"""
+        comment = ""
+        if len(additional_info.get("email")) > 1:
+            comment += _("\n\nEmails :\n") + "\n".join(additional_info["email"][1:])
+        if len(additional_info.get("phone_numbers")) > 1:
+            comment += _("\n\nPhone numbers :\n") + "\n".join(
+                additional_info["phone_numbers"][1:]
+            )
+
+        return comment
 
     # ---------------------------------------------------------------------
     # Propagate 'related_structure_ids' to Contact's childs and parents
@@ -543,31 +585,23 @@ class Partner(models.Model):
         # during the creation... But it's better than nothing.
         if self._context.get("partner_tag"):
             vals["category_id"] = [(4, self.env.ref("crm_booking.partner_tag").id)]
-        return super(Partner, self).create(vals)
 
-    # ---------------------------------------------------------------------
-    # Show period festival fields
-    # ---------------------------------------------------------------------
-    @api.multi
-    @api.constrains("show_period_date_begin", "show_period_date_end")
-    def _check_closing_date(self):
-        self.ensure_one()
-        if self.show_period_date_end and self.show_period_date_begin:
-            if self.show_period_date_end < self.show_period_date_begin:
-                raise ValidationError(
-                    _(
-                        "The ending date cannot be earlier\
-                    than the beginning date."
-                    )
+        # Catch facebook and additional emails and phone numbers from the
+        # module 'partner_autocomplete'
+        # TODO : try to catch these additional info by overriding the 'enrich_company()'
+        # in module 'partner_autocomplete' instead of overrinding the create in order to
+        # fill the facebook and comment fields during the onchange
+        if vals.get("additional_info"):
+            additional_info = ast.literal_eval(
+                vals["additional_info"].replace("false", "False")
+            )
+            if additional_info.get("facebook"):
+                vals["facebook"] = (
+                    "http://www.facebook.com/" + additional_info["facebook"]
                 )
+            vals["comment"] = self._build_additional_contact(additional_info)
 
-    @api.onchange("show_period_date_begin")
-    def onchange_date_begin(self):
-        """Pre-fill show_period_date_end with show_period_date_begin
-        if no show_period_date_end"""
-        self.ensure_one()
-        if not self.show_period_date_end:
-            self.show_period_date_end = self.show_period_date_begin
+        return super(Partner, self).create(vals)
 
 
 # ---------------------------------------------------------------------

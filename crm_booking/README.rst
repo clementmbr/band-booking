@@ -19,7 +19,7 @@ Custom CRM for Booking
 
 |badge1| |badge2| |badge3| 
 
-A Booking management software based on Odoo CE ERP.
+A Booking management software based on Odoo CE ERP and few OCA modules.
 
 - Manage Contacts, Venues, Festivals
 - Qualify Leads and follow Negociations

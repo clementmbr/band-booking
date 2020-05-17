@@ -32,7 +32,7 @@
         <field name="color">7</field>
         <field name="sequence">5</field>
     </record>
-    <!-- Contacts -->
+    <!-- Contact -->
     <record id="follower_tag" model="res.partner.category">
         <field name="name">follower</field>
         <field name="category_type_id" ref="contact_categ_type" />

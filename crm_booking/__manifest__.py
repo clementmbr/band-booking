@@ -9,6 +9,7 @@
     "depends": [
         "crm",
         "event",
+        "partner_autocomplete",
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
     ],
