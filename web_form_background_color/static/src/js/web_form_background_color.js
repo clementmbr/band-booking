@@ -17,10 +17,8 @@ odoo.define("web_form_background_color.FormBackgroundColor", function(require) {
             if (this.has_sheet && this.state.model === "crm.lead") {
                 div_form_sheet_bg.classList.remove("o_form_sheet_bg");
                 if (this.state.data.type === "opportunity") {
-                    console.log("IF OPP");
                     div_form_sheet_bg.classList.add("o_form_sheet_bg_opportunity");
                 } else {
-                    console.log("IF LEAD");
                     div_form_sheet_bg.classList.add("o_form_sheet_bg_lead");
                 }
             } else if (this.has_sheet && this.state.model === "event.event") {
