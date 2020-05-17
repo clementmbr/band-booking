@@ -584,8 +584,12 @@ class Partner(models.Model):
         # onchange Partner's methods.
         # Thus this present solution is not ideal because it doesn't display the tag
         # during the creation... But it's better than nothing.
+        tag_ids = []
+        if vals["category_id"]:
+            tag_ids += vals["category_id"][0][2]
         if self._context.get("partner_tag"):
-            vals["category_id"] = [(4, self.env.ref("crm_booking.partner_tag").id)]
+            tag_ids.append(self.env.ref("crm_booking.partner_tag").id)
+        vals["category_id"] = [(6, 0, set(tag_ids))]
 
         # Catch facebook and additional emails and phone numbers from the
         # module 'partner_autocomplete'
