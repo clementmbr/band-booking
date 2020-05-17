@@ -11,17 +11,24 @@ _logger = logging.getLogger(__name__)
 
 
 def post_init_hook(cr, registry):
-    """Delete Odoo native CRM Lost reasons"""
+    """Delete Odoo unuseful native CRM records"""
     env = api.Environment(cr, SUPERUSER_ID, {})
     _logger.info(_("Preparing datas for 'crm_booking'..."))
 
-    crm_data_tree = etree.parse(file_open("crm/data/crm_data.xml"))
-    lost_reasons = crm_data_tree.xpath("//record[@model='crm.lost.reason']")
+    def _unlink_data(model, module, file_path):
+        data_elements = etree.parse(file_open(file_path))
+        model_elements = data_elements.xpath("//record[@model='{}']".format(model))
 
-    to_unlink = env["crm.lost.reason"]
-    for lost_reason in lost_reasons:
-        try:
-            to_unlink |= env.ref("crm." + lost_reason.get("id"))
-        except ValueError:
-            continue
-    to_unlink.unlink()
+        to_unlink = env["{}".format(model)]
+        for el in model_elements:
+            el_xmlid = "{}.".format(module) + el.get("id")
+            try:
+                to_unlink |= env.ref(el_xmlid)
+            except ValueError:
+                continue
+        to_unlink.unlink()
+
+    # Delete native lost reasons
+    _unlink_data("crm.lost.reason", "crm", "crm/data/crm_data.xml")
+    # Delete native crm stages
+    _unlink_data("crm.stage", "crm", "crm/data/crm_stage_data.xml")
