@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- FORM -->
+    <record id="view_partner_category_form" model="ir.ui.view">
+        <field name="model">res.partner.category</field>
+        <field name="inherit_id" ref="base.view_partner_category_form" />
+        <field name="arch" type="xml">
+            <!-- Use 'is_partner_type_categ' to distinguish categories for partner's type to others -->
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="is_partner_type_categ" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field
+                    name="category_type_id"
+                    attrs="{'readonly': [('is_partner_type_categ', '=', True)]}"
+                    options="{'no_create_edit': True}"
+                    required="True"
+                    domain="[('is_for_partner_type', '=', False)]"
+                />
+            </xpath>
+            <!-- Make all the fields readonly if it's a category for partner's type -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('is_partner_type_categ', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='active']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('is_partner_type_categ', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'readonly': [('is_partner_type_categ', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- TREE VIEW -->
+    <record id="view_partner_category_list" model="ir.ui.view">
+        <field name="model">res.partner.category</field>
+        <field name="inherit_id" ref="base.view_partner_category_list" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute
+                    name="decoration-muted"
+                >is_partner_type_categ == True </attribute>
+            </xpath>
+            <!-- Add sequence -->
+            <xpath expr="//field[@name='display_name']" position="before">
+                <field name="sequence" widget="handle" />
+                <field name="is_partner_type_categ" invisible="1" />
+            </xpath>
+            <!-- Add category type -->
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="category_type_id" />
+            </xpath>
+        </field>
+    </record>
+    <!-- SEARCH VIEW -->
+    <record id="view_partner_category_filter" model="ir.ui.view">
+        <field name="name">res.partner.category.search</field>
+        <field name="model">res.partner.category</field>
+        <field name="arch" type="xml">
+            <search string="Search Categories">
+                <field name="category_type_id" />
+                <!-- TODO : find a way to filter by Structure/Contact category type.
+            Passing {'structure_categ_type_id' : ref('crm_booking.structure_categ_type')}
+            in the action's context doesn't work as the filter object don't access to this action's context -->
+                <!-- <filter
+                string="For Structures"
+                name="structure"
+                domain="[('category_type_id', '=', context.get('structure_categ_type_id'))]"
+            />
+            <filter
+                string="For Contacts"
+                name="contact"
+                domain="[('category_type_id', '=', context.get('structure_categ_type_id'))]"
+            /> -->
+                <group expand="0" string="Group By" colspan="16">
+                    <filter
+                        string="Type"
+                        name="type"
+                        context="{'group_by':'category_type_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

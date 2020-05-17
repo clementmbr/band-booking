@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo>
+<odoo noupdate="0">
     <!-- Define available category types : Structure, Contact, Contact Type and Structure Type
     no other category type must be created by the user-->
     <record id="structure_categ_type" model="res.partner.category.type">

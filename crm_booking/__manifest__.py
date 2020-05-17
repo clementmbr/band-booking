@@ -12,6 +12,7 @@
         "partner_autocomplete",
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
+        "partner_category_type",  # https://github.com/clementmbr/crm-booking
     ],
     "data": [
         # Data
@@ -32,6 +33,7 @@
         "views/crm_lead_views.xml",
         "views/event_views.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
     "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,

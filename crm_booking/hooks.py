@@ -4,10 +4,26 @@ import logging
 
 from lxml import etree
 
-from odoo import SUPERUSER_ID, _, api
+from odoo import SUPERUSER_ID, _, api, tools
 from odoo.tools import file_open
 
 _logger = logging.getLogger(__name__)
+
+
+def pre_init_hook(cr):
+    """Load mandatory datas used in python files before loading them"""
+    _logger.info(_("Loading crm_booking data..."))
+
+    tools.convert_file(
+        cr,
+        "crm_booking",
+        "data/res_partner_category.xml",
+        None,
+        mode="init",
+        noupdate=True,
+        kind="init",
+        report=None,
+    )
 
 
 def post_init_hook(cr, registry):
