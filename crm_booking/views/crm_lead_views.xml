@@ -7,10 +7,6 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_leads" />
         <field name="arch" type="xml">
-            <!-- Define background color -->
-            <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
-                <attribute name="style">background-color:#f2e6ff</attribute>
-            </xpath> -->
             <!-- Override 'Convert to Opportunity' button to force the creation of a new
             opportunity, always -->
             <xpath
@@ -146,10 +142,6 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
         <field name="arch" type="xml">
-            <!-- Define background color -->
-            <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
-                <attribute name="style">background-color:#f2e6ff</attribute>
-            </xpath> -->
             <!-- Hide Meeting smart button -->
             <xpath
                 expr="//button[@name='action_schedule_meeting']"

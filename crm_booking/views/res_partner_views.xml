@@ -7,10 +7,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
-            <!-- Define background color -->
-            <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
-        <attribute name="style">background-color:#c6ecd9</attribute>
-      </xpath> -->
             <!-- ======================== CUSTOM FIELDS ============================= -->
             <!-- Add a structure_type selection on top -->
             <xpath expr="//field[@name='company_type']" position="before">

@@ -4,10 +4,6 @@
         <field name="model">event.event</field>
         <field name="inherit_id" ref="event.view_event_form" />
         <field name="arch" type="xml">
-            <!-- Define background color -->
-            <!-- <xpath expr="//div[hasclass('oe_title')]" position="attributes">
-                <attribute name="style">background-color:#ebf9f2</attribute>
-            </xpath> -->
             <!-- ================ HIDE FIELDS ==================== -->
             <!-- Hide State status bar and related buttons-->
             <xpath expr="//field[@name='state']" position="attributes">
