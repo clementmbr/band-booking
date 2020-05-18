@@ -27,7 +27,7 @@ def pre_init_hook(cr):
 
 
 def post_init_hook(cr, registry):
-    """Delete Odoo unuseful native CRM records"""
+    """Delete Odoo unuseful native CRM records and display Leads"""
     env = api.Environment(cr, SUPERUSER_ID, {})
     _logger.info(_("Preparing datas for 'crm_booking'..."))
 
@@ -48,3 +48,9 @@ def post_init_hook(cr, registry):
     _unlink_data("crm.lost.reason", "crm", "crm/data/crm_data.xml")
     # Delete native crm stages
     _unlink_data("crm.stage", "crm", "crm/data/crm_stage_data.xml")
+
+    # -------------------------------------------------
+    # Add all the users do 'group_use_lead' in order to display Leads for everybody
+    users = env["res.users"].search([("id", "!=", env.ref("base.public_user").id)])
+    group_use_lead = env.ref("crm.group_use_lead")
+    group_use_lead.users = [(6, 0, users.ids)]
