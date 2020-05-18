@@ -83,7 +83,7 @@
                     groups="base.group_multi_company"
                     options="{'no_create': True}"
                 />
-                <field name="lead_id" />
+                <field name="lead_id" domain="[('type', '=', 'opportunity')]" />
                 <field name="company_currency" invisible="1" />
                 <field
                     name="planned_revenue"
@@ -215,5 +215,12 @@
                 <field name="stage_id" />
             </xpath>
         </field>
+    </record>
+    <!-- Hide Event Categories menu in Configuration -->
+    <record model="ir.ui.menu" id="event.menu_event_type">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
+    </record>
+    <record model="ir.ui.menu" id="event.menu_action_registration">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
     </record>
 </odoo>
