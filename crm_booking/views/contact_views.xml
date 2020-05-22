@@ -41,6 +41,9 @@
             <xpath expr="//filter[@name='supplier']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <xpath expr="//filter[@name='group_company']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
             <!-- Add Filter by Creation date -->
             <xpath expr="//field[@name='parent_id']" position="after">
                 <filter
