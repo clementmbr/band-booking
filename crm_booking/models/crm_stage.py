@@ -16,7 +16,7 @@ class Stage(models.Model):
             raise UserError(
                 _(
                     """It is not allowed to delete the 'Done' stage as it is used
-                    in the module to link Contacts with 'Done' leads."""
+                    by the 'crm_booking' module to link Contacts with 'Done' leads."""
                 )
             )
 

@@ -2,7 +2,7 @@
 
 import base64
 import logging
-from os import listdir
+from os import listdir, path
 
 from lxml import etree
 
@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 def pre_init_hook(cr):
-    """Load mandatory datas used in python files before loading them"""
+    """Load mandatory datas used in python files before loading the module"""
     _logger.info(_("Loading crm_booking data..."))
 
     tools.convert_file(
@@ -61,24 +61,32 @@ def post_init_hook(cr, registry):
     # Load demo records
     # =================
     if tools.config.get("demo_booking"):
-        tools.convert_file(
-            cr,
-            "crm_booking",
-            "demo/res.partner-demo.csv",
-            None,
-            mode="init",
-            noupdate=True,
-            kind="init",
-            report=None,
-        )
+        _logger.info(_("Loading demo datas for 'crm_booking'..."))
+
+        files = [
+            "demo/res.partner-festival-demo.csv",
+            "demo/res.partner-venue-demo.csv",
+        ]
+        for file in files:
+            tools.convert_file(
+                cr,
+                "crm_booking",
+                file,
+                None,
+                mode="init",
+                noupdate=True,
+                kind="init",
+                report=None,
+            )
 
         image_folder = "./odoo/external-src/crm-booking/crm_booking/static/img/"
         image_files = {}
         for file_name in listdir(image_folder):
-            if file_name.split("-")[1] == "demo":
+            # To load a demo image, its name must be in the format "xml_id-demo.ext"
+            if path.splitext(file_name)[0].split("-")[1] == "demo":
                 image_files[file_name.split("-")[0]] = image_folder + file_name
 
         for name, img_path in image_files.items():
-            with open(img_path, "rb") as file:
-                partner = env.ref("__import__.{}".format(name))
-                partner.image = base64.b64encode(file.read())
+            with open(img_path, "rb") as image_file:
+                partner = env.ref("crm_booking.{}".format(name))
+                partner.image = base64.b64encode(image_file.read())
