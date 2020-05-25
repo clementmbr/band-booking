@@ -66,6 +66,7 @@ def post_init_hook(cr, registry):
         files = [
             "demo/res.partner-festival-demo.csv",
             "demo/res.partner-venue-demo.csv",
+            "demo/res.partner-contact-demo.csv",
         ]
         for file in files:
             tools.convert_file(
