@@ -112,7 +112,7 @@
         </field>
     </record>
     <!-- ===================== CUSTOM VIEW AND MENU ================================ -->
-    <!-- Custom Filter and Group By options in Event view -->
+    <!-- Custom Filter and Group By options in Event SEARCH view -->
     <record model="ir.ui.view" id="view_event_search">
         <field name="model">event.event</field>
         <field name="inherit_id" ref="event.view_event_search" />

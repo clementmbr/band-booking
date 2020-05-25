@@ -7,6 +7,9 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-primary">is_confirmed == True</attribute>
+            </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
                 <field
                     name="display_category_ids"
@@ -14,9 +17,7 @@
                     options="{'color_field': 'color'}"
                 />
                 <field name="display_related_structure_names" />
-            </xpath>
-            <xpath expr="//field[@name='country_id']" position="after">
-                <field name="is_confirmed" />
+                <field name="is_confirmed" invisible="1" />
             </xpath>
         </field>
     </record>
@@ -111,18 +112,37 @@
         <field name="act_window_id" ref="action_contacts" />
     </record>
     <!-- ====== 'Tree Menu Action' to confirm many Contacts at once =====-->
-    <record id="confirm_contact_fields_lines" model="ir.server.object.lines">
+    <record id="contact_confirmed_fields_lines" model="ir.server.object.lines">
         <field name="col1" ref="crm_booking.field_res_partner__is_confirmed" />
         <field name="value">True if record.is_structure == False else False</field>
         <field name="type">equation</field>
     </record>
-    <record id="action_confirm_contact" model="ir.actions.server">
-        <field name="name">Confirm Contacts</field>
+    <record id="action_contact_confirmed" model="ir.actions.server">
+        <field name="name">Contacts Confirmed</field>
         <field name="model_id" ref="crm_booking.model_res_partner" />
+        <field name="binding_model_id" ref="crm_booking.model_res_partner" />
+        <field name="binding_type">action</field>
         <field name="state">object_write</field>
         <field
             name="fields_lines"
-            eval="[(6, 0, [ref('crm_booking.confirm_contact_fields_lines')])]"
+            eval="[(6, 0, [ref('crm_booking.contact_confirmed_fields_lines')])]"
+        />
+    </record>
+    <!-- ====== 'Tree Menu Action' to set many Contacts 'Not Confirmed' at once =====-->
+    <record id="contact_not_confirmed_fields_lines" model="ir.server.object.lines">
+        <field name="col1" ref="crm_booking.field_res_partner__is_confirmed" />
+        <field name="value">False</field>
+        <field name="type">equation</field>
+    </record>
+    <record id="action_contact_not_confirmed" model="ir.actions.server">
+        <field name="name">Contacts Not Confirmed</field>
+        <field name="model_id" ref="crm_booking.model_res_partner" />
+        <field name="binding_model_id" ref="crm_booking.model_res_partner" />
+        <field name="binding_type">action</field>
+        <field name="state">object_write</field>
+        <field
+            name="fields_lines"
+            eval="[(6, 0, [ref('crm_booking.contact_not_confirmed_fields_lines')])]"
         />
     </record>
     <!-- ================= FESTIVAL LIST ========================-->
