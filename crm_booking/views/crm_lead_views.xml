@@ -303,7 +303,7 @@
         </field>
     </record>
     <!-- ===============TREE, KANBAN, FILTER and MENU VIEWS========================= -->
-    <!-- Custom FILTER and GROUP BY options in Leads tree view -->
+    <!-- Custom FILTER and GROUP BY options in Leads SEARCH view -->
     <record model="ir.ui.view" id="view_crm_case_leads_filter">
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
@@ -349,13 +349,17 @@
             </xpath>
         </field>
     </record>
-    <!-- Custom FILTER and GROUP BY options in Opportunities kanban view -->
+    <!-- Custom FILTER and GROUP BY options in Opportunities SEARCH view -->
     <record model="ir.ui.view" id="view_crm_case_opportunities_filter">
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
         <field name="arch" type="xml">
             <!-- Hide Expected Closing Date filter -->
             <xpath expr="//filter[@name='close_this_month']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Filter by overdue date -->
+            <xpath expr="//filter[@name='overdue_opp']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
             <!-- Add Show Period Group by -->
