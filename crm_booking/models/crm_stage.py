@@ -1,13 +1,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import UserError
 
 
 class Stage(models.Model):
     _inherit = "crm.stage"
 
-    @api.multi
     def unlink(self):
         """Prevent from deleting mandatory 'Done' stage and display a message if
         the deleted stage is still linked to leads."""

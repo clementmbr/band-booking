@@ -8,7 +8,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import MissingError, ValidationError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
-# TODO : allow translation of these tags
+# TODO : allow translation of these structure types
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
 STRUCTURE_CAPACITY = [
     ("inf1k", "< 1000"),
@@ -21,9 +21,9 @@ STRUCTURE_CAPACITY = [
 
 
 class Partner(models.Model):
-    """In res.partner, make the difference between classic Contacts and Structures
-    (i.e. Venues and Festivals for the moment).
-    Thus, Venues and Festivals will be linked to classic 'partners' and will display
+    """Make the difference between classic Contacts and Structures (i.e. Venues and
+    Festivals for the moment).
+    Venues and Festivals will be linked to classic 'partners' and will display
     special fields about the Structure.
     """
 
@@ -126,7 +126,6 @@ class Partner(models.Model):
     # Sequence integer to handle partner order in m2m tree views
     sequence = fields.Integer()
 
-    @api.multi
     @api.depends("struct_date_begin", "struct_date_end")
     def _compute_struct_short_date(self):
         """Display date in format DD/MM for Festivals tree view and CRM kanban view"""
@@ -147,12 +146,10 @@ class Partner(models.Model):
                     short_date_end = datetime.strftime(date_end_obj, "%d" + "/" + "%m")
                     partner.struct_short_date += " - " + short_date_end
 
-    @api.multi
     def toogle_confirmed(self):
         for partner in self:
             partner.is_confirmed = not partner.is_confirmed
 
-    @api.multi
     @api.depends("related_structure_ids")
     def _compute_display_related_structure_names(self):
         for partner in self:
@@ -164,7 +161,6 @@ class Partner(models.Model):
                         structure.name
                     )
 
-    @api.multi
     def _compute_display_category_ids(self):
         """Display tags in tree view except special ones made to distinguish the type
         of Structure or Contact, like 'festival', 'venue' or 'partner' """
@@ -279,7 +275,7 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
     # Button to link (or create) leads from partner
     # ---------------------------------------------------------------------
-    @api.multi
+
     def _compute_lower_stage_id(self):
         """Find the Lead's stage_id with the lower sequence to create
         a lead from partner with this default stage"""
@@ -291,7 +287,6 @@ class Partner(models.Model):
             [min(dict_sequences, key=dict_sequences.get)]
         )
 
-    @api.multi
     def _compute_opportunity_count(self):
         """Override method do display a linked opportunity in partners related
         to a Structure with opportunity"""
@@ -316,7 +311,6 @@ class Partner(models.Model):
 
         return res
 
-    @api.multi
     def _compute_lead_count(self):
         """Identical method for counting related Leads"""
         for partner in self:
@@ -332,7 +326,6 @@ class Partner(models.Model):
                     ]
                 )
 
-    @api.multi
     def _compute_opp_done_count(self):
         """Count how many opportunities are in Stage which name is "Done" """
         for partner in self:
@@ -351,7 +344,6 @@ class Partner(models.Model):
                     ]
                 )
 
-    @api.multi
     def _compute_opp_lost_count(self):
         """Count how many opportunities were Lost (i.e. inactives with
         a null probability)"""
@@ -373,7 +365,6 @@ class Partner(models.Model):
                     ]
                 )
 
-    @api.multi
     def action_lead_from_partner(self):
         """Button's action to create a lead from a Structure partner"""
         self.ensure_one()
@@ -390,7 +381,6 @@ class Partner(models.Model):
 
         return action
 
-    @api.multi
     def action_related_lead(self):
         """Display related Leads from Partner's smart button"""
         self.ensure_one()
@@ -414,7 +404,6 @@ class Partner(models.Model):
 
         return act_window
 
-    @api.multi
     def action_related_opportunity(self):
         """Display related opportunities from Partner's smart button"""
         self.ensure_one()
@@ -443,7 +432,6 @@ class Partner(models.Model):
 
         return act_window
 
-    @api.multi
     def action_done_opportunity(self):
         """Display Done opportunities from Partner's smart button"""
         self.ensure_one()
@@ -470,7 +458,6 @@ class Partner(models.Model):
 
         return act_window
 
-    @api.multi
     def action_lost_opportunity(self):
         """Display Lost opportunities from Partner's smart button"""
         self.ensure_one()
@@ -503,7 +490,7 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
     # Show period festival fields
     # ---------------------------------------------------------------------
-    @api.multi
+
     @api.constrains("struct_date_begin", "struct_date_end")
     def _check_closing_date(self):
         self.ensure_one()
@@ -529,7 +516,7 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
 
     # vvvvv TODO - WORK IN PROGRESS vvvvvvv
-    # @api.multi
+    #
     # def action_add_related_partner(self):
     #     """Button's action to add a new Partner to Many2many related_partner_ids
     #     in Structure field"""
@@ -545,7 +532,7 @@ class Partner(models.Model):
     #     return action
 
     # ---------------------------------------------------------------------
-    # Custom Partner Autocomplete
+    # Method for custom Partner Autocomplete
     # ---------------------------------------------------------------------
 
     def _build_additional_contact(self, additional_info):
@@ -571,7 +558,6 @@ class Partner(models.Model):
                     # Add the partner_tag to all the propagated related contacts
                     p.category_id = [(4, self.env.ref("crm_booking.partner_tag").id)]
 
-    @api.multi
     def write(self, vals):
         """ Add/Remove the partner_tag to new/old related Contacts and
         Propagate the partner's related structures from parent to childs"""

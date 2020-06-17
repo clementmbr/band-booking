@@ -86,7 +86,6 @@ class Lead(models.Model):
         if not self.struct_date_end:
             self.struct_date_end = self.struct_date_begin
 
-    @api.multi
     def action_add_new_related_event(self):
         """Button's action to add a new Event to lead_event_ids"""
         self.ensure_one()
@@ -106,7 +105,6 @@ class Lead(models.Model):
 
         return action
 
-    @api.multi
     def action_lead_to_new_opportunity(self):
         """Override the 'lead2opportunity.partner' wizard.
         Force the creation of a new opportunity."""
@@ -119,7 +117,6 @@ class Lead(models.Model):
     # Link with related Events
     # ---------------------------------------------------------------------
 
-    @api.multi
     def action_set_lost(self):
         """Archive related Events when lost"""
         res = super(Lead, self).action_set_lost()
@@ -140,7 +137,7 @@ class Lead(models.Model):
     # ---------------------------------------------------------------------
     # MAP button methods
     # ---------------------------------------------------------------------
-    @api.multi
+
     def _address_as_string(self):
         """Necessary method to 'open_map' action"""
         self.ensure_one()
@@ -160,7 +157,6 @@ class Lead(models.Model):
             raise UserError(_("Address missing on partner '%s'.") % address.name)
         return " ".join(addr)
 
-    @api.model
     def _prepare_url(self, url, replace):
         """Necessary method to 'open_map' action"""
         assert url, "Missing URL"
@@ -172,7 +168,6 @@ class Lead(models.Model):
         logger.debug("Final URL: %s", url)
         return url
 
-    @api.multi
     def open_map(self):
         """Copy action from module 'partner_external_map' to link Opportunities
         address to an external map site"""
