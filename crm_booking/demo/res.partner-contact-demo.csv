@@ -84,7 +84,7 @@ crm_booking.contact_82,0,0,0,Alex Boireau ,Diretor Artistico,crm_booking.festiva
 crm_booking.contact_83,0,1,0,Les Elvis Platinés ,,crm_booking.festival_6,,,Sumène,base.fr,+33 4 67 81 57 90,,contact@leselvis.org, http://leselvis.org,https://www.facebook.com/elvis.platines ,,Associação organizadora do festival
 crm_booking.contact_84,0,0,0,Julia ,,crm_booking.festival_6,crm_booking.contact_83,,Sumène,base.fr,,,julia@leselvis.org,,,,
 crm_booking.contact_85,0,0,0,Théo ,,crm_booking.festival_6,crm_booking.contact_83,,Sumène,base.fr,,,theo@leselvis.org,,,,
-crm_booking.contact_86,0,1,0,Association Les Vieilles Charrues ,,crm_booking.festival_11,,,Carhaix-Plouguer,base.fr,+33 820 890 066,+33 2 98 99 25 45,info@vieillescharrues.asso.fr,,,,Empresa produtora do festival   contact@vieillescharrues.asso.fr
+crm_booking.contact_86,0,1,0,Association Les Vieilles Charrues ,,crm_booking.festival_11,,,Carhaix-Plouguer,base.fr,33820890066,+33 2 98 99 25 45,info@vieillescharrues.asso.fr,,,,Empresa produtora do festival   contact@vieillescharrues.asso.fr
 crm_booking.contact_87,0,0,0,Jean Jacques TOUX,Curador e fundador,crm_booking.festival_11,crm_booking.contact_86,,Carhaix-Plouguer,base.fr,+33 2 98 99 25 45,,artistes@vieillescharrues.asso.fr,,,,
 crm_booking.contact_88,0,0,0,Jeanne ,,crm_booking.festival_11,crm_booking.contact_86,,Carhaix-Plouguer,base.fr,,,jeanne@vieillescharrues.asso.fr,,,,Contato da Lou
 crm_booking.contact_89,0,1,0,Loupoulo ,,crm_booking.festival_48,,,Balazuc,base.fr,+33 6 38 88 80 54,+33 4 75 39 03 71,brasseur@loupoulo.fr,https://www.loupoulo.fr , https://www.facebook.com/biere.loupoulo/,,Cervejaria artisanal da Ardèche organizadora do festival
@@ -95,7 +95,7 @@ crm_booking.contact_93,0,0,0,Caroline Varral ,Administradora do Festival,crm_boo
 crm_booking.contact_94,0,0,0,Laurence Chansigaud  ,parte da asso Orane,crm_booking.festival_41,,,Marseille,base.fr,,,,,https://www.facebook.com/laurence.chansigaud,,
 crm_booking.contact_95,0,0,0,Orane ,"Associação organizadora do festival (70 Rue Consolat, 13001 Marseille)",crm_booking.festival_41,,,Marseille,base.fr,,,programmation@marsatac.com,,,,
 crm_booking.contact_96,0,0,1,Mathieu Fonsny ,Gerente da KuratedBy,crm_booking.festival_41,,,Marseille,base.fr,,,booking@kuratedby.be,https://kuratedby.eu/ ,, https://www.instagram.com/surfingleons/,"KuratedBy, empresa que cuida da curadoria em vários festivais, inclusive Marsatac  https://kuratedby.eu/member/mathieu-fonsny/  "
-crm_booking.contact_97,0,1,0,Association Festival Internationale de Jazz de Marseille des Cinq Continents ,,crm_booking.festival_7,,,Marseille,base.fr,+33 4 95 09 32 57,,contact@marseillejazz.com,https://www.marseillejazz.com/contact/,,,Associação organizadora do festival
+crm_booking.contact_97,0,1,0,Association Festival International de Jazz de Marseille des Cinq Continents ,,crm_booking.festival_7,,,Marseille,base.fr,+33 4 95 09 32 57,,contact@marseillejazz.com,https://www.marseillejazz.com/contact/,,,Associação organizadora do festival
 crm_booking.contact_98,0,0,0,Régis Guerbois ,Presidente da Associação,crm_booking.festival_7,crm_booking.contact_97,,Marseille,base.fr,,,,,,,
 crm_booking.contact_99,0,0,0,Hugues Kifer ,Diretor Artistica e Curadoria,crm_booking.festival_7,crm_booking.contact_97,,Marseille,base.fr,,,,,,,
 crm_booking.contact_100,0,0,1,Aurélie Pantana ,Em carga da Produção,crm_booking.festival_7,crm_booking.contact_97,,Marseille,base.fr,,,contact@marseillejazz.com,,,,
@@ -106,8 +106,8 @@ crm_booking.contact_104,0,0,0,Anna Gardelle Bah,Diretora de produção,crm_booki
 crm_booking.contact_105,0,0,0,Orianne Block ,Produção,crm_booking.festival_21,,,Luxey,base.fr,,,prod.festival@musicalarue.com,,https://www.facebook.com/orianne.block,,
 crm_booking.contact_106,0,1,0,Musiques Métisses ,,crm_booking.festival_35,,,Angoulême,base.fr,+33 5 45 95 43 42,,contact@musiques-metisses.com,,,,Associação organizadora do festival
 crm_booking.contact_107,0,0,0,Patrick Duval ,Curadoria do festival Musiques Métisses,crm_booking.festival_35,crm_booking.contact_106,,Angoulême,base.fr,,,programmation@musiques-metisses.com,,,,
-crm_booking.contact_108,0,1,0,Service Evenementiel da Prefeitura de Nice ,,crm_booking.festival_8,,,Nice,base.fr,+33 4.97.13.20.00,,info@nicejazzfestival.fr,,,,Organizadora do Nice Jazz Festival
-crm_booking.contact_109,0,1,0,Direção da Comunicação e dos Eventos da Prefeitura de Nice ,,crm_booking.festival_8,,,Nice,base.fr,+33 4 97 13 32 40,,,,,,Responsavel do site nicejazzfestival.fr
+crm_booking.contact_108,0,1,0,Service Evenementiel de la mairie de Nice ,,crm_booking.festival_8,,,Nice,base.fr,+33 4.97.13.20.00,,info@nicejazzfestival.fr,,,,Organizadora do Nice Jazz Festival
+crm_booking.contact_109,0,1,0,Dir. de la Com. et des Événements de la mairie de Nice ,,crm_booking.festival_8,,,Nice,base.fr,+33 4 97 13 32 40,,,,,,Responsavel do site nicejazzfestival.fr
 crm_booking.contact_110,0,0,0,Laetitia Barbouteau ,Direção da Comunicação e dos Eventos da Prefeitura de Nice,crm_booking.festival_8,crm_booking.contact_109,,Nice,base.fr,+33 4 97 13 32 40,,laetitia.barbouteau@nicecotedazur.org,,,,
 crm_booking.contact_111,0,1,0,Association Les Nuits Secrètes ,,crm_booking.festival_32,,,Aulnoye-Aymeries,base.fr,+33 3 27 53 63 87,,association@lesnuitssecretes.com,,,,Organizadora do Festival
 crm_booking.contact_112,0,0,0,Olivier Collan ,Responsável curadoria,crm_booking.festival_32,crm_booking.contact_111,,Aulnoye-Aymeries,base.fr,,,association@lesnuitssecretes.com,,,,
