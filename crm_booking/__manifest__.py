@@ -22,7 +22,6 @@
         "data/crm_lost_reason.xml",
         # Security
         "security/crm_booking_security.xml",
-        "security/ir.model.access.csv",
         # Wizards
         "wizard/crm_lead_to_opportunity_views.xml",
         # Views
