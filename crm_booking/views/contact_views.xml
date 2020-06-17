@@ -11,11 +11,13 @@
                 <attribute name="decoration-primary">is_confirmed == True</attribute>
             </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
-                <field
+                <!-- TODO : Add tag to contact tree view when there will be enough demo partners with different tags to worth it -->
+                <!-- <field
                     name="display_category_ids"
                     widget="many2many_tags"
                     options="{'color_field': 'color'}"
-                />
+                    string="Tags"
+                /> -->
                 <field name="display_related_structure_names" />
                 <field name="is_confirmed" invisible="1" />
             </xpath>
@@ -59,6 +61,13 @@
                     string="Confirmed"
                     name="is_confirmed"
                     domain="[('is_confirmed', '=', True)]"
+                />
+            </xpath>
+            <xpath expr="//filter[@name='group_country']" position="after">
+                <filter
+                    name="struct_date_begin"
+                    string="Structure Date"
+                    context="{'group_by': 'struct_date_begin'}"
                 />
             </xpath>
         </field>
@@ -152,13 +161,18 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">struct_date_begin</attribute>
+            </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
                 <field
                     name="display_category_ids"
                     widget="many2many_tags"
                     options="{'color_field': 'color'}"
+                    string="Tags"
                 />
-                <field name="show_period_date_begin" />
+                <field name="struct_date_begin" invisible="1" />
+                <field name="struct_short_date" />
                 <field name="structure_capacity" />
             </xpath>
             <xpath expr="//field[@name='phone']" position="attributes">
@@ -229,11 +243,15 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">country_id</attribute>
+            </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
                 <field
                     name="display_category_ids"
                     widget="many2many_tags"
                     options="{'color_field': 'color'}"
+                    string="Tags"
                 />
                 <field name="structure_capacity" />
             </xpath>

@@ -2,11 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 import logging
-from datetime import datetime
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +44,7 @@ class Lead(models.Model):
     country_code = fields.Char(
         string="Country Code", related="partner_id.country_id.code", store=True
     )
-    short_date = fields.Char(string="Short Date", compute="_compute_short_date")
+    struct_short_date = fields.Char(related="partner_id.struct_short_date")
 
     # Special Show Structure fields related fields
     # with Customer's Show Strucure fields
@@ -60,34 +58,19 @@ class Lead(models.Model):
         string="Structure Type", related="partner_id.structure_type", store=True
     )
     structure_capacity = fields.Selection(
-        string="Show Capacity",
+        string="Structure Capacity",
         related="partner_id.structure_capacity",
         readonly=False,
         store=True,
         help="Average audience expected in this venue or festival",
     )
 
-    show_period_date_begin = fields.Date(
-        string="Beginning Show Period",
-        related="partner_id.show_period_date_begin",
-        store=True,
-        readonly=False,
+    struct_date_begin = fields.Date(
+        related="partner_id.struct_date_begin", store=True, readonly=False,
     )
-    show_period_date_end = fields.Date(
-        string="Ending Show Period",
-        related="partner_id.show_period_date_end",
-        store=True,
-        readonly=False,
+    struct_date_end = fields.Date(
+        related="partner_id.struct_date_end", store=True, readonly=False,
     )
-
-    @api.multi
-    @api.depends("show_period_date_begin")
-    def _compute_short_date(self):
-        for lead in self:
-            if lead.show_period_date_begin:
-                date = str(lead.show_period_date_begin)
-                date_obj = datetime.strptime(date, DEFAULT_SERVER_DATE_FORMAT)
-                lead.short_date = datetime.strftime(date_obj, "%d" + "/" + "%m")
 
     @api.onchange("partner_id")
     def on_change_customer(self):
@@ -95,13 +78,13 @@ class Lead(models.Model):
         self.ensure_one()
         self.name = self.partner_id.name
 
-    @api.onchange("show_period_date_begin")
+    @api.onchange("struct_date_begin")
     def onchange_date_begin(self):
-        """Pre-fill show_period_date_end with show_period_date_begin
-        if no show_period_date_end"""
+        """Pre-fill struct_date_end with struct_date_begin
+        if no struct_date_end"""
         self.ensure_one()
-        if not self.show_period_date_end:
-            self.show_period_date_end = self.show_period_date_begin
+        if not self.struct_date_end:
+            self.struct_date_end = self.struct_date_begin
 
     @api.multi
     def action_add_new_related_event(self):
@@ -117,8 +100,8 @@ class Lead(models.Model):
             "default_lead_id": self.id,
             "default_name": self.name,
             "default_address_id": self.partner_id.id,
-            "default_date_begin": self.show_period_date_begin,
-            "default_date_end": self.show_period_date_end,
+            "default_date_begin": self.struct_date_begin,
+            "default_date_end": self.struct_date_end,
         }
 
         return action

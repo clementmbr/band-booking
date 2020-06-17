@@ -101,14 +101,23 @@
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
                     <field name="structure_capacity" widget="selection" />
                     <field name="structure_type" invisible="1" />
-                    <field
-                        name="show_period_date_begin"
+                    <!-- Approx. date fields not for venues -->
+                    <label
+                        for="struct_date_begin"
                         attrs="{'invisible': [('structure_type', '=', 'venue')]}"
                     />
-                    <field
-                        name="show_period_date_end"
+                    <div
+                        class="o_row"
                         attrs="{'invisible': [('structure_type', '=', 'venue')]}"
-                    />
+                    >
+                        <field name="struct_date_begin" />
+                        <span
+                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                            class="oe_read_only"
+                        > - </span>
+                        <span class="oe_edit_only"> - </span>
+                        <field name="struct_date_end" />
+                    </div>
                 </group>
             </xpath>
             <!-- Add partner Many2many in Leads-->
@@ -232,14 +241,23 @@
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
                     <field name="structure_type" invisible="1" />
                     <field name="structure_capacity" widget="selection" />
-                    <field
-                        name="show_period_date_begin"
+                    <!-- Approx. date fields not for venues -->
+                    <label
+                        for="struct_date_begin"
                         attrs="{'invisible': [('structure_type', '=', 'venue')]}"
                     />
-                    <field
-                        name="show_period_date_end"
+                    <div
+                        class="o_row"
                         attrs="{'invisible': [('structure_type', '=', 'venue')]}"
-                    />
+                    >
+                        <field name="struct_date_begin" />
+                        <span
+                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                            class="oe_read_only"
+                        > - </span>
+                        <span class="oe_edit_only"> - </span>
+                        <field name="struct_date_end" />
+                    </div>
                 </group>
             </xpath>
             <!-- Add Partners MANY2MANY in opportunities-->
@@ -274,7 +292,7 @@
                         <field
                             name="lead_event_ids"
                             nolabel="1"
-                            context="{'default_lead_id': id, 'default_name': name, 'default_address_id': partner_id, 'default_date_begin': show_period_date_begin, 'default_date_end': show_period_date_begin}"
+                            context="{'default_lead_id': id, 'default_name': name, 'default_address_id': partner_id, 'default_date_begin': struct_date_begin, 'default_date_end': struct_date_begin}"
                         >
                             <tree>
                                 <field name="name" />
@@ -318,9 +336,9 @@
             </xpath>
             <xpath expr="//filter[@name='country']" position="after">
                 <filter
-                    name="show_period_date_begin"
-                    string="Show Period"
-                    context="{'group_by': 'show_period_date_begin'}"
+                    name="struct_date_begin"
+                    string="Structure Date"
+                    context="{'group_by': 'struct_date_begin'}"
                 />
                 <separator />
             </xpath>
@@ -368,9 +386,9 @@
             </xpath>
             <xpath expr="//filter[@name='country']" position="after">
                 <filter
-                    name="show_period_date_begin"
-                    string="Show Period"
-                    context="{'group_by': 'show_period_date_begin'}"
+                    name="struct_date_begin"
+                    string="Structure Date"
+                    context="{'group_by': 'struct_date_begin'}"
                 />
                 <separator />
             </xpath>
@@ -392,17 +410,17 @@
             <xpath expr="//field[@name='stage_id']" position="after">
                 <field name="city" />
                 <field name="country_code" />
-                <field name="short_date" />
+                <field name="struct_short_date" />
             </xpath>
             <xpath
                 expr="(//span[@t-if='record.partner_id.value']/../t)[position() = 1]"
                 position="before"
             >
-                <span t-if="record.short_date.value">
-                    <t t-esc="record.short_date.value" />
+                <span t-if="record.struct_short_date.value">
+                    <t t-esc="record.struct_short_date.value" />
                 </span>
                 <t>
-                    <span t-if="record.short_date.value"> </span>
+                    <span t-if="record.struct_short_date.value"> </span>
                 </t>
                 <span t-if="record.city.value">
                     <t t-esc="record.city.value" />

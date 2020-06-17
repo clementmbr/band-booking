@@ -56,11 +56,7 @@ class EventEvent(models.Model):
     )
 
     structure_capacity = fields.Selection(
-        string="Show Capacity",
-        related="lead_id.structure_capacity",
-        readonly=True,
-        store=True,
-        help="Average audience expected in this venue or festival",
+        related="lead_id.structure_capacity", readonly=True, store=True,
     )
 
     event_link = fields.Char(

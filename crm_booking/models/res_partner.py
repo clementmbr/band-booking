@@ -2,9 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 import ast
+from datetime import datetime
 
 from odoo import _, api, fields, models
 from odoo.exceptions import MissingError, ValidationError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 # TODO : allow translation of these tags
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
@@ -69,8 +71,11 @@ class Partner(models.Model):
         help="Average audience expected in this venue or festival",
     )
 
-    show_period_date_begin = fields.Date(string="Beginning Show Period")
-    show_period_date_end = fields.Date(string="Ending Show Period")
+    struct_date_begin = fields.Date(
+        string="Structure Date", help="The date on which the festival is used to start."
+    )
+    struct_date_end = fields.Date(string="Structure Date End")
+    struct_short_date = fields.Char(string="Date", compute="_compute_struct_short_date")
 
     related_structure_ids = fields.Many2many(
         comodel_name="res.partner",
@@ -97,7 +102,9 @@ class Partner(models.Model):
     )
     # Used to display Tags in tree views
     display_category_ids = fields.Many2many(
-        "res.partner.category", string="Tags", compute="_compute_display_category_ids",
+        "res.partner.category",
+        string="Tags for tree view",
+        compute="_compute_display_category_ids",
     )
 
     facebook = fields.Char(help="Must begin by 'http://' to activate URL link")
@@ -118,6 +125,27 @@ class Partner(models.Model):
 
     # Sequence integer to handle partner order in m2m tree views
     sequence = fields.Integer()
+
+    @api.multi
+    @api.depends("struct_date_begin", "struct_date_end")
+    def _compute_struct_short_date(self):
+        """Display date in format DD/MM for Festivals tree view and CRM kanban view"""
+        for partner in self:
+            date_begin = partner.struct_date_begin
+            date_end = partner.struct_date_end
+            if date_begin:
+                date_begin_obj = datetime.strptime(
+                    str(date_begin), DEFAULT_SERVER_DATE_FORMAT
+                )
+                partner.struct_short_date = datetime.strftime(
+                    date_begin_obj, "%d" + "/" + "%m"
+                )
+                if date_end and date_end != date_begin:
+                    date_end_obj = datetime.strptime(
+                        str(date_end), DEFAULT_SERVER_DATE_FORMAT
+                    )
+                    short_date_end = datetime.strftime(date_end_obj, "%d" + "/" + "%m")
+                    partner.struct_short_date += " - " + short_date_end
 
     @api.multi
     def toogle_confirmed(self):
@@ -476,11 +504,11 @@ class Partner(models.Model):
     # Show period festival fields
     # ---------------------------------------------------------------------
     @api.multi
-    @api.constrains("show_period_date_begin", "show_period_date_end")
+    @api.constrains("struct_date_begin", "struct_date_end")
     def _check_closing_date(self):
         self.ensure_one()
-        if self.show_period_date_end and self.show_period_date_begin:
-            if self.show_period_date_end < self.show_period_date_begin:
+        if self.struct_date_end and self.struct_date_begin:
+            if self.struct_date_end < self.struct_date_begin:
                 raise ValidationError(
                     _(
                         "The ending date cannot be earlier\
@@ -488,13 +516,13 @@ class Partner(models.Model):
                     )
                 )
 
-    @api.onchange("show_period_date_begin")
+    @api.onchange("struct_date_begin")
     def onchange_date_begin(self):
-        """Pre-fill show_period_date_end with show_period_date_begin
-        if no show_period_date_end"""
+        """Pre-fill struct_date_end with struct_date_begin
+        if no struct_date_end"""
         self.ensure_one()
-        if not self.show_period_date_end:
-            self.show_period_date_end = self.show_period_date_begin
+        if not self.struct_date_end:
+            self.struct_date_end = self.struct_date_begin
 
     # ---------------------------------------------------------------------
     # Add related_structure button
