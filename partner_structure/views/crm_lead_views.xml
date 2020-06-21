@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+    ==================CUSTOM LEAD FORM VIEW==============================
+  -->
+    <record id="crm_case_form_view_leads" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads" />
+        <field name="arch" type="xml">
+            <!-- Override 'Convert to Opportunity' button to force the creation of a new
+            opportunity, always -->
+            <xpath
+                expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//button[@name='%(crm.action_crm_lead2opportunity_partner)d']"
+                position="after"
+            >
+                <button
+                    name="action_lead_to_new_opportunity"
+                    string="Convert to Opportunity"
+                    type="object"
+                    help="Convert to Opportunity"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('type', '=', 'opportunity')]}"
+                />
+            </xpath>
+            <!-- Add external map button in Lead view -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_inline oe_stat_button"
+                    name="open_map"
+                    type="object"
+                    string="Map"
+                    icon="fa-map-marker"
+                />
+            </xpath>
+            <!-- Hide fields Company Name, from the group Contact Name and from the page Extra Info -->
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='message_bounce']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_open']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Extra Info page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='extra']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Original Customer field is only visible in debug mode.
+        Set invisible the original Customer field and add another field-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field
+                    name="partner_id"
+                    readonly="0"
+                    widget="res_partner_many2one"
+                    context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
+                    options="{'always_reload': True}"
+                    required="1"
+                />
+            </xpath>
+            <!-- Hide Customer's related website if False -->
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('website', '=', False)]}</attribute>
+            </xpath>
+            <!-- Hide native street field -->
+            <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Move compnay_id field to the top of the screen-->
+            <field name="company_id" position="replace" />
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field
+                    name="company_id"
+                    string="Band"
+                    groups="base.group_multi_company"
+                    options="{'no_create': True}"
+                />
+            </xpath>
+            <!-- Add Strong related link with Customer's fields -->
+            <xpath expr="//field[@name='tag_ids']/.." position="after">
+                <field name="is_structure" invisible="1" />
+                <group attrs="{'invisible': [('is_structure', '=', False)]}">
+                    <field name="structure_capacity" widget="selection" />
+                    <field name="structure_type" invisible="1" />
+                    <!-- Approx. date fields not for venues -->
+                    <label
+                        for="struct_date_begin"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    />
+                    <div
+                        class="o_row"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    >
+                        <field name="struct_date_begin" />
+                        <span
+                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                            class="oe_read_only"
+                        > - </span>
+                        <span class="oe_edit_only"> - </span>
+                        <field name="struct_date_end" />
+                    </div>
+                </group>
+            </xpath>
+            <!-- Add partner Many2many in Leads-->
+            <xpath expr="//page[1]" position="before">
+                <page string="Contacts">
+                    <group>
+                        <field name="lead_partner_ids" widget="many2many" nolabel="1">
+                            <tree decoration-primary="is_confirmed == True">
+                                <field name="active" invisible="1" />
+                                <field name="is_confirmed" invisible="1" />
+                                <field name="sequence" widget="handle" />
+                                <field name="display_name" string="Name" />
+                                <field name="function" />
+                                <field name="phone" />
+                                <field name="mobile" />
+                                <field name="email" />
+                                <control>
+                                    <create string="Add a Contact" />
+                                </control>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <!--
+    =================CUSTOM OPPORTUNITY FORM VIEW========================
+  -->
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+        <field name="arch" type="xml">
+            <!-- Hide Meeting smart button -->
+            <xpath
+                expr="//button[@name='action_schedule_meeting']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide probability -->
+            <!-- <xpath expr="//field[@name='planned_revenue']/../span" position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath>
+      <xpath expr="//field[@name='probability']/../.." position="attributes">
+        <attribute name="invisible">True</attribute>
+      </xpath> -->
+            <!-- Add external map button in Opportunity view -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_inline oe_stat_button"
+                    name="open_map"
+                    type="object"
+                    string="Map"
+                    icon="fa-map-marker"
+                />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">True</attribute>
+            </xpath>
+            <!-- Display Customer with full address and add website -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="context">{'show_address': 1}</attribute>
+                <attribute name="options">{"always_reload": True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field
+                    name="website"
+                    widget="url"
+                    placeholder="e.g. https://www.akretion.com"
+                    attrs="{'invisible': [('website', '=', False)]}"
+                />
+            </xpath>
+            <!-- Hide Customer's phone and mail -->
+            <xpath expr="//label[@for='email_from']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_address_email']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_address_phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide fields from the group Expected closing date, Initial Contact info, -->
+            <xpath expr="//field[@name='date_deadline']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//group[@name='Misc']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide 'Follow Up' page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='lead']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add compnay_id field on top of the screen-->
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field
+                    name="company_id"
+                    string="Band"
+                    groups="base.group_multi_company"
+                    options="{'no_create': True}"
+                />
+            </xpath>
+            <!-- Add Customer 'Show' fields -->
+            <xpath expr="//field[@name='tag_ids']/.." position="after">
+                <field name="is_structure" invisible="1" />
+                <group attrs="{'invisible': [('is_structure', '=', False)]}">
+                    <field name="structure_type" invisible="1" />
+                    <field name="structure_capacity" widget="selection" />
+                    <!-- Approx. date fields not for venues -->
+                    <label
+                        for="struct_date_begin"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    />
+                    <div
+                        class="o_row"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    >
+                        <field name="struct_date_begin" />
+                        <span
+                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                            class="oe_read_only"
+                        > - </span>
+                        <span class="oe_edit_only"> - </span>
+                        <field name="struct_date_end" />
+                    </div>
+                </group>
+            </xpath>
+            <!-- Add Partners MANY2MANY in opportunities-->
+            <xpath expr="//page[1]" position="before">
+                <page string="Contacts">
+                    <group>
+                        <field
+                            name="lead_partner_ids"
+                            widget="many2many"
+                            nolabel="1"
+                            context="{}"
+                        >
+                            <tree decoration-primary="is_confirmed == True">
+                                <field name="active" invisible="1" />
+                                <field name="is_confirmed" invisible="1" />
+                                <field name="sequence" widget="handle" />
+                                <field name="display_name" string="Name" />
+                                <field name="function" />
+                                <field name="phone" />
+                                <field name="mobile" />
+                                <field name="email" />
+                                <control>
+                                    <create string="Add a Contact" />
+                                </control>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                <!-- Add Events ONE2MANY in opportunities-->
+                <page string="Events">
+                    <group>
+                        <field
+                            name="lead_event_ids"
+                            nolabel="1"
+                            context="{'default_lead_id': id, 'default_name': name, 'default_address_id': partner_id, 'default_date_begin': struct_date_begin, 'default_date_end': struct_date_begin}"
+                        >
+                            <tree>
+                                <field name="name" />
+                                <field name="date_begin" />
+                                <field name="date_end" />
+                                <field name="address_id" />
+                                <field name="stage_id" />
+                                <control>
+                                    <create string="Add an Event" />
+                                </control>
+                            </tree>
+                        </field>
+                    </group>
+                    <button
+                        class="oe_inline oe_stat_button"
+                        type="object"
+                        name="action_add_new_related_event"
+                        string="Add an Event"
+                    />
+                </page>
+            </xpath>
+            <!-- TODO HIDE Send message if not in debug mode. Following code not working... -->
+            <xpath expr="//field[@name='message_follower_ids']" position="attributes">
+        <!-- <attribute name="groups">base.group_no_one</attribute> -->
+      </xpath>
+        </field>
+    </record>
+    <!-- ===============TREE, KANBAN, FILTER and MENU VIEWS========================= -->
+    <!-- Custom FILTER and GROUP BY options in Leads SEARCH view -->
+    <record model="ir.ui.view" id="view_crm_case_leads_filter">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+        <field name="arch" type="xml">
+            <!-- Hide Expected Closing Date Group By -->
+            <xpath expr="//filter[@name='date_deadline']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add Show Period Group by -->
+            <xpath expr="//filter[@name='stage']" position="after">
+                <separator />
+            </xpath>
+            <xpath expr="//filter[@name='country']" position="after">
+                <filter
+                    name="struct_date_begin"
+                    string="Structure Date"
+                    context="{'group_by': 'struct_date_begin'}"
+                />
+                <separator />
+            </xpath>
+            <!-- Add an "Opened Leads" filter -->
+            <xpath expr="//filter[@name='won']" position="before">
+                <separator />
+                <filter
+                    string="Opened"
+                    name="opened"
+                    domain="['&amp;', ('probability', '&gt;', 0), ('active', '=', True)]"
+                />
+            </xpath>
+        </field>
+    </record>
+    <!-- Custom fields displayed in Leads TREE view -->
+    <record model="ir.ui.view" id="crm_case_tree_view_leads">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads" />
+        <field name="arch" type="xml">
+            <!-- Hide Contact name -->
+            <xpath expr="//field[@name='contact_name']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="before">
+                <field name="user_id" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Custom FILTER and GROUP BY options in Opportunities SEARCH view -->
+    <record model="ir.ui.view" id="view_crm_case_opportunities_filter">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+        <field name="arch" type="xml">
+            <!-- Hide Expected Closing Date filter -->
+            <xpath expr="//filter[@name='close_this_month']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Filter by overdue date -->
+            <xpath expr="//filter[@name='overdue_opp']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add Show Period Group by -->
+            <xpath expr="//filter[@name='stage']" position="after">
+                <separator />
+            </xpath>
+            <xpath expr="//filter[@name='country']" position="after">
+                <filter
+                    name="struct_date_begin"
+                    string="Structure Date"
+                    context="{'group_by': 'struct_date_begin'}"
+                />
+                <separator />
+            </xpath>
+        </field>
+    </record>
+    <!-- Custom fields displayed in Opportunities KANBAN view -->
+    <record id="crm_case_kanban_view_leads" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
+        <field name="arch" type="xml">
+            <!-- Hide partner_id -->
+            <xpath expr="//t[@t-esc='record.partner_id.value']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//span[@t-if='record.partner_id.value']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add City, country and Date begin -->
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="city" />
+                <field name="country_code" />
+                <field name="struct_short_date" />
+            </xpath>
+            <xpath
+                expr="(//span[@t-if='record.partner_id.value']/../t)[position() = 1]"
+                position="before"
+            >
+                <span t-if="record.struct_short_date.value">
+                    <t t-esc="record.struct_short_date.value" />
+                </span>
+                <t>
+                    <span t-if="record.struct_short_date.value"> </span>
+                </t>
+                <span t-if="record.city.value">
+                    <t t-esc="record.city.value" />
+                </span>
+                <t>
+                    <span t-if="record.city.value"> </span>
+                </t>
+                <span t-if="record.country_code.value">
+                    <t t-esc="record.country_code.value" />
+                </span>
+                <t>
+                    <span t-if="record.country_code.value"> </span>
+                </t>
+            </xpath>
+        </field>
+    </record>
+    <!-- Custom KANBAN Quick create opportunity -->
+    <record id="quick_create_opportunity_form" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form" />
+        <field name="arch" type="xml">
+            <!-- Replace Customer field -->
+            <field name="partner_id" position="replace" />
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="partner_id" required="True" />
+            </xpath>
+            <!-- Rename Opportunity's name label -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Opportunity's name</attribute>
+            </xpath>
+            <!-- Set Band field visible-->
+            <field name="company_id" position="replace" />
+            <xpath expr="//field[@name='name']" position="after">
+                <field
+                    name="company_id"
+                    string="Band"
+                    groups="base.group_multi_company"
+                    options="{'no_create_edit': True, 'no_open': True}"
+                />
+            </xpath>
+        </field>
+    </record>
+    <!-- Add search_default "Opened Leads" to Leads menu -->
+    <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
+        <field
+            name="context"
+        >{'search_default_opened' : 1, 'group_by': 'stage_id', 'default_type': 'lead'}</field>
+    </record>
+    <!-- ====================CUSTOM MENU ACTIONS ========================-->
+    <!-- Main menu "Leads" direct loading leads tree view -->
+    <record model="ir.ui.menu" id="crm.crm_menu_leads">
+        <field name="action" eval="False" />
+    </record>
+    <menuitem
+        id="crm.menu_crm_leads"
+        name="Leads"
+        parent="crm.crm_menu_root"
+        sequence="5"
+        action="crm.crm_lead_all_leads"
+        groups="crm.group_use_lead"
+    />
+    <!-- Hide Customers menu, display Festivals and Venues -->
+    <record model="ir.ui.menu" id="crm.res_partner_menu_customer">
+        <field name="action" eval="False" />
+    </record>
+    <menuitem
+        id="crm_lead_menu_festivals"
+        name="Festivals"
+        parent="crm.crm_menu_sales"
+        action="partner_structure.action_festivals"
+        sequence="5"
+    />
+    <menuitem
+        id="crm_lead_menu_venues"
+        name="Venues"
+        parent="crm.crm_menu_sales"
+        action="partner_structure.action_venues"
+        sequence="5"
+    />
+    <!-- Hide Lead tags menu as they are related (and readonly) to the Customer's -->
+    <record model="ir.ui.menu" id="crm.menu_crm_lead_categ">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
+    </record>
+    <!-- Display Stage menu for Sales Managers instead of only debug mode-->
+    <record model="ir.ui.menu" id="crm.menu_crm_lead_stage_act">
+        <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager')])]" />
+    </record>
+</odoo>

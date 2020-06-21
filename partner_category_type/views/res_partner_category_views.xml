@@ -64,19 +64,6 @@
         <field name="arch" type="xml">
             <search string="Search Categories">
                 <field name="category_type_id" />
-                <!-- TODO : find a way to filter by Structure/Contact category type.
-            Passing {'structure_categ_type_id' : ref('crm_booking.structure_categ_type')}
-            in the action's context doesn't work as the filter object don't access to this action's context -->
-                <!-- <filter
-                string="For Structures"
-                name="structure"
-                domain="[('category_type_id', '=', context.get('structure_categ_type_id'))]"
-            />
-            <filter
-                string="For Contacts"
-                name="contact"
-                domain="[('category_type_id', '=', context.get('structure_categ_type_id'))]"
-            /> -->
                 <group expand="0" string="Group By" colspan="16">
                     <filter
                         string="Type"
