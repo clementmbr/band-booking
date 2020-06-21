@@ -10,12 +10,12 @@ class Stage(models.Model):
     def unlink(self):
         """Prevent from deleting mandatory 'Done' stage and display a message if
         the deleted stage is still linked to leads."""
-        to_unlink = self - self.env.ref("partner_structure.stage_done")
+        to_unlink = self - self.env.ref("band_booking.stage_done")
         if len(to_unlink) < len(self):
             raise UserError(
                 _(
                     """It is not allowed to delete the 'Done' stage as it is used
-                    by the 'partner_structure' module to link Contacts with 'Done'\
+                    by the 'band_booking' module to link Contacts with 'Done'\
                     leads."""
                 )
             )

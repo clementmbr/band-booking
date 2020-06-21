@@ -299,11 +299,7 @@ class Partner(models.Model):
                     [
                         ("partner_id", "=", partner.id),
                         ("type", "=", "opportunity"),
-                        (
-                            "stage_id",
-                            "!=",
-                            self.env.ref("partner_structure.stage_done").id,
-                        ),
+                        ("stage_id", "!=", self.env.ref("band_booking.stage_done").id,),
                     ]
                 )
             else:
@@ -311,11 +307,7 @@ class Partner(models.Model):
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
                         ("type", "=", "opportunity"),
-                        (
-                            "stage_id",
-                            "!=",
-                            self.env.ref("partner_structure.stage_done").id,
-                        ),
+                        ("stage_id", "!=", self.env.ref("band_booking.stage_done").id,),
                     ]
                 )
 
@@ -343,22 +335,14 @@ class Partner(models.Model):
                 partner.opp_done_count = self.env["crm.lead"].search_count(
                     [
                         ("partner_id", "=", partner.id),
-                        (
-                            "stage_id",
-                            "=",
-                            self.env.ref("partner_structure.stage_done").id,
-                        ),
+                        ("stage_id", "=", self.env.ref("band_booking.stage_done").id,),
                     ]
                 )
             else:
                 partner.opp_done_count = self.env["crm.lead"].search_count(
                     [
                         ("partner_id", "in", partner.related_structure_ids.ids),
-                        (
-                            "stage_id",
-                            "=",
-                            self.env.ref("partner_structure.stage_done").id,
-                        ),
+                        ("stage_id", "=", self.env.ref("band_booking.stage_done").id,),
                     ]
                 )
 
@@ -432,13 +416,13 @@ class Partner(models.Model):
         if self.is_structure:
             domain = [
                 ("partner_id", "=", self.id),
-                ("stage_id", "!=", self.env.ref("partner_structure.stage_done").id),
+                ("stage_id", "!=", self.env.ref("band_booking.stage_done").id),
                 ("type", "=", "opportunity"),
             ]
         else:
             domain = [
                 ("partner_id", "in", self.related_structure_ids.ids),
-                ("stage_id", "!=", self.env.ref("partner_structure.stage_done").id),
+                ("stage_id", "!=", self.env.ref("band_booking.stage_done").id),
                 ("type", "=", "opportunity"),
             ]
 
@@ -460,12 +444,12 @@ class Partner(models.Model):
         if self.is_structure:
             domain = [
                 ("partner_id", "=", self.id),
-                ("stage_id", "=", self.env.ref("partner_structure.stage_done").id),
+                ("stage_id", "=", self.env.ref("band_booking.stage_done").id),
             ]
         else:
             domain = [
                 ("partner_id", "in", self.related_structure_ids.ids),
-                ("stage_id", "=", self.env.ref("partner_structure.stage_done").id),
+                ("stage_id", "=", self.env.ref("band_booking.stage_done").id),
             ]
 
         act_window["domain"] = domain
