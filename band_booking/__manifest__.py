@@ -7,7 +7,14 @@
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "www.akretion.com.br",
-    "depends": [],
-    "data": [],
+    "depends": [
+        "partner_structure",
+        "base_usability",  # https://github.com/akretion/odoo-usability
+        "web_form_background_color",  # https://github.com/clementmbr/crm-booking],
+    ],
+    "data": ["data/crm_stage.xml", "data/crm_lost_reason.xml"],
     "demo": [],
+    "post_init_hook": "post_init_hook",
+    "installable": True,
+    "application": True,
 }

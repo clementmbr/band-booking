@@ -13,16 +13,11 @@
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
         "partner_category_type",  # https://github.com/clementmbr/crm-booking
-        # Recomended for better UX but not mandatory :
-        "base_usability",  # https://github.com/akretion/odoo-usability
-        "web_form_background_color",  # https://github.com/clementmbr/crm-booking
     ],
     "data": [
         # Data
         "data/res_partner_category.xml",
         "data/res_partner_category_noupdate.xml",
-        "data/crm_stage.xml",
-        "data/crm_lost_reason.xml",
         # Security
         "security/partner_structure_security.xml",
         # Wizards
@@ -36,7 +31,6 @@
         "views/event_views.xml",
     ],
     "pre_init_hook": "pre_init_hook",
-    "post_init_hook": "post_init_hook",
     "installable": True,
     "application": False,
 }
