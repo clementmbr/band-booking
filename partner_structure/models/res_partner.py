@@ -278,26 +278,6 @@ class Partner(models.Model):
             self.struct_date_end = self.struct_date_begin
 
     # ---------------------------------------------------------------------
-    # Add related_structure button
-    # ---------------------------------------------------------------------
-
-    # vvvvv TODO - WORK IN PROGRESS vvvvvvv
-    #
-    # def action_add_related_partner(self):
-    #     """Button's action to add a new Partner to Many2many related_partner_ids
-    #     in Structure field"""
-    #     self.ensure_one()
-    #
-    #     xml_id = 'partner_structure.action_contacts'
-    #     action = self.env.ref(xml_id).read()[0]
-    #     # form = self.env.ref('partner_structure.view_partner_tree_contacts')
-    #     # action['views'] = [(form.id, 'form')]
-    #     action['target'] = 'new'
-    #     # action['context'] = {'default_related_structure_ids' : self.}
-    #
-    #     return action
-
-    # ---------------------------------------------------------------------
     # Propagate 'related_structure_ids' to Contact's childs and parents
     # ---------------------------------------------------------------------
     def propagate_related_struct(self):

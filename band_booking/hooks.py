@@ -64,7 +64,7 @@ def post_init_hook(cr, registry):
                 report=None,
             )
 
-        image_folder = "./odoo/external-src/crm-booking/band_booking/static/img/"
+        image_folder = "./odoo/external-src/band-booking/band_booking/static/img/"
         image_files = {}
         for file_name in listdir(image_folder):
             # To load a demo image, its name must be in the format "xml_id-demo.ext"

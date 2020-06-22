@@ -8,7 +8,7 @@
     "category": "Generic Modules",
     "depends": [
         "contacts",
-        "partner_category_type",  # https://github.com/clementmbr/crm-booking
+        "partner_category_type",  # https://github.com/clementmbr/band-booking
     ],
     "data": [
         # Data

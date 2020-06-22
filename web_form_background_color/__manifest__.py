@@ -9,7 +9,7 @@
     "version": "12.0.1.0.0",
     "license": "LGPL-3",
     "author": "Clément Mombereau",
-    "website": "https://github.com/clementmbr/crm-booking",
+    "website": "https://github.com/clementmbr/band-booking",
     "depends": [
         "web",
         "backend_theme_v12",  # https://github.com/Openworx/backend_theme
