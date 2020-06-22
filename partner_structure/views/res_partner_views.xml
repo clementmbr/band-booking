@@ -11,6 +11,7 @@
             <!-- Add a structure_type selection on top -->
             <xpath expr="//field[@name='company_type']" position="before">
                 <div>
+                    <field name="is_structure" invisible="1" />
                     <field
                         name="structure_type"
                         options="{'horizontal': true}"
@@ -38,28 +39,6 @@
                     context="{'default_category_type_id': context.get('default_category_type')}"
                 />
             </xpath>
-            <!-- MOVE Job Position and HIDE Contact type in non-edit mode -->
-            <field name="function" position="replace" />
-            <xpath expr="//field[@name='type']" position="before">
-                <field
-                    name="function"
-                    placeholder="e.g. Programmer"
-                    attrs="{'invisible': [('is_company','=', True)]}"
-                />
-                <label
-                    for="type"
-                    class="oe_edit_only"
-                    attrs="{'invisible': [('parent_id','=', False)]}"
-                />
-            </xpath>
-            <xpath expr="//field[@name='type']" position="attributes">
-                <attribute name="class">oe_edit_only</attribute>
-                <attribute name="nolabel">1</attribute>
-            </xpath>
-            <!-- Set Country field required -->
-            <xpath expr="//field[@name='country_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
             <!-- ADD Special Structure fields-->
             <xpath expr="//field[@name='type']/../.." position="before">
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
@@ -68,7 +47,7 @@
                         widget="selection"
                         class="col-12 col-lg-6"
                     />
-                    <!-- Approx. date fields not for venues -->
+                    <!-- Structure date fields not for venues -->
                     <label
                         for="struct_date_begin"
                         attrs="{'invisible': [('structure_type', '=', 'venue')]}"
@@ -86,138 +65,6 @@
                         <field name="struct_date_end" />
                     </div>
                 </group>
-            </xpath>
-            <!-- Hide vat, title and lang field, purchase group and Misc group-->
-            <xpath expr="//field[@name='vat']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='title']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='lang']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//group[@name='purchase']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath
-                expr="//page[@name='sales_purchases']/group/group[3]"
-                position="attributes"
-            >
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Add social media fields to the partner -->
-            <xpath expr="//field[@name='website']" position="after">
-                <field
-                    name="facebook"
-                    widget="url"
-                    placeholder="e.g. https://www.fb.com/companyname"
-                />
-                <field
-                    name="instagram"
-                    widget="url"
-                    placeholder="e.g. https://www.instagram.com/companyname"
-                />
-            </xpath>
-            <!-- ======================== CUSTOM BUTTONS ============================= -->
-            <!-- HIDE Meeting button -->
-            <xpath expr="//button[@name='schedule_meeting']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//button[@name='open_route_map']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- HIDE native Smart button to Opportunities -->
-            <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
-                position="attributes"
-            >
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- SMART BUTTON to create lead if no one  -->
-            <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
-                position="after"
-            >
-                <field name="is_structure" invisible="1" />
-                <button
-                    class="oe_stat_button o_res_partner_tip_opp"
-                    type="object"
-                    attrs="{'invisible': ['|', '|', ('is_structure', '=', False), ('opportunity_count', '&gt;', 0), ('lead_count', '&gt;', 0)]}"
-                    name="action_lead_from_partner"
-                    string="Create a Lead"
-                    icon="fa-star"
-                    groups="sales_team.group_sale_salesman"
-                />
-                <!-- SMART BUTTON to related Leads if existing -->
-                <button
-                    class="oe_stat_button o_res_partner_tip_opp"
-                    type="object"
-                    attrs="{'invisible': ['|', ('customer', '=', False), ('lead_count', '&lt;', 1)]}"
-                    name="action_related_lead"
-                    icon="fa-star"
-                    groups="sales_team.group_sale_salesman"
-                >
-                    <field string="Lead" name="lead_count" widget="statinfo" />
-                </button>
-                <!-- SMART BUTTON to related Opportunities if existing -->
-                <button
-                    class="oe_stat_button o_res_partner_tip_opp"
-                    type="object"
-                    attrs="{'invisible': ['|', ('customer', '=', False), ('opportunity_count', '&lt;', 1)]}"
-                    name="action_related_opportunity"
-                    icon="fa-star"
-                    groups="sales_team.group_sale_salesman"
-                >
-                    <field
-                        string="Opportunity"
-                        name="opportunity_count"
-                        widget="statinfo"
-                    />
-                </button>
-                <!-- SMART BUTTON to DONE Opportunities -->
-                <button
-                    class="oe_stat_button o_res_partner_tip_opp"
-                    type="object"
-                    attrs="{'invisible': ['|', ('customer', '=', False), ('opp_done_count', '&lt;', 1)]}"
-                    name="action_done_opportunity"
-                    icon="fa-star"
-                    groups="sales_team.group_sale_salesman"
-                >
-                    <field string="Done" name="opp_done_count" widget="statinfo" />
-                </button>
-                <!-- SMART BUTTON to LOST Opportunities -->
-                <button
-                    class="oe_stat_button o_res_partner_tip_opp"
-                    type="object"
-                    attrs="{'invisible': ['|', ('customer', '=', False), ('opp_lost_count', '&lt;', 1)]}"
-                    name="action_lost_opportunity"
-                    icon="fa-star"
-                    groups="sales_team.group_sale_salesman"
-                >
-                    <field string="Lost" name="opp_lost_count" widget="statinfo" />
-                </button>
-            </xpath>
-            <!-- BUTTON to Confirm a Contact-->
-            <xpath expr="//button[@name='toggle_active']" position="before">
-                <button
-                    name="toogle_confirmed"
-                    type="object"
-                    class="oe_stat_button"
-                    icon="fa-check-square"
-                    attrs="{'invisible' : [('is_structure', '=', True)]}"
-                >
-                    <field
-                        name="is_confirmed"
-                        widget="boolean_button"
-                        options="{'terminology': {
-                          'string_true': 'Confirmed',
-                          'hover_true': &quot;Cancel&quot;,
-                          'string_false': 'Not Confirmed',
-                          'hover_false': &quot;Confirm&quot;,
-                        }}"
-                    />
-                </button>
             </xpath>
             <!--
                 ===================== CUSTOM M2M, PAGE and CHILDS =====================
@@ -324,9 +171,8 @@
                             domain="[('is_structure', '=', False )]"
                             context="{'partner_tag': True}"
                         >
-                            <tree decoration-primary="is_confirmed == True">
+                            <tree>
                                 <field name="active" invisible="1" />
-                                <field name="is_confirmed" invisible="1" />
                                 <field name="sequence" widget="handle" />
                                 <field name="display_name" string="Name" />
                                 <field name="function" />

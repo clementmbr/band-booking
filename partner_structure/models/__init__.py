@@ -1,1 +1,1 @@
-from . import crm_lead, event, res_partner
+from . import res_partner

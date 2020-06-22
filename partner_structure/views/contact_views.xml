@@ -7,9 +7,6 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
-                <attribute name="decoration-primary">is_confirmed == True</attribute>
-            </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
                 <!-- TODO : Add tag to contact tree view when there will be enough demo partners with different tags to worth it -->
                 <!-- <field
@@ -19,7 +16,6 @@
                     string="Tags"
                 /> -->
                 <field name="display_related_structure_names" />
-                <field name="is_confirmed" invisible="1" />
             </xpath>
         </field>
     </record>
@@ -28,41 +24,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_res_partner_filter" />
         <field name="arch" type="xml">
-            <!-- Hide filter options -->
-            <xpath expr="//filter[@name='filter_my_partners']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='type_person']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='type_company']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='customer']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='supplier']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='group_company']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Add Filter by Creation date -->
-            <xpath expr="//field[@name='parent_id']" position="after">
-                <filter
-                    string="Creation Date"
-                    name="creation_date"
-                    date="create_date"
-                />
-            </xpath>
-            <!-- Add Filter for Confirmed Contacts -->
-            <xpath expr="//filter[@name='inactive']" position="before">
-                <filter
-                    string="Confirmed"
-                    name="is_confirmed"
-                    domain="[('is_confirmed', '=', True)]"
-                />
-            </xpath>
+            <!-- Add filter by Structure Date -->
             <xpath expr="//filter[@name='group_country']" position="after">
                 <filter
                     name="struct_date_begin"
@@ -119,40 +81,6 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="base.view_partner_form" />
         <field name="act_window_id" ref="action_contacts" />
-    </record>
-    <!-- ====== 'Tree Menu Action' to confirm many Contacts at once =====-->
-    <record id="contact_confirmed_fields_lines" model="ir.server.object.lines">
-        <field name="col1" ref="partner_structure.field_res_partner__is_confirmed" />
-        <field name="value">True if record.is_structure == False else False</field>
-        <field name="type">equation</field>
-    </record>
-    <record id="action_contact_confirmed" model="ir.actions.server">
-        <field name="name">Contacts Confirmed</field>
-        <field name="model_id" ref="partner_structure.model_res_partner" />
-        <field name="binding_model_id" ref="partner_structure.model_res_partner" />
-        <field name="binding_type">action</field>
-        <field name="state">object_write</field>
-        <field
-            name="fields_lines"
-            eval="[(6, 0, [ref('partner_structure.contact_confirmed_fields_lines')])]"
-        />
-    </record>
-    <!-- ====== 'Tree Menu Action' to set many Contacts 'Not Confirmed' at once =====-->
-    <record id="contact_not_confirmed_fields_lines" model="ir.server.object.lines">
-        <field name="col1" ref="partner_structure.field_res_partner__is_confirmed" />
-        <field name="value">False</field>
-        <field name="type">equation</field>
-    </record>
-    <record id="action_contact_not_confirmed" model="ir.actions.server">
-        <field name="name">Contacts Not Confirmed</field>
-        <field name="model_id" ref="partner_structure.model_res_partner" />
-        <field name="binding_model_id" ref="partner_structure.model_res_partner" />
-        <field name="binding_type">action</field>
-        <field name="state">object_write</field>
-        <field
-            name="fields_lines"
-            eval="[(6, 0, [ref('partner_structure.contact_not_confirmed_fields_lines')])]"
-        />
     </record>
     <!-- ================= FESTIVAL LIST ========================-->
     <!-- Custom view_partner_tree for FESTIVALS -->
@@ -351,29 +279,4 @@
         groups="base.group_system"
         sequence="4"
     />
-    <!-- Hide Sectores of Activity, Banks and Localization menus when not in debug with assets mode -->
-    <record model="ir.ui.menu" id="contacts.res_partner_industry_menu">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_localisation">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_partner">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_group">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_state_partner">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_config_bank_accounts">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_action_res_bank_form">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_action_res_partner_bank_form">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
 </odoo>
