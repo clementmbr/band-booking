@@ -13,7 +13,7 @@ Partner Category Type
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-clementmbr%2Fcrm--booking-lightgray.png?logo=github
+.. |badge3| image:: https://img.shields.io/badge/github-clementmbr%2Fband--booking-lightgray.png?logo=github
     :target: https://github.com/clementmbr/band-booking/tree/12.0/partner_category_type
     :alt: clementmbr/band-booking
 
@@ -22,22 +22,12 @@ Partner Category Type
 Add a "Category type" on partner's categories to differentiate categories for some type
 of partner.
 
-Used in module [partner_structure](https://github.com/clementmbr/band-booking/tree/12.0/partner_structure) to differentiate Structure partners (festival, venue...) from Contact partners.
+Used in module `partner_structure <../partner_structure>`_ to differentiate Structure partners (festival, venue...) from Contact partners.
 
 **Table of contents**
 
 .. contents::
    :local:
-
-Usage
-=====
-
-
-
-Known issues / Roadmap
-======================
-
-
 
 Bug Tracker
 ===========

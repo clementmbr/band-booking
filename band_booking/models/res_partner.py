@@ -245,7 +245,7 @@ class Partner(models.Model):
         return act_window
 
     # ---------------------------------------------------------------------
-    # Method for custom Partner Autocomplete
+    # Catch Facebook and other info throughout core module partner_autocomplete
     # ---------------------------------------------------------------------
 
     def _build_additional_contact(self, additional_info):

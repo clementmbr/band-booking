@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    "name": "Custom CRM for Booking",
+    "name": "Partner Structure",
     "version": "12.0.0.0.1",
     "author": "Akretion",
     "website": "www.akretion.com",

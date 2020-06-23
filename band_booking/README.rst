@@ -19,13 +19,33 @@ Band Booking
 
 |badge1| |badge2| |badge3| 
 
-A Booking management software based on Odoo CE ERP and few OCA modules.
+A Booking management module for music band, gathering some OCA modules and other custom ones. It also directly adds some custom features such as :
 
-- Manage Contacts, Venues, Festivals
-- Qualify Leads and follow Negociations
-- Follow your Tour Agenda
+    **Partners**
 
-Gather various OCA modules with some custom modules, mainly ``partner_structure`` creating the basic difference between "Structure" partners (Festivals, Venues...) and "Contact" partners.
+    - Custom Contacts menus and search view
+    - Facebook/Instagram fields
+    - Confirmed/Not confirmed state in 'not-structure' partners
+    - Link with structure's (or related structure's) leads from form view
+    - Catch Facebook and additional info from core module *partner_autocomplete*
+
+    **Leads**
+
+    - Customer's special Strucure fields in form views
+    - Display customer's related contacts (when is a Structure)
+    - Create Events related to the current opportunity
+    - Auto-convert from Lead to opportunity
+    - External Map button to customer's address
+    - Custom kanban view with Structure info
+    - Custom default Lost Reason and Stages
+
+    **Events**
+
+    - Default Calendar view with custom information
+    - Fields linking with related Lead and Structure
+    - ``company_id`` field for multi-company (=multi-band) events management
+    - Event link field
+    - External Map button to structure's address
 
 **Table of contents**
 
@@ -35,7 +55,9 @@ Gather various OCA modules with some custom modules, mainly ``partner_structure`
 Configuration
 =============
 
-Just install module `band_booking` and you're ready!
+``band_booking`` is a top-level module, so it is necessary to have all its odoo dependencies available for installation before installing it.
+
+Along with `partner_category_type <../partner_category_type>`_ and `partner_structure <../partner_structure>`_, the module depends on `crm_stage_type <https://github.com/OCA/crm>`_ and `partner_external_map <https://github.com/OCA/partner-contact>`_ from the OCA.
 
 Usage
 =====

@@ -14,9 +14,6 @@
         "partner_structure",  # https://github.com/clementmbr/band-booking
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
-        # Only for a better UX :
-        "base_usability",  # https://github.com/akretion/odoo-usability
-        "web_form_background_color",  # https://github.com/clementmbr/band-booking
     ],
     "data": [
         # Data

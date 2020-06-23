@@ -368,13 +368,35 @@ ul.auto-toc {
 !! changes will be overwritten.                   !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/clementmbr/band-booking/tree/12.0/band_booking"><img alt="clementmbr/band-booking" src="https://img.shields.io/badge/github-clementmbr%2Fband--booking-lightgray.png?logo=github" /></a></p>
-<p>A Booking management software based on Odoo CE ERP and few OCA modules.</p>
+<p>A Booking management module for music band, gathering some OCA modules and other custom ones. It also directly adds some custom features such as :</p>
+<blockquote>
+<p><strong>Partners</strong></p>
 <ul class="simple">
-<li>Manage Contacts, Venues, Festivals</li>
-<li>Qualify Leads and follow Negociations</li>
-<li>Follow your Tour Agenda</li>
+<li>Custom Contacts menus and search view</li>
+<li>Facebook/Instagram fields</li>
+<li>Confirmed/Not confirmed state in ‘not-structure’ partners</li>
+<li>Link with structure’s (or related structure’s) leads from form view</li>
+<li>Catch Facebook and additional info from core module <em>partner_autocomplete</em></li>
 </ul>
-<p>Gather various OCA modules with some custom modules, mainly <tt class="docutils literal">partner_structure</tt> creating the basic difference between “Structure” partners (Festivals, Venues…) and “Contact” partners.</p>
+<p><strong>Leads</strong></p>
+<ul class="simple">
+<li>Customer’s special Strucure fields in form views</li>
+<li>Display customer’s related contacts (when is a Structure)</li>
+<li>Create Events related to the current opportunity</li>
+<li>Auto-convert from Lead to opportunity</li>
+<li>External Map button to customer’s address</li>
+<li>Custom kanban view with Structure info</li>
+<li>Custom default Lost Reason and Stages</li>
+</ul>
+<p><strong>Events</strong></p>
+<ul class="simple">
+<li>Default Calendar view with custom information</li>
+<li>Fields linking with related Lead and Structure</li>
+<li><tt class="docutils literal">company_id</tt> field for multi-company (=multi-band) events management</li>
+<li>Event link field</li>
+<li>External Map button to structure’s address</li>
+</ul>
+</blockquote>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -392,7 +414,8 @@ ul.auto-toc {
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#id1">Configuration</a></h1>
-<p>Just install module <cite>band_booking</cite> and you’re ready!</p>
+<p><tt class="docutils literal">band_booking</tt> is a top-level module, so it is necessary to have all its odoo dependencies available for installation before installing it.</p>
+<p>Along with <a class="reference external" href="../partner_category_type">partner_category_type</a> and <a class="reference external" href="../partner_structure">partner_structure</a>, the module depends on <a class="reference external" href="https://github.com/OCA/crm">crm_stage_type</a> and <a class="reference external" href="https://github.com/OCA/partner-contact">partner_external_map</a> from the OCA.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#id2">Usage</a></h1>
