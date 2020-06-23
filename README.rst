@@ -11,7 +11,7 @@ Custom Odoo modules to help manage music band booking (and more!) with `Odoo <ht
 `partner_structure <partner_structure>`_                  Distinguish "Structure" partners (Festivals and Venues for the moment) from classic "Contacts" partners.
 `partner_category_type <partner_category_type>`_          Create "Category types" allowing to make the difference between Strucures categories and classic Contacts categories.
 `band_booking <band_booking>`_                            Special link between Contacts, CRM Leads and Events along other small customisations.
-`web_form_background_color <web_form_background_color>`_  Pure UX module displaying a custom background color in Leads and Events form views.
+`web_form_background_color <web_form_background_color>`_  Pure UX module displaying a custom background color in Leads and Events form view.
 ========================================================  =====================================================================================================================
 
 What can I do with that ?
@@ -21,6 +21,12 @@ Manage your contacts
 ~~~~~~~~~~~~
 
 No more headaches with obsolete and unreadable Excel sheets !
+
+.. image:: readme/img/festival_list.png
+.. image:: readme/img/contact_list.png
+.. image:: readme/img/festival_form.png
+.. image:: readme/img/contact_form.png
+
 
 Qualify your leads and follow up negociations
 ~~~~~~~~~
