@@ -24,6 +24,10 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_res_partner_filter" />
         <field name="arch" type="xml">
+            <!-- Allow search by related_structure_ids -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="display_related_structure_names" />
+            </xpath>
             <!-- Add filter by Structure Date -->
             <xpath expr="//filter[@name='group_country']" position="after">
                 <filter

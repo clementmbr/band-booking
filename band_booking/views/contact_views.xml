@@ -54,13 +54,6 @@
                     domain="[('is_confirmed', '=', True)]"
                 />
             </xpath>
-            <xpath expr="//filter[@name='group_country']" position="after">
-                <filter
-                    name="struct_date_begin"
-                    string="Structure Date"
-                    context="{'group_by': 'struct_date_begin'}"
-                />
-            </xpath>
         </field>
     </record>
     <!-- ====== 'Tree Menu Action' to confirm many Contacts at once =====-->
