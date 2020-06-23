@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import MissingError, ValidationError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
-# TODO : allow translation of these structure types
+# TODO : allow translation for these structure types
 STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
 STRUCTURE_CAPACITY = [
     ("inf1k", "< 1000"),
@@ -114,6 +114,7 @@ class Partner(models.Model):
     @api.depends("struct_date_begin", "struct_date_end")
     def _compute_struct_short_date(self):
         """Display date in format DD/MM for Festivals tree view and CRM kanban view"""
+        # TODO : Display MM/DD or DD/MM depending on user language
         for partner in self:
             date_begin = partner.struct_date_begin
             date_end = partner.struct_date_end

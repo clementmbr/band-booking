@@ -12,6 +12,8 @@ class Partner(models.Model):
     facebook = fields.Char(help="Must begin by 'http://' to activate URL link")
     instagram = fields.Char(help="Must begin by 'http://' to activate URL link")
 
+    display_phone = fields.Char("Phone/Mobile", compute="_compute_display_phone")
+
     # Confirmed partner ?
     is_confirmed = fields.Boolean(string="Confirmed", default=False)
 
@@ -24,6 +26,11 @@ class Partner(models.Model):
     lead_count = fields.Integer("Leads", compute="_compute_lead_count")
     opp_done_count = fields.Integer("Done", compute="_compute_opp_done_count")
     opp_lost_count = fields.Integer("Lost", compute="_compute_opp_lost_count")
+
+    @api.depends("mobile", "phone")
+    def _compute_display_phone(self):
+        for partner in self:
+            partner.display_phone = partner.mobile or partner.phone
 
     def toogle_confirmed(self):
         for partner in self:

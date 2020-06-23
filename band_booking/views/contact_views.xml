@@ -12,6 +12,12 @@
             <xpath expr="//field[@name='display_name']" position="after">
                 <field name="is_confirmed" invisible="1" />
             </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="display_phone" class="o_force_ltr" />
+            </xpath>
         </field>
     </record>
     <!-- Custom SEARCH partner Views for every kind of partner -->
