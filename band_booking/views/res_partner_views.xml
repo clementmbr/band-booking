@@ -5,7 +5,7 @@
   -->
     <record id="view_partner_form" model="ir.ui.view">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="inherit_id" ref="partner_structure.view_partner_form" />
         <field name="arch" type="xml">
             <!-- ======================== CUSTOM FIELDS ============================= -->
             <!-- MOVE Job Position and HIDE Contact type in non-edit mode -->
@@ -84,23 +84,29 @@
             </xpath>
             <!-- ======================== CUSTOM BUTTONS ============================= -->
             <!-- HIDE Meeting button -->
-            <xpath expr="//button[@name='schedule_meeting']" position="attributes">
+            <xpath
+                expr="/form/sheet/div/button[@name='schedule_meeting']"
+                position="attributes"
+            >
                 <attribute name="invisible">True</attribute>
             </xpath>
             <!-- HIDE Route button from partner_external_map module -->
-            <xpath expr="//button[@name='open_route_map']" position="attributes">
+            <xpath
+                expr="/form/sheet/div/button[@name='open_route_map']"
+                position="attributes"
+            >
                 <attribute name="invisible">True</attribute>
             </xpath>
             <!-- HIDE native  button to Opportunities -->
             <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                expr="/form/sheet/div/button[@name='%(crm.crm_lead_opportunities)d']"
                 position="attributes"
             >
                 <attribute name="invisible">True</attribute>
             </xpath>
             <!--  BUTTON to create lead if no one  -->
             <xpath
-                expr="//button[@name='%(crm.crm_lead_opportunities)d']"
+                expr="/form/sheet/div/button[@name='%(crm.crm_lead_opportunities)d']"
                 position="after"
             >
                 <field name="is_structure" invisible="1" />
@@ -163,7 +169,10 @@
                 </button>
             </xpath>
             <!-- BUTTON to Confirm a Contact-->
-            <xpath expr="//button[@name='toggle_active']" position="before">
+            <xpath
+                expr="/form/sheet/div/button[@name='toggle_active']"
+                position="before"
+            >
                 <button
                     name="toogle_confirmed"
                     type="object"
@@ -185,12 +194,15 @@
             </xpath>
             <!-- Decorate related partners in blue if confirmed -->
             <xpath
-                expr="//field[@name='related_partner_ids']/tree"
+                expr="/form/sheet/notebook/page/group/field[@name='related_partner_ids']/tree"
                 position="attributes"
             >
                 <attribute name="decoration-primary">is_confirmed == True</attribute>
             </xpath>
-            <xpath expr="//field[@name='related_partner_ids']/tree" position="inside">
+            <xpath
+                expr="/form/sheet/notebook/page/group/field[@name='related_partner_ids']/tree"
+                position="inside"
+            >
                 <field name="is_confirmed" invisible="1" />
             </xpath>
         </field>

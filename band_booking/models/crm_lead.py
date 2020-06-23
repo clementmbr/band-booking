@@ -114,7 +114,7 @@ class Lead(models.Model):
 
     def action_set_lost(self):
         """Archive related Events when lost"""
-        res = super(Lead, self).action_set_lost()
+        res = super().action_set_lost()
         for lead in self:
             for event in lead.lead_event_ids:
                 event.write({"active": False})
@@ -122,7 +122,7 @@ class Lead(models.Model):
 
     def toggle_active(self):
         """Active related Events when restore"""
-        res = super(Lead, self).toggle_active()
+        res = super().toggle_active()
         for lead in self:
             for event in self.env["event.event"].search([("active", "=", False)]):
                 if event.lead_id.id == lead.id:
