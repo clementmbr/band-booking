@@ -6,6 +6,11 @@ Custom Odoo modules to help manage music band booking (and more!) with `Odoo <ht
 
   A basic Odoo project usecase with these modules can be found at the `odoo-band-template <https://github.com/clementmbr/odoo-band-template>`_ repository.
 
+.. contents::
+   :local:
+
+Available modules
+=======
 
 ========================================================  =====================================================================================================================
 `partner_structure <partner_structure>`_                  Distinguish "Structure" partners (Festivals and Venues for the moment) from classic "Contacts" partners.
