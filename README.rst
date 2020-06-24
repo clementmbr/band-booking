@@ -6,8 +6,14 @@ Custom Odoo modules to help manage music band booking (and more!) with `Odoo <ht
 
   A basic Odoo project usecase with these modules can be found at the `odoo-band-template <https://github.com/clementmbr/odoo-band-template>`_ repository.
 
+------------
+
+**Table of contents**
+
 .. contents::
    :local:
+
+------------
 
 Available modules
 =======
@@ -27,11 +33,10 @@ Manage your contacts
 
 No more headaches with obsolete and unreadable Excel sheets !
 
-.. image:: readme/img/festival_list.png
-.. image:: readme/img/contact_list.png
-.. image:: readme/img/festival_form.png
-.. image:: readme/img/contact_form.png
-
+=================================== ==================================
+.. image:: readme/festival_list.png .. image:: readme/contact_list.png
+.. image:: readme/festival_form.png .. image:: readme/contact_form.png
+=================================== ==================================
 
 Qualify your leads and follow up negociations
 ~~~~~~~~~
