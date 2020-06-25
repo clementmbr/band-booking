@@ -4,7 +4,7 @@
 from datetime import datetime
 
 from odoo import _, api, fields, models
-from odoo.exceptions import MissingError, ValidationError
+from odoo.exceptions import MissingError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 # TODO : allow translation for these structure types
@@ -257,18 +257,6 @@ class Partner(models.Model):
     # ---------------------------------------------------------------------
     # Show period festival fields
     # ---------------------------------------------------------------------
-
-    @api.constrains("struct_date_begin", "struct_date_end")
-    def _check_closing_date(self):
-        self.ensure_one()
-        if self.struct_date_end and self.struct_date_begin:
-            if self.struct_date_end < self.struct_date_begin:
-                raise ValidationError(
-                    _(
-                        "The ending date cannot be earlier\
-                    than the beginning date."
-                    )
-                )
 
     @api.onchange("struct_date_begin")
     def onchange_date_begin(self):
