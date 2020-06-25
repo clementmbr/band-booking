@@ -1,4 +1,4 @@
-id,is_structure,is_company,is_confirmed,name,function,related_structure_ids/id,parent_id/id,category_id/id,city,country_id/id,mobile,phone,email,website,facebook,instagram,comment
+id,is_structure,is_company,is_checked,name,function,related_structure_ids/id,parent_id/id,category_id/id,city,country_id/id,mobile,phone,email,website,facebook,instagram,comment
 band_booking.contact_1,0,0,1,Constantinos Kyprianou ,Diretor,band_booking.festival_30,,,Gialiá,base.cy,,,constantinos.k@afrobananarepublic.com,,https://www.facebook.com/cotsios.pikatillis,,  archsenses@gmail.com
 band_booking.contact_2,0,0,0,Andreas Panteli ,Produção,band_booking.festival_30,,,Gialiá,base.cy,,,andreaspantelli@gmail.com,,https://www.facebook.com/andreas.panteli,,
 band_booking.contact_3,0,0,1,Claudio Saghbini ,Recepção artistas,band_booking.festival_30,,,Gialiá,base.cy,,,csaghbiz@gmail.com,,https://www.facebook.com/claudio.saghbini,,

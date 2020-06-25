@@ -174,20 +174,20 @@
                 position="before"
             >
                 <button
-                    name="toogle_confirmed"
+                    name="toogle_checked"
                     type="object"
                     class="oe_stat_button"
                     icon="fa-check-square"
                     attrs="{'invisible' : [('is_structure', '=', True)]}"
                 >
                     <field
-                        name="is_confirmed"
+                        name="is_checked"
                         widget="boolean_button"
                         options="{'terminology': {
-                          'string_true': 'Confirmed',
-                          'hover_true': &quot;Cancel&quot;,
-                          'string_false': 'Not Confirmed',
-                          'hover_false': &quot;Confirm&quot;,
+                          'string_true': 'Checked',
+                          'hover_true': &quot;Uncheck&quot;,
+                          'string_false': 'Unchecked',
+                          'hover_false': &quot;Check&quot;,
                         }}"
                     />
                 </button>
@@ -197,13 +197,13 @@
                 expr="/form/sheet/notebook/page/group/field[@name='related_partner_ids']/tree"
                 position="attributes"
             >
-                <attribute name="decoration-primary">is_confirmed == True</attribute>
+                <attribute name="decoration-primary">is_checked == True</attribute>
             </xpath>
             <xpath
                 expr="/form/sheet/notebook/page/group/field[@name='related_partner_ids']/tree"
                 position="inside"
             >
-                <field name="is_confirmed" invisible="1" />
+                <field name="is_checked" invisible="1" />
             </xpath>
         </field>
     </record>

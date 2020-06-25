@@ -15,7 +15,7 @@ class Partner(models.Model):
     display_phone = fields.Char("Phone/Mobile", compute="_compute_display_phone")
 
     # Confirmed partner ?
-    is_confirmed = fields.Boolean(string="Confirmed", default=False)
+    is_checked = fields.Boolean(string="Confirmed", default=False)
 
     # Compute lower stage_id for creating lead from partner
     lower_stage_id = fields.Many2one(
@@ -32,9 +32,9 @@ class Partner(models.Model):
         for partner in self:
             partner.display_phone = partner.mobile or partner.phone
 
-    def toogle_confirmed(self):
+    def toogle_checked(self):
         for partner in self:
-            partner.is_confirmed = not partner.is_confirmed
+            partner.is_checked = not partner.is_checked
 
     # ---------------------------------------------------------------------
     # Button to link (or create) leads from Structure
