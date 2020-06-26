@@ -6,6 +6,9 @@ Custom Odoo modules to help manage music band booking (and more!) with `Odoo <ht
 
   A basic Odoo project usecase with these modules can be found at the `odoo-band-template <https://github.com/clementmbr/odoo-band-template>`_ repository.
 
+
+*Presentation video coming soon...*
+
 ------------
 
 **Table of contents**
@@ -43,10 +46,18 @@ Qualify your leads and follow up negociations
 
 No more misunderstandings between the Booker and the Musicians !
 
+================================ ==================================
+.. image:: readme/crm_kanban.png .. image:: readme/crm_form.png
+================================ ==================================
+
 Follow up and share your previsional Tour Agenda
 ~~~~~~
 
 No more irational forecast !
+
+==================================== ==================================
+.. image:: readme/event_calendar.png .. image:: readme/event_form.png
+==================================== ==================================
 
 And more !
 ~~~~~
@@ -61,8 +72,8 @@ And more !
 Roadmap
 =====
 
-- Newsletters management
-- Translation in French and Brazilian portuguese
+- Newsletters management coming soon
+- Translation in French and Brazilian portuguese even sooner
 
 
 Author
