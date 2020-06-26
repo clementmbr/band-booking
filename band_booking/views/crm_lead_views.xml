@@ -426,14 +426,26 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads" />
         <field name="arch" type="xml">
-            <!-- Hide partner_id -->
+            <!-- Hide partner_id and lead tag_ids-->
             <xpath expr="//t[@t-esc='record.partner_id.value']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//span[@t-if='record.partner_id.value']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Add City, country and Date begin -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add Customer's tag, City, country and Date begin -->
+            <xpath expr="//field[@name='name']" position="after">
+                <div>
+                    <field
+                        name="partner_tag_ids"
+                        widget="many2many_tags"
+                        options="{'color_field': 'color'}"
+                    />
+                </div>
+            </xpath>
             <xpath expr="//field[@name='stage_id']" position="after">
                 <field name="city" />
                 <field name="country_code" />
