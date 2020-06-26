@@ -50,8 +50,14 @@ class EventEvent(models.Model):
         related="lead_id.planned_revenue",
     )
 
+    is_structure = fields.Boolean(
+        string="The Event Address is a Show Structure",
+        related="address_id.is_structure",
+        default="False",
+    )
+
     structure_capacity = fields.Selection(
-        related="lead_id.structure_capacity", readonly=True, store=True,
+        related="address_id.structure_capacity", readonly=True, store=True,
     )
 
     event_link = fields.Char(

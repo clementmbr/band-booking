@@ -54,6 +54,7 @@
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//div[hasclass('o_address_format')]/.." position="attributes">
+                <!-- This will let a residual 'div' in the fields_view_get. Invisible, but still there... -->
                 <attribute name="invisible">True</attribute>
             </xpath>
             <!-- 2) create the new group -->

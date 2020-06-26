@@ -70,42 +70,55 @@
                 />
             </xpath>
             <!-- ================ ADD FIELDS ==================== -->
-            <!-- Add Opportunity field-->
+            <!-- company_id and structure tags under the title-->
             <field name="company_id" position="replace" />
-            <xpath expr="//field[@name='organizer_id']" position="before">
-                <field
-                    name="company_id"
-                    groups="base.group_multi_company"
-                    options="{'no_create': True}"
-                />
-                <field name="lead_id" domain="[('type', '=', 'opportunity')]" />
-                <field name="company_currency" invisible="1" />
-                <field
-                    name="planned_revenue"
-                    widget="monetary"
-                    options="{'currency_field': 'company_currency'}"
-                />
-                <!-- TODO : Add a "for X shows" to notify that the revenue is for all the related events, if many -->
-            </xpath>
-            <xpath expr="//field[@name='address_id']" position="attributes">
-                <attribute name="domain">[('is_structure', '=', True)]</attribute>
-            </xpath>
-            <!-- Add structure_capacity and tags fields, replace Responsible-->
-            <field name="user_id" position="replace" />
-            <xpath expr="//field[@name='date_begin']/.." position="before">
-                <group>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div class="oe_inline">
+                    <field
+                        name="company_id"
+                        string="Band"
+                        groups="base.group_multi_company"
+                        options="{'no_create': True}"
+                        class="mr8"
+                    />
                     <field
                         name="partner_tag_ids"
                         widget="many2many_tags"
                         options="{'color_field': 'color', 'no_create_edit': True}"
+                        class="mr8"
                     />
-                    <field name="structure_capacity" widget="selection" />
+                </div>
+            </xpath>
+            <!-- Structure capacity under the address -->
+            <xpath expr="//field[@name='address_id']" position="attributes">
+                <attribute name="domain">[('is_structure', '=', True)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='address_id']" position="after">
+                <field name="is_structure" invisible="1" />
+                <field
+                    name="structure_capacity"
+                    widget="selection"
+                    attrs="{'invisible': [('is_structure', '=', False)]}"
+                />
+            </xpath>
+            <!-- Add Responsible, Opportunity and event's link-->
+            <field name="user_id" position="replace" />
+            <xpath expr="//field[@name='date_begin']/.." position="before">
+                <group>
+                    <field name="user_id" />
+                    <field name="lead_id" domain="[('type', '=', 'opportunity')]" />
+                    <field name="company_currency" invisible="1" />
+                    <field
+                        name="planned_revenue"
+                        widget="monetary"
+                        options="{'currency_field': 'company_currency'}"
+                    />
+                    <!-- TODO : Add a "for X shows" to notify that the revenue is for all the related events, if many -->
                     <field
                         name="event_link"
                         widget="url"
                         placeholder="e.g. https://www.facebook.com/events/450471162302496/"
                     />
-                    <field name="user_id" />
                 </group>
             </xpath>
         </field>
