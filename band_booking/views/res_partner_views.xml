@@ -12,35 +12,26 @@
             <field name="function" position="replace" />
             <!-- FIX: the universal xpath "//field[@name='type']" is not working for fields between the oe_title div
             and the notebook... Why ? Can it be fixed ?  -->
-            <xpath expr="/form/sheet/group/group/field[@name='type']" position="before">
+            <xpath
+                expr="/form/sheet/group/group/group/field[@name='type']"
+                position="before"
+            >
                 <field
                     name="function"
                     placeholder="e.g. Programmer"
                     attrs="{'invisible': [('is_company','=', True)]}"
                 />
-                <label
-                    for="type"
-                    class="oe_edit_only"
-                    attrs="{'invisible': [('parent_id','=', False)]}"
-                />
-            </xpath>
-            <xpath
-                expr="/form/sheet/group/group/field[@name='type']"
-                position="attributes"
-            >
-                <attribute name="class">oe_edit_only</attribute>
-                <attribute name="nolabel">1</attribute>
             </xpath>
             <!-- Set Country field required -->
             <xpath
-                expr="/form/sheet/group/group/div/field[@name='country_id']"
+                expr="/form/sheet/group/group/group/div/field[@name='country_id']"
                 position="attributes"
             >
                 <attribute name="required">True</attribute>
             </xpath>
             <!-- Hide vat, title and lang field, purchase group and Misc group-->
             <xpath
-                expr="/form/sheet/group/group/field[@name='vat']"
+                expr="/form/sheet/group/group/group/field[@name='vat']"
                 position="attributes"
             >
                 <attribute name="invisible">True</attribute>

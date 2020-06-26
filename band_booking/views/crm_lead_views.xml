@@ -44,18 +44,19 @@
             <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <div class="oe_inline">
                     <field
+                        name="company_id"
+                        string="Band"
+                        groups="base.group_multi_company"
+                        options="{'no_create': True}"
+                        class="mr8"
+                    />
+                    <field
                         name="partner_tag_ids"
                         widget="many2many_tags"
                         options="{'color_field': 'color', 'no_create_edit': True}"
                         class="mr8"
                     />
                     <field name="priority" widget="priority" class="mr8" />
-                    <field
-                        name="company_id"
-                        string="Band"
-                        groups="base.group_multi_company"
-                        options="{'no_create': True}"
-                    />
                 </div>
             </xpath>
             <!-- Hide CRM lead tags -->
@@ -195,18 +196,19 @@
             <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <div class="oe_inline">
                     <field
+                        name="company_id"
+                        string="Band"
+                        groups="base.group_multi_company"
+                        options="{'no_create': True}"
+                        class="mr8"
+                    />
+                    <field
                         name="partner_tag_ids"
                         widget="many2many_tags"
                         options="{'color_field': 'color', 'no_create_edit': True}"
                         class="mr8"
                     />
                     <field name="priority" widget="priority" class="mr8" />
-                    <field
-                        name="company_id"
-                        string="Band"
-                        groups="base.group_multi_company"
-                        options="{'no_create': True}"
-                    />
                 </div>
             </xpath>
             <!-- Hide CRM lead tags -->

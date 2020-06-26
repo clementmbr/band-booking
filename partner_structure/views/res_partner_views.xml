@@ -39,38 +39,117 @@
                     context="{'default_category_type_id': context.get('default_category_type')}"
                 />
             </xpath>
-            <!-- ADD Special Structure fields-->
-            <xpath expr="//field[@name='type']/../.." position="before">
-                <group attrs="{'invisible': [('is_structure', '=', False)]}">
-                    <field
-                        name="structure_capacity"
-                        widget="selection"
-                        class="col-12 col-lg-6"
-                    />
-                    <!-- Structure date fields not for venues -->
-                    <label
-                        for="struct_date_begin"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
-                    />
-                    <div
-                        class="o_row col-12 col-lg-6"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+            <!-- ================  Put all the type, address and vat inside a group   ==========================-->
+            <!-- 1) remove all the actual group's fields -->
+            <field name="type" position="replace" />
+            <field name="street" position="replace" />
+            <field name="street2" position="replace" />
+            <field name="city" position="replace" />
+            <field name="state_id" position="replace" />
+            <field name="zip" position="replace" />
+            <field name="country_id" position="replace" />
+            <field name="vat" position="replace" />
+            <label for="street" position="replace" />
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_address_format')]/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- 2) create the new group -->
+            <xpath expr="//field[@name='phone']/../.." position="before">
+                <group>
+                    <group class="w-100">
+                        <field
+                            name="type"
+                            attrs="{'invisible': [('parent_id','=', False)]}"
+                            groups="base.group_no_one"
+                        />
+                        <label for="street" string="Address" />
+                        <div class="o_address_format">
+                            <div
+                                attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"
+                                class="oe_edit_only"
+                            >
+                                <b>Company Address:</b>
+                            </div>
+                            <field
+                                name="street"
+                                placeholder="Street..."
+                                class="o_address_street"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                            />
+                            <field
+                                name="street2"
+                                placeholder="Street 2..."
+                                class="o_address_street"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                            />
+                            <field
+                                name="city"
+                                placeholder="City"
+                                class="o_address_city"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                            />
+                            <field
+                                name="state_id"
+                                class="o_address_state"
+                                placeholder="State"
+                                options="{&quot;no_open&quot;: True}"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                context="{'country_id': country_id, 'zip': zip}"
+                            />
+                            <field
+                                name="zip"
+                                placeholder="ZIP"
+                                class="o_address_zip"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                            />
+                            <field
+                                name="country_id"
+                                placeholder="Country"
+                                class="o_address_country"
+                                options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                            />
+                        </div>
+                        <field
+                            name="vat"
+                            placeholder="e.g. BE0477472701"
+                            attrs="{'readonly': [('parent_id','!=',False)]}"
+                        />
+                    </group>
+                    <!-- ADD Special Structure fields-->
+                    <group
+                        attrs="{'invisible': [('is_structure', '=', False)]}"
+                        class="w-100"
                     >
-                        <field name="struct_date_begin" />
-                        <span
-                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
-                            class="oe_read_only"
-                        > - </span>
-                        <span class="oe_edit_only"> - </span>
-                        <field name="struct_date_end" />
-                    </div>
+                        <field name="structure_capacity" widget="selection" />
+                        <!-- Structure date fields not for venues -->
+                        <label
+                            for="struct_date_begin"
+                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        />
+                        <div
+                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                            class="o_row"
+                        >
+                            <field name="struct_date_begin" />
+                            <span
+                                attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                                class="oe_read_only"
+                            > - </span>
+                            <span class="oe_edit_only"> - </span>
+                            <field name="struct_date_end" />
+                        </div>
+                    </group>
                 </group>
             </xpath>
             <!--
                 ===================== CUSTOM M2M, PAGE and CHILDS =====================
             -->
             <!-- MANY2MANY Related Structure if partner is NOT a structure -->
-            <xpath expr="//field[@name='type']/../.." position="before">
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <group attrs="{'invisible': [('is_structure', '=', True)]}">
                     <field
                         name="related_structure_ids"
