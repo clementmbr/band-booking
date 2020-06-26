@@ -24,15 +24,13 @@ class Lead(models.Model):
     )
 
     # Relate Lead Tags, Description and Addres to Customer's
-    tag_ids = fields.Many2many(
-        "res.partner.category", related="partner_id.category_id", string="Tags"
+    partner_tag_ids = fields.Many2many(
+        "res.partner.category",
+        related="partner_id.category_id",
+        string="Customer's Tags",
     )
-    description = fields.Text("Notes", related="partner_id.comment")
-    website = fields.Char(
-        "Website",
-        index=True,
-        help="Website of the contact",
-        related="partner_id.website",
+    partner_description = fields.Text(
+        "Customer's Notes", related="partner_id.comment", readonly=False
     )
 
     # Fields to display in Opportunities kanban view

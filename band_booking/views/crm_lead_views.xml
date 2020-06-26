@@ -38,64 +38,32 @@
                     icon="fa-map-marker"
                 />
             </xpath>
-            <!-- Hide fields Company Name, from the group Contact Name and from the page Extra Info -->
-            <xpath expr="//field[@name='partner_name']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='message_bounce']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='date_open']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide Extra Info page
-            TODO : set to visible if MARKETING options (Tracking group) are needed -->
-            <xpath expr="//page[@name='extra']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Original Customer field is only visible in debug mode.
-        Set invisible the original Customer field and add another field-->
-            <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field
-                    name="partner_id"
-                    readonly="0"
-                    widget="res_partner_many2one"
-                    context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
-                    options="{'always_reload': True}"
-                    required="1"
-                />
-            </xpath>
-            <!-- Hide Customer's related website if False -->
-            <xpath expr="//field[@name='website']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('website', '=', False)]}</attribute>
-            </xpath>
-            <!-- Hide native street field -->
-            <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//label[@for='street']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Move compnay_id field to the top of the screen-->
+            <!-- Move priority, customer's tag and company_id under oe_title div  -->
+            <field name="priority" position="replace" />
             <field name="company_id" position="replace" />
-            <xpath expr="//field[@name='user_id']" position="before">
-                <field
-                    name="company_id"
-                    string="Band"
-                    groups="base.group_multi_company"
-                    options="{'no_create': True}"
-                />
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div class="oe_inline">
+                    <field
+                        name="partner_tag_ids"
+                        widget="many2many_tags"
+                        options="{'color_field': 'color', 'no_create_edit': True}"
+                        class="mr8"
+                    />
+                    <field name="priority" widget="priority" class="mr8" />
+                    <field
+                        name="company_id"
+                        string="Band"
+                        groups="base.group_multi_company"
+                        options="{'no_create': True}"
+                    />
+                </div>
             </xpath>
-            <!-- Add Strong related link with Customer's fields -->
-            <xpath expr="//field[@name='tag_ids']/.." position="after">
+            <!-- Hide CRM lead tags -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add Structure related Customer's fields -->
+            <xpath expr="//field[@name='user_id']/.." position="after">
                 <field name="is_structure" invisible="1" />
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
                     <field name="structure_capacity" widget="selection" />
@@ -119,6 +87,54 @@
                     </div>
                 </group>
             </xpath>
+            <!-- Hide fields Company Name, from the group Contact Name and from the page Extra Info -->
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='message_bounce']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_open']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Original Customer field is only visible in debug mode.
+        Set invisible the original Customer field and add another field-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field
+                    name="partner_id"
+                    readonly="0"
+                    widget="res_partner_many2one"
+                    context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
+                    options="{'always_reload': True}"
+                    required="1"
+                />
+            </xpath>
+            <!-- Hide Customer's related website -->
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide native street field -->
+            <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Extra Info page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='extra']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Lead's Internal Notes page -->
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
             <!-- Add partner Many2many in Leads-->
             <xpath expr="//page[1]" position="before">
                 <page string="Contacts">
@@ -140,6 +156,10 @@
                         </field>
                     </group>
                 </page>
+                <!-- Add related Customer's Notes page -->
+                <page string="Customer's Notes">
+                    <field name="partner_description" />
+                </page>
             </xpath>
         </field>
     </record>
@@ -157,13 +177,6 @@
             >
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Hide probability -->
-            <!-- <xpath expr="//field[@name='planned_revenue']/../span" position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath>
-      <xpath expr="//field[@name='probability']/../.." position="attributes">
-        <attribute name="invisible">True</attribute>
-      </xpath> -->
             <!-- Add external map button in Opportunity view -->
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button
@@ -177,18 +190,58 @@
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="required">True</attribute>
             </xpath>
-            <!-- Display Customer with full address and add website -->
+            <!-- Move priority, customer's tag and company_id under oe_title div  -->
+            <field name="priority" position="replace" />
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div class="oe_inline">
+                    <field
+                        name="partner_tag_ids"
+                        widget="many2many_tags"
+                        options="{'color_field': 'color', 'no_create_edit': True}"
+                        class="mr8"
+                    />
+                    <field name="priority" widget="priority" class="mr8" />
+                    <field
+                        name="company_id"
+                        string="Band"
+                        groups="base.group_multi_company"
+                        options="{'no_create': True}"
+                    />
+                </div>
+            </xpath>
+            <!-- Hide CRM lead tags -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Add Structure related Customer's fields -->
+            <xpath expr="//field[@name='user_id']/.." position="after">
+                <field name="is_structure" invisible="1" />
+                <group attrs="{'invisible': [('is_structure', '=', False)]}">
+                    <field name="structure_capacity" widget="selection" />
+                    <field name="structure_type" invisible="1" />
+                    <!-- Structure date fields not for venues -->
+                    <label
+                        for="struct_date_begin"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    />
+                    <div
+                        class="o_row"
+                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                    >
+                        <field name="struct_date_begin" />
+                        <span
+                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
+                            class="oe_read_only"
+                        > - </span>
+                        <span class="oe_edit_only"> - </span>
+                        <field name="struct_date_end" />
+                    </div>
+                </group>
+            </xpath>
+            <!-- Display Customer with full address -->
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="context">{'show_address': 1}</attribute>
                 <attribute name="options">{"always_reload": True}</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field
-                    name="website"
-                    widget="url"
-                    placeholder="e.g. https://www.akretion.com"
-                    attrs="{'invisible': [('website', '=', False)]}"
-                />
             </xpath>
             <!-- Hide Customer's phone and mail -->
             <xpath expr="//label[@for='email_from']" position="attributes">
@@ -224,39 +277,9 @@
             <xpath expr="//page[@name='lead']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <!-- Add compnay_id field on top of the screen-->
-            <xpath expr="//field[@name='user_id']" position="before">
-                <field
-                    name="company_id"
-                    string="Band"
-                    groups="base.group_multi_company"
-                    options="{'no_create': True}"
-                />
-            </xpath>
-            <!-- Add Customer 'Show' fields -->
-            <xpath expr="//field[@name='tag_ids']/.." position="after">
-                <field name="is_structure" invisible="1" />
-                <group attrs="{'invisible': [('is_structure', '=', False)]}">
-                    <field name="structure_type" invisible="1" />
-                    <field name="structure_capacity" widget="selection" />
-                    <!-- Structure date fields not for venues -->
-                    <label
-                        for="struct_date_begin"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
-                    />
-                    <div
-                        class="o_row"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
-                    >
-                        <field name="struct_date_begin" />
-                        <span
-                            attrs="{'invisible': [('struct_date_end', '=', False)]}"
-                            class="oe_read_only"
-                        > - </span>
-                        <span class="oe_edit_only"> - </span>
-                        <field name="struct_date_end" />
-                    </div>
-                </group>
+            <!-- Hide Lead's Internal Notes page -->
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
             </xpath>
             <!-- Add Partners MANY2MANY in opportunities-->
             <xpath expr="//page[1]" position="before">
@@ -310,6 +333,10 @@
                         name="action_add_new_related_event"
                         string="Add an Event"
                     />
+                </page>
+                <!-- Add related Customer's Notes page -->
+                <page string="Customer's Notes">
+                    <field name="partner_description" />
                 </page>
             </xpath>
             <!-- TODO HIDE Send message if not in debug mode. Following code not working... -->

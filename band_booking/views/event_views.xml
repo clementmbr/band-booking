@@ -95,7 +95,7 @@
             <xpath expr="//field[@name='date_begin']/.." position="before">
                 <group>
                     <field
-                        name="tag_ids"
+                        name="partner_tag_ids"
                         widget="many2many_tags"
                         options="{'color_field': 'color', 'no_create_edit': True}"
                     />

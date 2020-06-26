@@ -60,8 +60,8 @@ class EventEvent(models.Model):
         help="Facebook event or other web link to the event details",
     )
 
-    tag_ids = fields.Many2many(
-        "res.partner.category", related="lead_id.tag_ids", string="Tags"
+    partner_tag_ids = fields.Many2many(
+        "res.partner.category", related="lead_id.partner_tag_ids", string="Tags"
     )  # TODO : store=True impossible...
 
     city = fields.Char("City", related="address_id.city", store=True, readonly=True)
