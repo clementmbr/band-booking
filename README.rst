@@ -34,7 +34,7 @@ What can I do with that ?
 Manage your contacts
 ~~~~~~~~~~~~
 
-No more headaches with obsolete and unreadable Excel sheets !
+No more headaches with obsolete and unreadable Excel sheets.
 
 =================================== ==================================
 .. image:: readme/festival_list.png .. image:: readme/contact_list.png
@@ -44,7 +44,7 @@ No more headaches with obsolete and unreadable Excel sheets !
 Qualify your leads and follow up negociations
 ~~~~~~~~~
 
-No more misunderstandings between the Booker and the Musicians !
+No more misunderstandings between the Booker and the Musicians.
 
 ================================ ==================================
 .. image:: readme/crm_kanban.png .. image:: readme/crm_form.png
@@ -53,7 +53,7 @@ No more misunderstandings between the Booker and the Musicians !
 Follow up and share your previsional Tour Agenda
 ~~~~~~
 
-No more irational forecast !
+No more irational forecast.
 
 ==================================== ==================================
 .. image:: readme/event_calendar.png .. image:: readme/event_form.png
@@ -62,6 +62,7 @@ No more irational forecast !
 And more !
 ~~~~~
 
+- Easy data import
 - Multi-band management (with customisable User access rights)
 - Basic Leads and Events reporting
 - Discuss platform between users

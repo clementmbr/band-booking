@@ -4,7 +4,7 @@ A Booking management module for music band, gathering some OCA modules and other
 
     - Custom Contacts menus and search view
     - Facebook/Instagram fields
-    - Confirmed/Not confirmed state in 'not-structure' partners
+    - Checked/Unchecked state in 'not-structure' partners
     - Link with structure's (or related structure's) leads from form view
     - Catch Facebook and additional info from core module *partner_autocomplete*
 

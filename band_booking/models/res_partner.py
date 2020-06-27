@@ -14,8 +14,8 @@ class Partner(models.Model):
 
     display_phone = fields.Char("Phone/Mobile", compute="_compute_display_phone")
 
-    # Confirmed partner ?
-    is_checked = fields.Boolean(string="Confirmed", default=False)
+    # Checked partner ?
+    is_checked = fields.Boolean(string="Checked", default=False)
 
     # Compute lower stage_id for creating lead from partner
     lower_stage_id = fields.Many2one(

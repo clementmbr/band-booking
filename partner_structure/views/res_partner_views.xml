@@ -146,6 +146,17 @@
                     </group>
                 </group>
             </xpath>
+            <!-- Hide mobile for Structure -->
+            <xpath expr="//label[@for='mobile']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_structure', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile']/.." position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_structure', '=', True)]}</attribute>
+            </xpath>
             <!--
                 ===================== CUSTOM M2M, PAGE and CHILDS =====================
             -->

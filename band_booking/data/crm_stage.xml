@@ -61,17 +61,17 @@
     > The Curator's contact is confirmed by a third party.
     >> But he didn't answer yet.
 
-    TIP : The Curator's contact is an identified way to get in touch with the "human"
-    that will make the real decision to select your project.
+    TIP : The Curator's confirmed contact is an identified way to get in touch with the
+    "human" that will make the real decision to select your project.
 
     At this stage, you only "think" this contact is the Curator's. It is a good practice
-    to change the Curator's "Odoo Contact" form status to "Confirmed" only when you
+    to change the Curator's "Odoo Contact" form status to "Checked" only when you
     receive a real answer from this contact.
         </field>
     </record>
     <record id="stage_received_by_curator" model="crm.stage">
         <field name="name">Received by Curator</field>
-        <field name="lead_type">opportunity</field>
+        <field name="lead_type">lead</field>
         <field name="sequence">3</field>
         <field name="on_change">True</field>
         <field name="probability">10.00</field>
@@ -79,12 +79,12 @@
     > The Curator confirmed he/she received your presentation.
     >> But he didn't gave any feedback yet.
 
-    TIP : The famous "I will return you back if I am interested", but sent by a real
-    person. It is a good practice to avoid moving to "Received by Curator" if the
-    received answer is obviously sent by an automatic mail.
+    TIP : This stage corresponds to the famous "I will return you back if I am
+    interested", but sent by a real person. It is a good practice to avoid moving to
+    "Received by Curator" if the received answer is obviously sent by an automatic mail.
 
     If the answer is trustworthy, the Curator's "Odoo Contact" form status should be
-    changed to "Confirmed".
+    changed to "Checked".
         </field>
     </record>
     <record id="stage_interest" model="crm.stage">
