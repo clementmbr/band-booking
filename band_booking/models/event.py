@@ -1,6 +1,8 @@
 # © 2019 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
+from pytz import country_timezones
+
 from odoo import api, fields, models
 
 
@@ -68,7 +70,7 @@ class EventEvent(models.Model):
 
     partner_tag_ids = fields.Many2many(
         "res.partner.category", related="lead_id.partner_tag_ids", string="Tags"
-    )  # TODO : store=True impossible...
+    )
 
     city = fields.Char("City", related="address_id.city", store=True, readonly=True)
 
@@ -94,6 +96,13 @@ class EventEvent(models.Model):
         self.ensure_one()
         if not self.date_end:
             self.date_end = self.date_begin
+
+    @api.onchange("address_id")
+    def onchange_address_id(self):
+        """Define event Timezone from the event address country if existing"""
+        for event in self:
+            if event.address_id and event.address_id.country_id:
+                event.date_tz = country_timezones(event.address_id.country_id.code)[0]
 
     def open_map(self):
         """Use open_map method from module 'partner_external_map' """
