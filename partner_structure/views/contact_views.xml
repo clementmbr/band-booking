@@ -28,11 +28,11 @@
             <xpath expr="//field[@name='name']" position="after">
                 <field name="display_related_structure_names" />
             </xpath>
-            <!-- Add filter by Structure Date -->
+            <!-- Add filter by Festival Date -->
             <xpath expr="//filter[@name='group_country']" position="after">
                 <filter
                     name="struct_date_begin"
-                    string="Structure Date"
+                    string="Festival Date"
                     context="{'group_by': 'struct_date_begin'}"
                 />
             </xpath>

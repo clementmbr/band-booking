@@ -126,7 +126,7 @@
                         class="w-100"
                     >
                         <field name="structure_capacity" widget="selection" />
-                        <!-- Structure date fields not for venues -->
+                        <!-- Festival Date fields not for venues -->
                         <label
                             for="struct_date_begin"
                             attrs="{'invisible': [('structure_type', '=', 'venue')]}"

@@ -89,7 +89,7 @@
                     />
                 </div>
             </xpath>
-            <!-- Structure capacity under the address -->
+            <!-- Expected Audience under the address -->
             <xpath expr="//field[@name='address_id']" position="attributes">
                 <attribute name="domain">[('is_structure', '=', True)]</attribute>
             </xpath>

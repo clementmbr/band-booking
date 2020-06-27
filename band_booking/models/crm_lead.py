@@ -51,7 +51,7 @@ class Lead(models.Model):
         string="Structure Type", related="partner_id.structure_type", store=True
     )
     structure_capacity = fields.Selection(
-        string="Structure Capacity",
+        string="Expected Audience",
         related="partner_id.structure_capacity",
         readonly=False,
         store=True,

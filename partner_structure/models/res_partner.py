@@ -68,14 +68,14 @@ class Partner(models.Model):
 
     structure_capacity = fields.Selection(
         selection=_get_structure_capacity,
-        string="Structure Capacity",
+        string="Expected Audience",
         help="Average audience expected in this venue or festival",
     )
 
     struct_date_begin = fields.Date(
-        string="Structure Date", help="The date on which the festival is used to start."
+        string="Festival Date", help="The date on which the festival is used to start."
     )
-    struct_date_end = fields.Date(string="Structure Date End")
+    struct_date_end = fields.Date(string="Festival Date End")
     struct_short_date = fields.Char(string="Date", compute="_compute_struct_short_date")
 
     related_structure_ids = fields.Many2many(
