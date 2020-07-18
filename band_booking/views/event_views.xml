@@ -123,9 +123,9 @@
             </xpath>
         </field>
     </record>
-    <!-- ===================== CUSTOM SEARCH AND MENU ================================ -->
+    <!-- ===================== CUSTOM SEARCH ================================ -->
     <!-- Custom Filter and Group By options in Event SEARCH view -->
-    <record model="ir.ui.view" id="view_event_search">
+    <record id="view_event_search" model="ir.ui.view">
         <field name="model">event.event</field>
         <field name="inherit_id" ref="event.view_event_search" />
         <field name="arch" type="xml">
@@ -158,8 +158,9 @@
             </xpath>
         </field>
     </record>
+    <!-- ================== CUSTOM MENU AND MAIN VIEWS ============================ -->
     <!-- Display events in calendar mode by default -->
-    <record model="ir.actions.act_window" id="event.action_event_view">
+    <record id="event.action_event_view" model="ir.actions.act_window">
         <field name="name">Events</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">event.event</field>
@@ -169,11 +170,11 @@
         <field name="search_view_id" ref="event.view_event_search" />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-          Add a new event
-        </p>
+              Add a new event
+            </p>
             <p>
-          Schedule and organize your events efficiently !
-        </p>
+              Schedule and organize your events efficiently !
+            </p>
         </field>
     </record>
     <record id="action_event_view_calendar" model="ir.actions.act_window.view">
