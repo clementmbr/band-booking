@@ -33,7 +33,7 @@
         <field name="on_change">True</field>
         <field name="probability">1.00</field>
         <field name="requirements">
-    > No email send yet.
+    > No email sent yet.
     >> The customer need to be contacted.
         </field>
     </record>

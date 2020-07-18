@@ -19,7 +19,7 @@
                 <field
                     name="function"
                     placeholder="e.g. Programmer"
-                    attrs="{'invisible': [('is_company','=', True)]}"
+                    attrs="{'invisible': ['|', ('is_company','=', True), ('is_structure', '=', True)]}"
                 />
             </xpath>
             <!-- Set Country field required -->
