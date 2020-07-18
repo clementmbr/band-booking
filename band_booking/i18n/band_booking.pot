@@ -1,0 +1,478 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* band_booking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-11 21:22+0000\n"
+"PO-Revision-Date: 2020-07-11 21:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: band_booking
+#: code:addons/band_booking/models/res_partner.py:262
+#, python-format
+msgid "\n"
+"\n"
+"Emails :\n"
+""
+msgstr ""
+
+#. module: band_booking
+#: code:addons/band_booking/models/res_partner.py:264
+#, python-format
+msgid "\n"
+"\n"
+"Phone numbers :\n"
+""
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_first_contact
+msgid "1st contact"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Add a Contact"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Add an Event"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_crm_lead__structure_capacity
+#: model:ir.model.fields,help:band_booking.field_event_event__structure_capacity
+msgid "Average audience expected in this venue or festival"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__company_id
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+#: model_terms:ir.ui.view,arch_db:band_booking.quick_create_opportunity_form
+#: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
+msgid "Band"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model,name:band_booking.model_crm_stage
+msgid "CRM Stages"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.actions.server,name:band_booking.action_contact_checked
+msgid "Check Contacts"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__is_checked
+#: model:ir.model.fields,field_description:band_booking.field_res_users__is_checked
+#: model_terms:ir.ui.view,arch_db:band_booking.view_res_partner_filter
+msgid "Checked"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__city
+msgid "City"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_confirmed
+msgid "Confirmed"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model,name:band_booking.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_contact_confirmed
+msgid "Contact confirmed"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Contacts"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+msgid "Convert to Opportunity"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__country_code
+msgid "Country Code"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "Create a Lead"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_res_partner_filter
+msgid "Creation Date"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__company_currency
+msgid "Currency"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__partner_description
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Customer's Notes"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__partner_tag_ids
+msgid "Customer's Tags"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_short_date
+msgid "Date"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_done
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__opp_done_count
+#: model:ir.model.fields,field_description:band_booking.field_res_users__opp_done_count
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "Done"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model,name:band_booking.model_event_event
+msgid "Event"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__subtitle
+msgid "Event Subtitle"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__event_link
+msgid "Event link"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__lead_event_ids
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Events"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__planned_revenue
+msgid "Expected Revenue"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__facebook
+#: model:ir.model.fields,field_description:band_booking.field_res_users__facebook
+msgid "Facebook"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_event_event__event_link
+msgid "Facebook event or other web link to the event details"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.ui.menu,name:band_booking.crm_lead_menu_festivals
+msgid "Festivals"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.lost.reason,name:band_booking.lost_reason_1
+msgid "Impossible to make contact"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__instagram
+#: model:ir.model.fields,field_description:band_booking.field_res_users__instagram
+msgid "Instagram"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_interest
+msgid "Interest"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_crm_lead__is_structure
+#: model:ir.model.fields,help:band_booking.field_event_event__is_structure
+msgid "Is a Festival or a Venue ?"
+msgstr ""
+
+#. module: band_booking
+#: code:addons/band_booking/models/crm_stage.py:16
+#, python-format
+msgid "It is not allowed to delete the 'Done' stage as it is used\n"
+"                    by the 'band_booking' module to link Contacts with 'Done'                    leads."
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "Lead"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__lead_partner_ids
+msgid "Lead Partners"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model,name:band_booking.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__lead_count
+#: model:ir.model.fields,field_description:band_booking.field_res_users__lead_count
+msgid "Leads"
+msgstr ""
+
+#. module: band_booking
+#: code:addons/band_booking/hooks.py:48
+#, python-format
+msgid "Loading demo datas for 'band_booking'..."
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__opp_lost_count
+#: model:ir.model.fields,field_description:band_booking.field_res_users__opp_lost_count
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "Lost"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__lower_stage_id
+#: model:ir.model.fields,field_description:band_booking.field_res_users__lower_stage_id
+msgid "Lower Lead Stage"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+#: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
+msgid "Map"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_res_partner__facebook
+#: model:ir.model.fields,help:band_booking.field_res_partner__instagram
+#: model:ir.model.fields,help:band_booking.field_res_users__facebook
+#: model:ir.model.fields,help:band_booking.field_res_users__instagram
+msgid "Must begin by 'http://' to activate URL link"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
+#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
+msgid "Name"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_hold
+msgid "On Hold"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
+msgid "Opened"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__lead_id
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "Opportunity"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__stage_id
+msgid "Opportunity's Stage"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__lead_type
+msgid "Opportunity's Type"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.quick_create_opportunity_form
+msgid "Opportunity's name"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_option
+msgid "Option"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_res_partner__display_phone
+#: model:ir.model.fields,field_description:band_booking.field_res_users__display_phone
+msgid "Phone/Mobile"
+msgstr ""
+
+#. module: band_booking
+#: code:addons/band_booking/hooks.py:17
+#, python-format
+msgid "Preparing datas for 'band_booking'..."
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_ready_to_confirm
+msgid "Ready to confirm"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_received_by_curator
+msgid "Received by Curator"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__team_id
+msgid "Sales Team"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_event_search
+msgid "Stage"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_capacity
+#: model:ir.model.fields,field_description:band_booking.field_event_event__structure_capacity
+msgid "Structure Capacity"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_begin
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_opportunities_filter
+msgid "Structure Date"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_end
+msgid "Structure Date End"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_type
+msgid "Structure Type"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__partner_tag_ids
+msgid "Tags"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__is_structure
+msgid "The Contact is a Show Structure"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_event_event__is_structure
+msgid "The Event Address is a Show Structure"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_crm_lead__country_code
+msgid "The ISO country code in two chars. \n"
+"You can use this field for quick search."
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_crm_lead__struct_date_begin
+msgid "The date on which the festival is used to start."
+msgstr ""
+
+#. module: band_booking
+#: code:addons/band_booking/models/crm_stage.py:41
+#, python-format
+msgid "The following leads are still related to the stage \"{stage}\":\n"
+"                        {stage_leads}\n"
+"\n"
+"                        Please consider moving these leads before deleting this stage.\n"
+"                        "
+msgstr ""
+
+#. module: band_booking
+#: model:crm.lost.reason,name:band_booking.lost_reason_4
+msgid "The structure doesn't exist anymore"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.stage,name:band_booking.stage_to_contact
+msgid "To contact"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_event_event__lead_type
+msgid "Type is used to separate Leads and Opportunities"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.actions.server,name:band_booking.action_contact_not_checked
+msgid "Uncheck Contacts"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.ui.menu,name:band_booking.crm_lead_menu_venues
+msgid "Venues"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,help:band_booking.field_event_event__team_id
+msgid "When sending mails, the default email address is taken from the Sales Team."
+msgstr ""
+
+#. module: band_booking
+#: model:crm.lost.reason,name:band_booking.lost_reason_2
+msgid "Will never be interested in the project"
+msgstr ""
+
+#. module: band_booking
+#: model:crm.lost.reason,name:band_booking.lost_reason_3
+msgid "Will never have the budget for the project"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "e.g. Programmer"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
+msgid "e.g. https://www.facebook.com/events/450471162302496/"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "e.g. https://www.fb.com/companyname"
+msgstr ""
+
+#. module: band_booking
+#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
+msgid "e.g. https://www.instagram.com/companyname"
+msgstr ""
+
