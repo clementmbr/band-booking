@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_calendar_defaultdate assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_calendar_defaultdate/static/src/js/web_calendar_defaultdate.js"
+            />
+        </xpath>
+    </template>
+</odoo>
