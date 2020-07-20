@@ -10,7 +10,7 @@
             <!-- ======================== CUSTOM FIELDS ============================= -->
             <!-- MOVE Job Position and HIDE Contact type in non-edit mode -->
             <field name="function" position="replace" />
-            <!-- FIX: the universal xpath "//field[@name='type']" is not working for fields between the oe_title div
+            <!-- FIXME: the universal xpath "//field[@name='type']" is not working for fields between the oe_title div
             and the notebook... Why ? Can it be fixed ?  -->
             <xpath
                 expr="/form/sheet/group/group/group/field[@name='type']"

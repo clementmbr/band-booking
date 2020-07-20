@@ -22,6 +22,7 @@ class Lead(models.Model):
             "company_id": lambda self: self.env.user.company_id,
         },
     )
+    event_count = fields.Integer(compute="_compute_event_count")
 
     # Relate Lead Tags, Description and Addres to Customer's
     partner_tag_ids = fields.Many2many(
@@ -64,6 +65,14 @@ class Lead(models.Model):
     struct_date_end = fields.Date(
         related="partner_id.struct_date_end", store=True, readonly=False,
     )
+
+    @api.depends("lead_event_ids")
+    def _compute_event_count(self):
+        """Number of events related to the lead"""
+        for lead in self:
+            lead.event_count = self.env["event.event"].search_count(
+                [("lead_id", "=", lead.id), ("date_end", ">", fields.Datetime.now())]
+            )
 
     @api.onchange("partner_id")
     def on_change_customer(self):
