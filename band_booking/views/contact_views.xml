@@ -97,6 +97,9 @@
         />
     </record>
     <!-- Hide Sectores of Activity, Banks and Localization menus when not in debug with assets mode -->
+    <record model="ir.ui.menu" id="contacts.menu_partner_title_contact">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
+    </record>
     <record model="ir.ui.menu" id="contacts.res_partner_industry_menu">
         <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
     </record>
