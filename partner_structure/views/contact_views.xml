@@ -146,7 +146,7 @@
         A festival, as a venue is a partner with special fields for Shows.
       </p>
             <p>
-        From a venue, you can link a negociation to it, creating a Lead or an Opportunity.
+        From a venue or a festival, you can link a negociation to it, creating a Lead or an Opportunity.
       </p>
         </field>
     </record>
@@ -226,7 +226,7 @@
         A venue, as a festival is a partner with special fields for Shows.
       </p>
             <p>
-        From a venue, you can link a negociation to it, creating a Lead or an Opportunity.
+        From a venue or a festival, you can link a negociation to it, creating a Lead or an Opportunity.
       </p>
         </field>
     </record>

@@ -1,0 +1,255 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_structure
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-20 12:39+0000\n"
+"PO-Revision-Date: 2020-07-20 12:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "<b>Company Address:</b>"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
+msgid "A festival, as a venue is a partner with special fields for Shows."
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_venues
+msgid "A venue, as a festival is a partner with special fields for Shows."
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Add a Contact"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_venues
+msgid "Add a venue in your address book"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Address"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Avatar"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,help:partner_structure.field_res_partner__structure_capacity
+#: model:ir.model.fields,help:partner_structure.field_res_users__structure_capacity
+msgid "Average audience expected in this venue or festival"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "City"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model,name:partner_structure.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.actions.act_window,name:partner_structure.action_contacts
+msgid "Contacts"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Country"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
+msgid "Create a contact in your address book"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
+msgid "Create a festival in your address book"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_short_date
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_short_date
+msgid "Date"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_capacity
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__structure_capacity
+msgid "Expected Audience"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_begin
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_date_begin
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_res_partner_filter
+msgid "Festival Date"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_end
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_date_end
+msgid "Festival Date End"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.actions.act_window,name:partner_structure.action_festivals
+#: model:ir.ui.menu,name:partner_structure.res_partner_menu_festivals
+msgid "Festivals"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
+#: model_terms:ir.actions.act_window,help:partner_structure.action_venues
+msgid "From a venue, you can link a negociation to it, creating a Lead or an Opportunity."
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Is Company?"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__is_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__is_structure
+msgid "Is Structure"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,help:partner_structure.field_res_partner__is_structure
+#: model:ir.model.fields,help:partner_structure.field_res_users__is_structure
+msgid "Is a Festival or a Venue ?"
+msgstr ""
+
+#. module: partner_structure
+#: code:addons/partner_structure/hooks.py:12
+#, python-format
+msgid "Loading partner_structure data..."
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Logo"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Name"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
+msgid "Odoo helps you to easily track all activities related to a customer."
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__related_partner_ids
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__related_partner_ids
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Related Contacts"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__related_structure_ids
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__related_structure_ids
+msgid "Related Structure"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__display_related_structure_names
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__display_related_structure_names
+msgid "Related Structures"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__sequence
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "State"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Street 2..."
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Street..."
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__structure_type
+msgid "Structure Type"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_tree_festivals
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_tree_venues
+msgid "Tags"
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__display_category_ids
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__display_category_ids
+msgid "Tags for tree view"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "Tags..."
+msgstr ""
+
+#. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:47
+#, python-format
+msgid "The Struture type {} is not related to any Tag.\n"
+"                        It is necessary to add one before continuing."
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.model.fields,help:partner_structure.field_res_partner__struct_date_begin
+#: model:ir.model.fields,help:partner_structure.field_res_users__struct_date_begin
+msgid "The date on which the festival is used to start."
+msgstr ""
+
+#. module: partner_structure
+#: model:ir.actions.act_window,name:partner_structure.action_venues
+#: model:ir.ui.menu,name:partner_structure.res_partner_menu_venues
+msgid "Venues"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "ZIP"
+msgstr ""
+
+#. module: partner_structure
+#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
+msgid "e.g. BE0477472701"
+msgstr ""
+
