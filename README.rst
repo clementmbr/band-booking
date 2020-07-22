@@ -4,10 +4,10 @@ Band booking and management with Odoo
 
 Custom Odoo modules to help manage music band booking (and more!) with `Odoo <https://www.odoo.com/>`_.
 
-  A basic Odoo project usecase with these modules can be found at the `odoo-band-template <https://github.com/clementmbr/odoo-band-template>`_ repository.
+.. image:: readme/miniature_video_play.png
+  :target: https://www.youtube.com/watch?v=A-sunIpG0YY
 
-
-*Presentation video coming soon...*
+A basic Odoo project usecase with these modules can be found at the `odoo-band-template <https://github.com/clementmbr/odoo-band-template>`_ repository.
 
 ------------
 
