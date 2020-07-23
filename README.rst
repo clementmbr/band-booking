@@ -74,7 +74,7 @@ Roadmap
 =====
 
 - Newsletters management coming soon
-- Translation in French and Brazilian portuguese even sooner
+- Basic Accounting for previsional Tour budget
 
 
 Author

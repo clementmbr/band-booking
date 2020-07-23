@@ -35,7 +35,6 @@ class EventEvent(models.Model):
         string="Band",
         index=True,
         default=lambda self: self.env.user.company_id.id,
-        related="lead_id.company_id",
     )
 
     company_currency = fields.Many2one(
@@ -89,6 +88,13 @@ class EventEvent(models.Model):
                 event.subtitle = str(city)
             else:
                 event.subtitle = str(stage)
+
+    @api.onchange("lead_id")
+    def onchange_lead_id(self):
+        """Change the event's company to related lead's company"""
+        for event in self:
+            if event.lead_id:
+                event.company_id = event.lead_id.company_id
 
     @api.onchange("date_begin")
     def onchange_date_begin(self):
