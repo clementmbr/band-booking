@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-20 12:39+0000\n"
-"PO-Revision-Date: 2020-07-20 12:39+0000\n"
+"POT-Creation-Date: 2020-07-23 20:41+0000\n"
+"PO-Revision-Date: 2020-07-23 20:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -99,6 +99,12 @@ msgid "Expected Audience"
 msgstr ""
 
 #. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:40
+#, python-format
+msgid "Festival"
+msgstr ""
+
+#. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_begin
 #: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_date_begin
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_res_partner_filter
@@ -120,7 +126,7 @@ msgstr ""
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
 #: model_terms:ir.actions.act_window,help:partner_structure.action_venues
-msgid "From a venue, you can link a negociation to it, creating a Lead or an Opportunity."
+msgid "From a venue or a festival, you can link a negociation to it, creating a Lead or an Opportunity."
 msgstr ""
 
 #. module: partner_structure
@@ -235,6 +241,12 @@ msgstr ""
 #: model:ir.model.fields,help:partner_structure.field_res_partner__struct_date_begin
 #: model:ir.model.fields,help:partner_structure.field_res_users__struct_date_begin
 msgid "The date on which the festival is used to start."
+msgstr ""
+
+#. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:40
+#, python-format
+msgid "Venue"
 msgstr ""
 
 #. module: partner_structure

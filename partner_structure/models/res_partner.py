@@ -7,8 +7,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import MissingError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
-# TODO : allow translation for these structure types
-STRUCTURE_TYPE = [("festival", "Festival"), ("venue", "Venue")]
 STRUCTURE_CAPACITY = [
     ("inf1k", "< 1000"),
     ("sup1k", "> 1000"),
@@ -39,7 +37,9 @@ class Partner(models.Model):
     def _get_structure_type(self):
         """ Check if the structure types have all their related tag with the same name
         and return them"""
-        for struc_type in STRUCTURE_TYPE:
+        structure_types = [("festival", _("Festival")), ("venue", _("Venue"))]
+
+        for struc_type in structure_types:
             if struc_type[0] not in [t.name for t in self._get_structure_type_tags()]:
                 raise MissingError(
                     _(
@@ -49,7 +49,8 @@ class Partner(models.Model):
                         )
                     )
                 )
-        return STRUCTURE_TYPE
+        # Override this result in order to add a Structure type
+        return structure_types
 
     def _get_structure_capacity(self):
         return STRUCTURE_CAPACITY
@@ -255,7 +256,7 @@ class Partner(models.Model):
                 return {"domain": {"category_id": contact_tags_domain}}
 
     # ---------------------------------------------------------------------
-    # Show period festival fields
+    # Festival date fields
     # ---------------------------------------------------------------------
 
     @api.onchange("struct_date_begin")

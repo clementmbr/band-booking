@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-20 12:39+0000\n"
-"PO-Revision-Date: 2020-07-20 12:39+0000\n"
+"POT-Creation-Date: 2020-07-23 20:45+0000\n"
+"PO-Revision-Date: 2020-07-23 20:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "Um festival, como uma casa de show, é um contato com campos específico
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_venues
 msgid "A venue, as a festival is a partner with special fields for Shows."
-msgstr "Uma casa, como um festival, é um contato com campos específicos para shows."
+msgstr "Uma casa de show, como um festival, é um contato com campos específicos para shows."
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
@@ -48,7 +48,7 @@ msgstr "Endereço"
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Avatar"
-msgstr "Avatar"
+msgstr ""
 
 #. module: partner_structure
 #: model:ir.model.fields,help:partner_structure.field_res_partner__structure_capacity
@@ -79,7 +79,7 @@ msgstr "País"
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
 msgid "Create a contact in your address book"
-msgstr "Adicionar um contato em seu catálogo de endereços"
+msgstr "Criar um contato em seu catálogo de endereços"
 
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
@@ -97,6 +97,12 @@ msgstr "Data"
 #: model:ir.model.fields,field_description:partner_structure.field_res_users__structure_capacity
 msgid "Expected Audience"
 msgstr "Público estimado"
+
+#. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:40
+#, python-format
+msgid "Festival"
+msgstr "Festival"
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_begin
@@ -149,7 +155,7 @@ msgstr ""
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Logo"
-msgstr "Logo"
+msgstr "Logotipo"
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
@@ -159,7 +165,7 @@ msgstr "Nome"
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
 msgid "Odoo helps you to easily track all activities related to a customer."
-msgstr ""
+msgstr "Odoo ajuda você a rastrear facilmente todas as atividades relacionadas a um cliente."
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__related_partner_ids
@@ -184,7 +190,7 @@ msgstr "Estrutura relacionada"
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__sequence
 #: model:ir.model.fields,field_description:partner_structure.field_res_users__sequence
 msgid "Sequence"
-msgstr "Sequência"
+msgstr "Seqüência"
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
@@ -199,7 +205,7 @@ msgstr "Rua 2..."
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Street..."
-msgstr "Rua..."
+msgstr "Endereço..."
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_type
@@ -222,7 +228,7 @@ msgstr "Marcadores para a visualização em lista"
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Tags..."
-msgstr "Marcadores..."
+msgstr ""
 
 #. module: partner_structure
 #: code:addons/partner_structure/models/res_partner.py:47
@@ -238,10 +244,16 @@ msgid "The date on which the festival is used to start."
 msgstr "A data na qual o Festival está acostumado começar."
 
 #. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:40
+#, python-format
+msgid "Venue"
+msgstr "Casa de show"
+
+#. module: partner_structure
 #: model:ir.actions.act_window,name:partner_structure.action_venues
 #: model:ir.ui.menu,name:partner_structure.res_partner_menu_venues
 msgid "Venues"
-msgstr "Casas"
+msgstr "Casas de show"
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
@@ -251,4 +263,4 @@ msgstr "CEP"
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "e.g. BE0477472701"
-msgstr "e.g. BE0477472701"
+msgstr "ex: BE0477472701"
