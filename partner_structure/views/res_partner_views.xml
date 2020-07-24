@@ -120,7 +120,7 @@
                             attrs="{'readonly': [('parent_id','!=',False)]}"
                         />
                     </group>
-                    <!-- ADD Special Structure fields-->
+                    <!-- ============ ADD Special Structure fields=========== -->
                     <group
                         attrs="{'invisible': [('is_structure', '=', False)]}"
                         class="w-100"

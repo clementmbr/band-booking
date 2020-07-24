@@ -31,9 +31,9 @@
             <!-- Add filter by Festival Date -->
             <xpath expr="//filter[@name='group_country']" position="after">
                 <filter
-                    name="struct_date_begin"
+                    name="struct_updated_date"
                     string="Festival Date"
-                    context="{'group_by': 'struct_date_begin'}"
+                    context="{'group_by': 'struct_updated_date'}"
                 />
             </xpath>
         </field>
@@ -94,7 +94,7 @@
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
             <xpath expr="//tree" position="attributes">
-                <attribute name="default_order">struct_date_begin</attribute>
+                <attribute name="default_order">struct_updated_date</attribute>
             </xpath>
             <xpath expr="//field[@name='display_name']" position="after">
                 <field
@@ -103,7 +103,7 @@
                     options="{'color_field': 'color'}"
                     string="Tags"
                 />
-                <field name="struct_date_begin" invisible="1" />
+                <field name="struct_updated_date" invisible="1" />
                 <field name="struct_short_date" />
                 <field name="structure_capacity" />
             </xpath>

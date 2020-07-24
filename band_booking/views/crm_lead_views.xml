@@ -413,9 +413,9 @@
             </xpath>
             <xpath expr="//filter[@name='country']" position="after">
                 <filter
-                    name="struct_date_begin"
+                    name="struct_updated_date"
                     string="Festival Date"
-                    context="{'group_by': 'struct_date_begin'}"
+                    context="{'group_by': 'struct_updated_date'}"
                 />
                 <separator />
             </xpath>

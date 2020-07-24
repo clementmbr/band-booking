@@ -65,6 +65,9 @@ class Lead(models.Model):
     struct_date_end = fields.Date(
         related="partner_id.struct_date_end", store=True, readonly=False,
     )
+    struct_updated_date = fields.Date(
+        related="partner_id.struct_updated_date", store=True,
+    )
 
     @api.depends("lead_event_ids")
     def _compute_event_count(self):

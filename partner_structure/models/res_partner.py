@@ -3,6 +3,8 @@
 
 from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import MissingError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -77,7 +79,15 @@ class Partner(models.Model):
         string="Festival Date", help="The date on which the festival is used to start."
     )
     struct_date_end = fields.Date(string="Festival Date End")
-    struct_short_date = fields.Char(string="Date", compute="_compute_struct_short_date")
+    # Short date formated like "DD/MM - DD/MM" for Partner's tree view and
+    # Lead's kanban view
+    struct_short_date = fields.Char(compute="_compute_struct_short_date")
+    # Computed date for "Group by Festival date" and "Order tree views" utilities
+    # (= same days and month as `struct_date_begin` but with a computed year to be
+    # a date in the future)
+    struct_updated_date = fields.Date(
+        compute="_compute_struct_updated_date", store=True
+    )
 
     related_structure_ids = fields.Many2many(
         comodel_name="res.partner",
@@ -111,6 +121,30 @@ class Partner(models.Model):
 
     # Sequence integer to handle partner order in m2m tree views
     sequence = fields.Integer()
+
+    @api.depends("struct_date_begin")
+    def _compute_struct_updated_date(self):
+        """Compute ``struct_updated_date`` to be used in "Group by Festival date" and
+        used to order the Festivals tree view.
+
+        It has the same days and month as ``struct_date_begin`` but with a modified year
+        to be a date included in the next 365 days.
+        """
+        now = datetime.now()
+        one_year = relativedelta(years=1)
+
+        for partner in [p for p in self if p.struct_date_begin]:
+            date_obj = datetime.strptime(
+                str(partner.struct_date_begin), DEFAULT_SERVER_DATE_FORMAT
+            )
+            while date_obj < now:
+                date_obj += one_year
+            while date_obj > (now + one_year):
+                date_obj -= one_year
+
+            partner.struct_updated_date = (
+                datetime.strftime(date_obj, DEFAULT_SERVER_DATE_FORMAT) or ""
+            )
 
     @api.depends("struct_date_begin", "struct_date_end")
     def _compute_struct_short_date(self):
