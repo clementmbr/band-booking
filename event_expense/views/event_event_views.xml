@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="event_event_form_view">
+        <field name="name">event.event.form (in event_expense)</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_inline oe_stat_button"
+                    name="action_expense_from_event"
+                    type="object"
+                    string="Add an expense"
+                    icon="fa-usd"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

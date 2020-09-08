@@ -38,7 +38,7 @@ class Stage(models.Model):
                         Please consider moving these leads before deleting this stage.
                         """.format(
                             stage=stage.name,
-                            stage_leads="\n".join(["- " + l.name for l in stage_leads]),
+                            stage_leads="\n- ".join(stage_leads.mapped("name")),
                         )
                     )
                 )
