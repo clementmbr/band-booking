@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="crm_lead_form_view">
+        <field name="name">crm.lead.form (in band_accounting)</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+        <field name="arch" type="xml">
+            <xpath expr="(//page[@name='lead']/../page)[last()]" position="after">
+                <page string="Invoicing">
+                    <group class="col-12 col-lg-6">
+                        <field
+                            name="revenue_invoice_id"
+                            context="{
+                                'default_type': 'out_invoice',
+                                'default_journal_type': 'sale',
+                                'default_partner_id': partner_id,
+                                'default_user_id': user_id,
+                                'lead_income_display_name': True,
+                                'form_view_ref': 'account.invoice_form',
+                            }"
+                            domain="[('type','=','out_invoice')]"
+                        />
+                        <field
+                            name="revenue_journal_ids"
+                            widget="many2many_tags"
+                            options="{'color_field': 'color', 'no_create_edit': True}"
+                            force_save="1"
+                            attrs="{'invisible': [('revenue_journal_ids', '=', [])]}"
+                        />
+                        <field name="settle_commission" />
+                    </group>
+                    <separator string="Participants Invoices" />
+                    <group>
+                        <field
+                            name="participant_invoice_ids"
+                            widget="many2many"
+                            nolabel="1"
+                            context="{
+                                 'default_type': 'in_invoice',
+                                 'default_journal_type': 'purchase',
+                                 'default_lead_id': id,
+                               }"
+                            domain="[('type', '=', 'in_invoice')]"
+                        />
+                        <group>
+                            <field
+                                name="participant_journal_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}"
+                                force_save="1"
+                                attrs="{'invisible': [('participant_journal_ids', '=', [])]}"
+                            />
+                            <separator />
+                            <field name="lead_net_income" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
