@@ -18,6 +18,7 @@ def post_init_hook(cr, registry):
     model_elements = data_elements.xpath("//record[@model='product.category']")
 
     categ_expense = env.ref("band_accounting.product_category_expense")
+    categ_saleable = env.ref("band_accounting.product_category_saleable")
     categ_all = env.ref("product.product_category_all")
 
     to_unlink = env["product.category"]
@@ -27,10 +28,12 @@ def post_init_hook(cr, registry):
                 categ_id = env.ref("product." + el.get("id"))
             except ValueError:
                 continue
+            # Update actual products using these native categories
             prod_ids = env["product.template"].search([("categ_id", "=", categ_id.id)])
-
             if el.get("id") == "cat_expense":
                 prod_ids.write({"categ_id": categ_expense.id})
+            if el.get("id") == "product_category_1":
+                prod_ids.write({"categ_id": categ_saleable.id})
             else:
                 prod_ids.write({"categ_id": categ_all.id})
 
