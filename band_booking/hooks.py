@@ -36,7 +36,7 @@ def post_init_hook(cr, registry):
     # Delete native crm stages
     _unlink_data("crm.stage", "crm", "crm/data/crm_stage_data.xml")
 
-    # Add all the users do 'group_use_lead' in order to display Leads for everybody
+    # Add all the users to 'group_use_lead' in order to display Leads for everybody
     # =============================================================================
     users = env["res.users"].search([("id", "!=", env.ref("base.public_user").id)])
     group_use_lead = env.ref("crm.group_use_lead")

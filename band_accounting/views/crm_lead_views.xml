@@ -43,7 +43,30 @@
                                  'default_lead_id': id,
                                }"
                             domain="[('type', '=', 'in_invoice')]"
-                        />
+                        >
+                            <tree decoration-primary="state == 'paid'">
+                                <field name="number" string="Invoice" />
+                                <field name="state" />
+                                <field
+                                    name="vendor_display_name"
+                                    string="Participant"
+                                    sum="Total"
+                                />
+                                <field
+                                    name="amount_total_signed"
+                                    string="Total"
+                                    sum="Total"
+                                />
+                                <field
+                                    name="residual_signed"
+                                    string="Amount Due"
+                                    sum="Total"
+                                />
+                                <control>
+                                    <create string="Add an Invoice" />
+                                </control>
+                            </tree>
+                        </field>
                         <group>
                             <field
                                 name="participant_journal_ids"

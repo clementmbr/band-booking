@@ -10,6 +10,15 @@
     "author": "Akretion",
     "website": "http://akretion.com",
     "depends": ["crm", "account", "l10n_generic_coa"],
-    "data": ["views/account_invoice_views.xml", "views/crm_lead_views.xml"],
+    "data": [
+        # Data
+        "data/product_category.xml",
+        # Views
+        "views/account_invoice_views.xml",
+        "views/crm_lead_views.xml",
+    ],
     "demo": [],
+    "post_init_hook": "post_init_hook",
+    "installable": True,
+    "application": True,
 }

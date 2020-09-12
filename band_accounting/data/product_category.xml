@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="product_category_expense" model="product.category">
+        <field name="parent_id" ref="product.product_category_all" />
+        <field name="name">Expense</field>
+    </record>
+    <record id="product_category_commision" model="product.category">
+        <field name="parent_id" ref="product.product_category_all" />
+        <field name="name">Commission</field>
+    </record>
+    <record id="product_category_fee" model="product.category">
+        <field name="parent_id" ref="product.product_category_all" />
+        <field name="name">Fee</field>
+    </record>
+</odoo>

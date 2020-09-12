@@ -48,6 +48,7 @@ class CrmLead(models.Model):
         string="Net Income",
         currency_field="company_currency",
         readonly=True,
+        compute="_compute_lead_net_income",
         help="Net Income for the Band.\nResult from the Revenue less the participants "
         "total invoices",
     )
@@ -65,4 +66,14 @@ class CrmLead(models.Model):
             journal_ids = payment_ids.mapped("journal_id")
             lead.update({"participant_journal_ids": [(6, 0, journal_ids.ids)]})
 
-    # TODO: hide Sale and INvoice page in contacts
+    @api.constrains("participant_invoice_ids", "revenue_invoice_id")
+    def _compute_lead_net_income(self):
+        for lead in self:
+            lead.lead_net_income = lead.revenue_invoice_id.amount_total - sum(
+                lead.participant_invoice_ids.mapped("amount_total")
+            )
+
+    # TODO:
+    # - hide Sale and INvoice page in contacts
+    # - add analytic account to lead and all the related invoice.lines
+    # - emoji green/yellow/red if invoice receveived/open/draft
