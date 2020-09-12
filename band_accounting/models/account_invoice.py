@@ -11,7 +11,6 @@ class AccountInvoice(models.Model):
         string="Opportunity",
         comodel_name="crm.lead",
         ondelete="set null",
-        readonly=True,
         help="Related Opportunity",
     )
 
@@ -36,3 +35,14 @@ class AccountInvoice(models.Model):
         else:
             res = super().name_get()
         return res
+
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+
+    prod_categ_id = fields.Many2one(
+        string="Product Category",
+        comodel_name="product.category",
+        related="product_id.categ_id",
+        ondelete="set null",
+    )

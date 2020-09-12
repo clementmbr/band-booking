@@ -8,7 +8,6 @@
         <field name="inherit_id" ref="account.invoice_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='user_id']" position="after">
-                <field name="type" />
                 <field name="lead_id" />
             </xpath>
         </field>
@@ -19,8 +18,13 @@
         <field name="inherit_id" ref="account.invoice_supplier_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_bank_id']" position="after">
-                <field name="type" />
                 <field name="lead_id" />
+            </xpath>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']"
+                position="after"
+            >
+                <field name="prod_categ_id" />
             </xpath>
         </field>
     </record>
