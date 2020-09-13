@@ -21,10 +21,12 @@ class CrmLead(models.Model):
         column1="lead_id",
         column2="revenue_journal_id",
         readonly=True,
+        compute="_compute_revenue_journal_ids",
         help="Payment Journal used to receive the Revenue Invoice",
     )
 
-    settle_commission = fields.Boolean(string="Settle Commission")
+    settle_commission = fields.Boolean(string="Settle Commission", default=True)
+    settle_fee = fields.Boolean(string="Settle Fee", default=True)
 
     participant_invoice_ids = fields.One2many(
         string="Field name",
@@ -41,6 +43,7 @@ class CrmLead(models.Model):
         column1="lead_id",
         column2="participant_journal_id",
         readonly=True,
+        compute="_compute_participant_invoice_ids",
         help="Payment Journal used to pay the Participant Invoices",
     )
 
@@ -53,20 +56,21 @@ class CrmLead(models.Model):
         "total invoices",
     )
 
-    @api.onchange("revenue_invoice_id")
-    def _onchange_revenue_journal_ids(self):
+    @api.depends("revenue_invoice_id")
+    def _compute_revenue_journal_ids(self):
         for lead in self:
             journal_ids = lead.revenue_invoice_id.payment_ids.mapped("journal_id")
-            lead.update({"revenue_journal_ids": [(6, 0, journal_ids.ids)]})
+            lead.revenue_journal_ids = [(6, 0, journal_ids.ids)]
 
-    @api.onchange("participant_invoice_ids")
-    def _onchange_participant_invoice_ids(self):
+    # FIXME: Not calculated when a unique invoice is set to paid
+    @api.depends("participant_invoice_ids")
+    def _compute_participant_invoice_ids(self):
         for lead in self:
             payment_ids = lead.participant_invoice_ids.mapped("payment_ids")
             journal_ids = payment_ids.mapped("journal_id")
-            lead.update({"participant_journal_ids": [(6, 0, journal_ids.ids)]})
+            lead.participant_journal_ids = [(6, 0, journal_ids.ids)]
 
-    @api.constrains("participant_invoice_ids", "revenue_invoice_id")
+    @api.depends("participant_invoice_ids", "revenue_invoice_id")
     def _compute_lead_net_income(self):
         for lead in self:
             lead.lead_net_income = lead.revenue_invoice_id.amount_total - sum(

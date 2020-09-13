@@ -11,11 +11,11 @@ class ProductProduct(models.Model):
         """Return the purchase and saleable categories defined in band_accounting datas
         """
         purchase_xml_ids = [
-            "product_category_expense",
-            "product_category_commision",
-            "product_category_fee",
+            "prod_categ_expense",
+            "prod_categ_commission",
+            "prod_categ_fee",
         ]
-        saleable_xml_ids = ["product_category_saleable"]
+        saleable_xml_ids = ["prod_categ_saleable"]
 
         purchase_categ_ids = self.env["product.category"]
         saleable_categ_ids = self.env["product.category"]
@@ -79,3 +79,7 @@ class ProductProduct(models.Model):
                     "'Commission' or 'Fee' must have a 'service' type."
                 )
                 return vals
+
+    def name_get(self):
+        # TODO: display the product category in the product's name
+        return super().name_get()

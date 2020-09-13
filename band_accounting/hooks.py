@@ -17,8 +17,8 @@ def post_init_hook(cr, registry):
     data_elements = etree.parse(file_open("product/data/product_data.xml"))
     model_elements = data_elements.xpath("//record[@model='product.category']")
 
-    categ_expense = env.ref("band_accounting.product_category_expense")
-    categ_saleable = env.ref("band_accounting.product_category_saleable")
+    categ_expense = env.ref("band_accounting.prod_categ_expense")
+    categ_saleable = env.ref("band_accounting.prod_categ_saleable")
     categ_all = env.ref("product.product_category_all")
 
     to_unlink = env["product.category"]

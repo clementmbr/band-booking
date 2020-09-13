@@ -9,10 +9,11 @@
         <field name="arch" type="xml">
             <xpath expr="(//page[@name='lead']/../page)[last()]" position="after">
                 <page string="Invoicing">
-                    <group class="col-12 col-lg-6">
-                        <field
-                            name="revenue_invoice_id"
-                            context="{
+                    <group>
+                        <group>
+                            <field
+                                name="revenue_invoice_id"
+                                context="{
                                 'default_type': 'out_invoice',
                                 'default_journal_type': 'sale',
                                 'default_partner_id': partner_id,
@@ -20,54 +21,20 @@
                                 'lead_income_display_name': True,
                                 'form_view_ref': 'account.invoice_form',
                             }"
-                            domain="[('type','=','out_invoice')]"
-                        />
-                        <field
-                            name="revenue_journal_ids"
-                            widget="many2many_tags"
-                            options="{'color_field': 'color', 'no_create_edit': True}"
-                            force_save="1"
-                            attrs="{'invisible': [('revenue_journal_ids', '=', [])]}"
-                        />
-                        <field name="settle_commission" />
-                    </group>
-                    <separator string="Participants Invoices" />
-                    <group>
-                        <field
-                            name="participant_invoice_ids"
-                            widget="many2many"
-                            nolabel="1"
-                            context="{
-                                 'default_type': 'in_invoice',
-                                 'default_journal_type': 'purchase',
-                                 'default_lead_id': id,
-                               }"
-                            domain="[('type', '=', 'in_invoice')]"
-                        >
-                            <tree decoration-primary="state == 'paid'">
-                                <field name="number" string="Invoice" />
-                                <field name="state" />
-                                <field
-                                    name="vendor_display_name"
-                                    string="Participant"
-                                    sum="Total"
-                                />
-                                <field
-                                    name="amount_total_signed"
-                                    string="Total"
-                                    sum="Total"
-                                />
-                                <field
-                                    name="residual_signed"
-                                    string="Amount Due"
-                                    sum="Total"
-                                />
-                                <control>
-                                    <create string="Add an Invoice" />
-                                </control>
-                            </tree>
-                        </field>
+                                domain="[('type','=','out_invoice')]"
+                            />
+                            <field name="lead_net_income" />
+                            <field
+                                name="revenue_journal_ids"
+                                widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}"
+                                force_save="1"
+                                attrs="{'invisible': [('revenue_journal_ids', '=', [])]}"
+                            />
+                        </group>
                         <group>
+                            <field name="settle_commission" />
+                            <field name="settle_fee" />
                             <field
                                 name="participant_journal_ids"
                                 widget="many2many_tags"
@@ -75,10 +42,50 @@
                                 force_save="1"
                                 attrs="{'invisible': [('participant_journal_ids', '=', [])]}"
                             />
-                            <separator />
-                            <field name="lead_net_income" />
                         </group>
                     </group>
+                    <separator string="Participants Invoices" />
+                    <field
+                        name="participant_invoice_ids"
+                        widget="many2many"
+                        nolabel="1"
+                        context="{
+                                 'default_type': 'in_invoice',
+                                 'default_journal_type': 'purchase',
+                                 'default_lead_id': id,
+                               }"
+                        domain="[('type', '=', 'in_invoice')]"
+                        class="col-12 col-lg-8"
+                    >
+                        <tree decoration-primary="state == 'paid'">
+                            <field name="number" string="Invoice" />
+                            <field name="state" />
+                            <field
+                                name="vendor_display_name"
+                                string="Participant"
+                                sum="Total"
+                            />
+                            <field
+                                name="amount_expense"
+                                string="Expenses"
+                                sum="Total"
+                            />
+                            <field name="amount_fee" string="Fee" sum="Total" />
+                            <field
+                                name="amount_commission"
+                                string="Commission"
+                                sum="Total"
+                            />
+                            <field
+                                name="amount_total_signed"
+                                string="Total"
+                                sum="Total"
+                            />
+                            <control>
+                                <create string="Add an Invoice" />
+                            </control>
+                        </tree>
+                    </field>
                 </page>
             </xpath>
         </field>
