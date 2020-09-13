@@ -81,5 +81,14 @@ class ProductProduct(models.Model):
                 return vals
 
     def name_get(self):
-        # TODO: display the product category in the product's name
-        return super().name_get()
+        """Override native name_get to display custom product name in invoice lines"""
+        res = super().name_get()
+        if self._context.get("display_name_invoice"):
+            newres = []
+            for (id, name) in res:
+                prod_id = self.env["product.product"].browse([id])
+                if prod_id.categ_id:
+                    name = "[" + prod_id.categ_id.name + "] " + name
+                newres.append((id, name))
+            res = newres
+        return res

@@ -10,8 +10,18 @@ class CrmLead(models.Model):
     revenue_invoice_id = fields.Many2one(
         string="Revenue Invoice",
         comodel_name="account.invoice",
+        compute="_compute_revenue_invoice_id",
+        inverse="_inverse_revenue_invoice_id",
+        store=True,
         ondelete="set null",
         help="Customer's Invoice related to this negociation",
+    )
+    # Tecnical field to simulate a one2one relation between `revenue_invoice_id` and
+    # invoice field `invoice_lead_id`
+    revenue_invoice_ids = fields.One2many(
+        comodel_name="account.invoice",
+        inverse_name="invoice_lead_id",
+        string="Technical Revenue Invoices",
     )
 
     revenue_journal_ids = fields.Many2many(
@@ -31,7 +41,7 @@ class CrmLead(models.Model):
     participant_invoice_ids = fields.One2many(
         string="Field name",
         comodel_name="account.invoice",
-        inverse_name="lead_id",
+        inverse_name="bill_lead_id",
         help="Participants invoices gathering the Fee, Expenses and Commission "
         "for each participant",
     )
@@ -56,13 +66,33 @@ class CrmLead(models.Model):
         "total invoices",
     )
 
+    @api.depends("revenue_invoice_ids")
+    def _compute_revenue_invoice_id(self):
+        """Triggered when an invoice fill its field `invoice_lead_id` and a
+        new item is added to the `revenue_invoice_ids` lead field."""
+        for lead in self:
+            if len(lead.revenue_invoice_ids) > 0:
+                lead.revenue_invoice_id = lead.revenue_invoice_ids[0]
+
+    def _inverse_revenue_invoice_id(self):
+        """Triggered when `revenue_invoice_id` is filled manually
+        instead of being computed by its dependency `revenue_invoice_ids`"""
+        for lead in self:
+            if len(lead.revenue_invoice_ids) > 0:
+                # delete `invoice_lead_id` reference from old invoice
+                # stored in `revenue_invoice_ids`
+                inv = lead.env["account.invoice"].browse(lead.revenue_invoice_ids[0].id)
+                inv.invoice_lead_id = False
+            # Now set the new `invoice_lead_id` reference to the new invoice
+            # written in `revenue_invoice_id`
+            lead.revenue_invoice_id.invoice_lead_id = lead
+
     @api.depends("revenue_invoice_id")
     def _compute_revenue_journal_ids(self):
         for lead in self:
             journal_ids = lead.revenue_invoice_id.payment_ids.mapped("journal_id")
             lead.revenue_journal_ids = [(6, 0, journal_ids.ids)]
 
-    # FIXME: Not calculated when a unique invoice is set to paid
     @api.depends("participant_invoice_ids")
     def _compute_participant_invoice_ids(self):
         for lead in self:

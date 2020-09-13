@@ -21,7 +21,7 @@
                                 'lead_income_display_name': True,
                                 'form_view_ref': 'account.invoice_form',
                             }"
-                                domain="[('type','=','out_invoice')]"
+                                domain="[('type','=','out_invoice'), ('partner_id', '=', partner_id)]"
                             />
                             <field name="lead_net_income" />
                             <field
