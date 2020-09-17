@@ -1,7 +1,7 @@
 # Copyright 2020 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class CrmLead(models.Model):
@@ -22,6 +22,10 @@ class CrmLead(models.Model):
         comodel_name="account.invoice",
         inverse_name="invoice_lead_id",
         string="Technical Revenue Invoices",
+    )
+
+    revenue_income_state = fields.Selection(
+        string="Revenue Invoice State", related="revenue_invoice_id.state",
     )
 
     revenue_journal_ids = fields.Many2many(
@@ -73,6 +77,10 @@ class CrmLead(models.Model):
         for lead in self:
             if len(lead.revenue_invoice_ids) > 0:
                 lead.revenue_invoice_id = lead.revenue_invoice_ids[0]
+        # FIXME: when you create an invoice from the "create and edit" button in
+        # a lead being created, the invoice created doesn't appear in the
+        # revenue_invoice_id field until you save the lead.
+        # (because the inverse method is triggered only when saving the lead)
 
     def _inverse_revenue_invoice_id(self):
         """Triggered when `revenue_invoice_id` is filled manually
@@ -85,7 +93,8 @@ class CrmLead(models.Model):
                 inv.invoice_lead_id = False
             # Now set the new `invoice_lead_id` reference to the new invoice
             # written in `revenue_invoice_id`
-            lead.revenue_invoice_id.invoice_lead_id = lead
+            if lead.revenue_invoice_id:
+                lead.revenue_invoice_id.invoice_lead_id = lead
 
     @api.depends("revenue_invoice_id")
     def _compute_revenue_journal_ids(self):
@@ -106,6 +115,24 @@ class CrmLead(models.Model):
             lead.lead_net_income = lead.revenue_invoice_id.amount_total - sum(
                 lead.participant_invoice_ids.mapped("amount_total")
             )
+
+    def button_add_fees(self):
+        self.ensure_one()
+        fee_distrib_view_xmlid = "band_accounting.fee_distribution_wizard_view_form"
+        return {
+            "context": {
+                "default_lead_id": self.id,
+                "revenue_income_display_name": True,
+                "participant_toto_ids": [],
+            },
+            "name": _("Distribute Fees and Commissions to the participants"),
+            "view_id": self.env.ref(fee_distrib_view_xmlid).id,
+            "view_type": "form",
+            "view_mode": "form",
+            "res_model": "fee.distribution.wizard",
+            "type": "ir.actions.act_window",
+            "target": "new",
+        }
 
     # TODO:
     # - hide Sale and INvoice page in contacts

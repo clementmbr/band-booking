@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fee_distribution_wizard_view_form" model="ir.ui.view">
+        <field name="name">fee.distribution.wizard.form</field>
+        <field name="model">fee.distribution.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group string="Income/Outcome">
+                            <field name="revenue_invoice_id" readonly="1" />
+                            <field name="lead_id" invisible="1" />
+                            <field name="participant_ids" invisible="1" />
+                        </group>
+                        <group string="Commission">
+                            <field name="commission_calculation" widget="radio" />
+                            <label
+                                for="commission_percentage"
+                                attrs="{'invisible': [('commission_calculation', '=', 'manual')]}"
+                            />
+                            <div
+                                attrs="{'invisible': [('commission_calculation', '=', 'manual')]}"
+                            >
+                                <field name="commission_percentage" class="oe_inline" />
+                                <span class="oe_inline">%</span>
+                            </div>
+                        </group>
+                        <field name="distribution_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="participant_ids" invisible="1" />
+                                <field
+                                    name="fee_distribution_wizard_id"
+                                    invisible="1"
+                                />
+                                <field name="participant_id" required="1" />
+                                <field name="fee_product_id" />
+                                <field name="fee_amount" />
+                                <field name="commission_product_id" />
+                                <field name="commission_amount" />
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button
+                            name="action_fill_invoices"
+                            string="Fill Invoices"
+                            type="object"
+                            class="oe_highlight"
+                        />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -12,6 +12,7 @@
                     name="invoice_lead_id"
                     context="{'default_type': 'opportunity', 'default_partner_id': partner_id, 'default_revenue_invoice_id': id}"
                     domain="[('partner_id', '=', partner_id)]"
+                    attrs="{'readonly': [('state', 'in', ['in_payment', 'paid'] )]}"
                     options="{'no_create': True}"
                 />
             </xpath>

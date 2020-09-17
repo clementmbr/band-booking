@@ -75,7 +75,7 @@ class AccountInvoice(models.Model):
         """Override native name_get to display custom invoice name in leads"""
         res = []
         if self._context.get("default_type") == "opportunity" or self._context.get(
-            "lead_income_display_name"
+            "revenue_income_display_name"
         ):
             for inv in self:
                 name = "{}".format(inv.amount_total)
@@ -116,14 +116,3 @@ class AccountInvoice(models.Model):
                     [("invoice_lead_id", "=", inv.invoice_lead_id.id)]
                 )
                 (all_inv - inv).write({"invoice_lead_id": False})
-
-
-class AccountInvoiceLine(models.Model):
-    _inherit = "account.invoice.line"
-
-    prod_categ_id = fields.Many2one(
-        string="Product Category",
-        comodel_name="product.category",
-        related="product_id.categ_id",
-        ondelete="set null",
-    )

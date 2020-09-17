@@ -8,12 +8,15 @@
     "author": "Akretion",
     "website": "www.akretion.com.br",
     "depends": [
+        # Native addons
         "crm",
         "event",
         "partner_autocomplete",
-        "partner_structure",  # https://github.com/clementmbr/band-booking
+        # OCA addons
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
+        # band-management special addons
+        "partner_structure",  # https://github.com/clementmbr/band-booking
     ],
     "data": [
         # Data

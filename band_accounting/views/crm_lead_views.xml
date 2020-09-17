@@ -18,11 +18,13 @@
                                 'default_journal_type': 'sale',
                                 'default_partner_id': partner_id,
                                 'default_user_id': user_id,
-                                'lead_income_display_name': True,
+                                'revenue_income_display_name': True,
                                 'form_view_ref': 'account.invoice_form',
                             }"
                                 domain="[('type','=','out_invoice'), ('partner_id', '=', partner_id)]"
+                                attrs="{'readonly': [('revenue_income_state', 'in', ['in_payment', 'paid'] )]}"
                             />
+                            <field name="revenue_income_state" invisible="1" />
                             <field name="lead_net_income" />
                             <field
                                 name="revenue_journal_ids"
@@ -86,6 +88,13 @@
                             </control>
                         </tree>
                     </field>
+                    <separator />
+                    <button
+                        name="button_add_fees"
+                        type="object"
+                        string="Record Participants Fees"
+                        class="oe_highlight"
+                    />
                 </page>
             </xpath>
         </field>
