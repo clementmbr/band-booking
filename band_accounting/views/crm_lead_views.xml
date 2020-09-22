@@ -18,6 +18,7 @@
                                 'default_journal_type': 'sale',
                                 'default_partner_id': partner_id,
                                 'default_user_id': user_id,
+                                'default_invoice_lead_id': id,
                                 'revenue_income_display_name': True,
                                 'form_view_ref': 'account.invoice_form',
                             }"

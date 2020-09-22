@@ -123,7 +123,6 @@ class CrmLead(models.Model):
             "context": {
                 "default_lead_id": self.id,
                 "revenue_income_display_name": True,
-                "participant_toto_ids": [],
             },
             "name": _("Distribute Fees and Commissions to the participants"),
             "view_id": self.env.ref(fee_distrib_view_xmlid).id,

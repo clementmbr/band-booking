@@ -10,11 +10,6 @@ class FeeDistributionWizard(models.TransientModel):
     _rec_name = "lead_id"
     _description = "Fees related to a lead"
 
-    @api.depends("lead_id")
-    def _compute_revenue_invoice_id(self):
-        for wiz in self:
-            wiz.revenue_invoice_id = wiz.lead_id.revenue_invoice_id
-
     participant_ids = fields.Many2many(
         string="Participants",
         comodel_name="res.partner",
@@ -28,7 +23,7 @@ class FeeDistributionWizard(models.TransientModel):
     revenue_invoice_id = fields.Many2one(
         string="Revenue Invoice",
         comodel_name="account.invoice",
-        compute="_compute_revenue_invoice_id",
+        related="lead_id.revenue_invoice_id",
         ondelete="set null",
         help="Customer's Invoice. The revenue to be distributed",
     )
@@ -64,80 +59,95 @@ class FeeDistributionWizard(models.TransientModel):
             ]
 
     def _sum_lines_prod_category(self, inv, cat):
-        """Returns the subtotal of invoice lines from a specific product category"""
+        """Returns the subtotal of invoice lines from a specific product category
+        with no tax included"""
         line_ids = inv.invoice_line_ids.filtered(lambda l: l.product_id.categ_id == cat)
         return sum(line_ids.mapped("price_subtotal"))
 
-    def action_fill_invoices(self):
-        categ_fee = self.env.ref("band_accounting.prod_categ_fee")
+    def _fill_invoice(self, line, type):
+        """Create (if needed) or fill a `line`'s partner invoice with the fee or
+        commission given in its line. `type` must be the string 'fee' or 'commission'
+        """
+        assert type in ["fee", "commission"]
 
+        partner_id = line.participant_id
+        # Existing partner's invoices in related lead
+        partner_inv_ids = self.lead_id.participant_invoice_ids.filtered(
+            lambda inv: inv.partner_id == partner_id
+        )
+
+        actual_amount = 0.00
+        to_fill = 0.00
+        if type == "fee":
+            product_id = line.fee_product_id
+            categ_id = self.env.ref("band_accounting.prod_categ_fee")
+            for inv in partner_inv_ids:
+                actual_amount += self._sum_lines_prod_category(inv, categ_id)
+            to_fill = line.fee_amount - actual_amount
+        if type == "commission":
+            product_id = line.commission_product_id
+            categ_id = self.env.ref("band_accounting.prod_categ_commission")
+            for inv in partner_inv_ids:
+                actual_amount += self._sum_lines_prod_category(inv, categ_id)
+            to_fill = line.commission_amount - actual_amount
+
+        if to_fill < 0:
+            raise UserError(
+                _(
+                    "{} is already receiving a greater fee or commission than "
+                    "the one filled here.\nPlease change its actual bills "
+                    "before continuing.".format(partner_id.name)
+                )
+            )
+        elif to_fill == 0:
+            return True
+        else:
+            non_paid_inv_ids = partner_inv_ids.filtered(lambda inv: inv.state != "paid")
+            if not partner_inv_ids or not non_paid_inv_ids:
+                # Create a new invoice to be filled if there is no invoice or
+                # only paid invoices
+                vals = {
+                    "type": "in_invoice",
+                    "partner_id": partner_id.id,
+                    "bill_lead_id": self.lead_id.id,
+                }
+                # Using play_onchanges method from onchange_helper OCA addon.
+                # It adds to 'vals' the 'account_id' value filled by the
+                # onchange methods triggered by filling an invoice's
+                # 'partner_id' field from the UI.
+                vals = self.env["account.invoice"].play_onchanges(vals, ["partner_id"])
+                inv_to_fill_id = self.env["account.invoice"].create(vals)
+            else:
+                # If a non-paid invoice already exists, delete its fee/commission lines
+                inv_to_fill_id = non_paid_inv_ids[0]
+                fee_line_ids = inv_to_fill_id.invoice_line_ids.filtered(
+                    lambda l: l.product_id.categ_id == categ_id
+                )
+                # Catch the deleted amount before deleting the lines
+                to_fill += sum(fee_line_ids.mapped("price_subtotal"))
+                fee_line_ids.unlink()
+
+            # Add a new fee invoice line to inv_to_fill_id
+            vals = {
+                "invoice_id": inv_to_fill_id.id,
+                "product_id": product_id.id,
+                "quantity": 1,
+                "price_unit": to_fill,
+            }
+            # Add 'uom_id', 'invoice_line_tax_ids' and other invoice line's
+            # fields calculated by the onchange method when filling 'product_id'
+            vals = self.env["account.invoice.line"].play_onchanges(
+                vals, list(vals.keys())
+            )
+            self.env["account.invoice.line"].create(vals)
+            inv_to_fill_id.compute_taxes()
+
+    def action_fill_invoices(self):
         for wiz in self:
             for line in wiz.distribution_line_ids:
-                partner_id = line.participant_id
-                # Partner's invoices in related lead
-                partner_inv_ids = self.lead_id.participant_invoice_ids.filtered(
-                    lambda inv: inv.partner_id == partner_id
-                )
+                self._fill_invoice(line, "fee")
+                self._fill_invoice(line, "commission")
 
-                # Calculate the total Fee already registered in partner's invoices
-                actual_fee = 0.00
-                for inv in partner_inv_ids:
-                    actual_fee += self._sum_lines_prod_category(inv, categ_fee)
-
-                to_fill = line.fee_amount - actual_fee
-                if to_fill < 0:
-                    raise UserError(
-                        _(
-                            "{} is already receiving a greater fee than the one filled "
-                            "here.\nPlease change its actual bills before continuing."
-                            "".format(partner_id.name)
-                        )
-                    )
-                elif to_fill == 0:
-                    continue
-                else:
-                    non_paid_inv_ids = partner_inv_ids.filtered(
-                        lambda inv: inv.state != "paid"
-                    )
-                    if not partner_inv_ids or not non_paid_inv_ids:
-                        # Create a new invoice to be filled if there is no invoice or
-                        # only paid invoices
-                        vals = {
-                            "partner_id": partner_id.id,
-                            "bill_lead_id": self.lead_id.id,
-                        }
-                        # Using play_onchanges method from onchange_helper OCA addon.
-                        # It adds to 'vals' the 'account_id' value filled by the
-                        # onchange methods triggered by filling an invoice's
-                        # 'partner_id' field from the UI.
-                        vals = self.env["account.invoice"].play_onchanges(
-                            vals, ["partner_id"]
-                        )
-                        inv_to_fill_id = self.env["account.invoice"].create(vals)
-                    else:
-                        # If a non-paid invoice already exists, delete its fee lines
-                        inv_to_fill_id = non_paid_inv_ids[0]
-                        fee_line_ids = inv_to_fill_id.invoice_line_ids.filtered(
-                            lambda l: l.product_id.categ_id == categ_fee
-                        )
-                        # Catch the deleted amount before deleting the lines
-                        to_fill += sum(fee_line_ids.mapped("price_subtotal"))
-                        fee_line_ids.unlink()
-
-                    # Add a new fee invoice line to inv_to_fill_id
-                    vals = {
-                        "invoice_id": inv_to_fill_id.id,
-                        "product_id": line.fee_product_id.id,
-                        "quantity": 1,
-                        "price_unit": to_fill,
-                    }
-                    # Add 'uom_id', 'invoice_line_tax_ids' and other invoice line's
-                    # fields calculated by the onchange method when filling 'product_id'
-                    vals = self.env["account.invoice.line"].play_onchanges(
-                        vals, list(vals.keys())
-                    )
-                    self.env["account.invoice.line"].create(vals)
-                    inv_to_fill_id.compute_taxes()
         return True
 
 
