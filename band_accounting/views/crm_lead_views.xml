@@ -23,7 +23,7 @@
                                 'form_view_ref': 'account.invoice_form',
                             }"
                                 domain="[('type','=','out_invoice'), ('partner_id', '=', partner_id)]"
-                                attrs="{'readonly': [('revenue_income_state', 'in', ['in_payment', 'paid'] )]}"
+                                attrs="{'readonly': [('revenue_income_state', '=', 'paid')]}"
                             />
                             <field name="revenue_income_state" invisible="1" />
                             <field name="lead_net_income" />
@@ -55,12 +55,13 @@
                         context="{
                                  'default_type': 'in_invoice',
                                  'default_journal_type': 'purchase',
-                                 'default_lead_id': id,
+                                 'default_bill_lead_id': id,
                                }"
                         domain="[('type', '=', 'in_invoice')]"
                         class="col-12 col-lg-8"
                     >
                         <tree decoration-primary="state == 'paid'">
+                            <field name="company_currency_id" invisible="1" />
                             <field name="number" string="Invoice" />
                             <field name="state" />
                             <field
@@ -80,7 +81,7 @@
                                 sum="Total"
                             />
                             <field
-                                name="amount_total_signed"
+                                name="amount_total_company_signed"
                                 string="Total"
                                 sum="Total"
                             />

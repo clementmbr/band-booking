@@ -10,16 +10,9 @@ class FeeDistributionWizard(models.TransientModel):
     _rec_name = "lead_id"
     _description = "Fees related to a lead"
 
-    participant_ids = fields.Many2many(
-        string="Participants",
-        comodel_name="res.partner",
-        help="Participants receiving the distributed Fees and Commission",
-    )
-
     lead_id = fields.Many2one(
         string="Related lead", comodel_name="crm.lead", ondelete="set null",
     )
-
     revenue_invoice_id = fields.Many2one(
         string="Revenue Invoice",
         comodel_name="account.invoice",
@@ -38,9 +31,22 @@ class FeeDistributionWizard(models.TransientModel):
         default="manual",
         help="Calculation method for indicative commission total",
     )
-
     commission_percentage = fields.Float(
         string="Percentage", default=10, help="% for indicative commission calculation"
+    )
+
+    company_id = fields.Many2one("res.company", string="Band",)
+    company_currency = fields.Many2one(
+        string="Currency",
+        related="company_id.currency_id",
+        readonly=True,
+        relation="res.currency",
+    )
+    expense_total = fields.Monetary(
+        string="Total expenses",
+        currency_field="company_currency",
+        compute="_compute_expense_total",
+        help="Total of the actual registered expenses",
     )
 
     distribution_line_ids = fields.One2many(
@@ -49,6 +55,25 @@ class FeeDistributionWizard(models.TransientModel):
         inverse_name="fee_distribution_wizard_id",
         help="Fees and Commissions distribution among the participants",
     )
+    participant_ids = fields.Many2many(
+        string="Participants",
+        comodel_name="res.partner",
+        help="Participants receiving the distributed Fees and Commission",
+    )
+
+    def _sum_lines_prod_category(self, inv, cat):
+        """Returns the subtotal of invoice lines from a specific product category
+        with no tax included"""
+        line_ids = inv.invoice_line_ids.filtered(lambda l: l.product_id.categ_id == cat)
+        return sum(line_ids.mapped("price_subtotal"))
+
+    @api.depends("lead_id")
+    def _compute_expense_total(self):
+        categ_id = self.env.ref("band_accounting.prod_categ_expense")
+        for wiz in self:
+            wiz.expense_total = 0.00
+            for inv in self.lead_id.participant_invoice_ids:
+                wiz.expense_total += self._sum_lines_prod_category(inv, categ_id)
 
     @api.onchange("distribution_line_ids")
     def _onchange_distribution_line_ids(self):
@@ -57,12 +82,6 @@ class FeeDistributionWizard(models.TransientModel):
             wiz.participant_ids = [
                 (6, 0, wiz.distribution_line_ids.mapped("participant_id").ids)
             ]
-
-    def _sum_lines_prod_category(self, inv, cat):
-        """Returns the subtotal of invoice lines from a specific product category
-        with no tax included"""
-        line_ids = inv.invoice_line_ids.filtered(lambda l: l.product_id.categ_id == cat)
-        return sum(line_ids.mapped("price_subtotal"))
 
     def _fill_invoice(self, line, type):
         """Create (if needed) or fill a `line`'s partner invoice with the fee or
@@ -221,7 +240,7 @@ class FeeDistributionLineWizard(models.TransientModel):
         "res.company",
         string="Band",
         index=True,
-        default=lambda self: self.env.user.company_id.id,
+        default=lambda self: self.fee_distribution_wizard_id.lead_id.company_id.id,
     )
 
     company_currency = fields.Many2one(

@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class CrmLead(models.Model):
@@ -116,12 +117,29 @@ class CrmLead(models.Model):
                 lead.participant_invoice_ids.mapped("amount_total")
             )
 
+    @api.constrains("participant_invoice_ids")
+    def _check_duplicate_participant_invoice(self):
+        for lead in self:
+            partner_seen = self.env["res.partner"]
+            for inv in lead.participant_invoice_ids:
+                if inv.partner_id not in partner_seen:
+                    partner_seen |= inv.partner_id
+                elif inv.state not in ["paid", "cancel"]:
+                    raise ValidationError(
+                        _(
+                            "There is already an opened bill for {}.\n"
+                            "Please update or cancel it instead of adding a new one"
+                            ".".format(inv.partner_id.name)
+                        )
+                    )
+
     def button_add_fees(self):
         self.ensure_one()
         fee_distrib_view_xmlid = "band_accounting.fee_distribution_wizard_view_form"
         return {
             "context": {
                 "default_lead_id": self.id,
+                "default_company_id": self.company_id.id,
                 "revenue_income_display_name": True,
             },
             "name": _("Distribute Fees and Commissions to the participants"),

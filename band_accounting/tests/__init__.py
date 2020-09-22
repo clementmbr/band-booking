@@ -1,1 +1,2 @@
-from . import test_bandaccounting
+from . import test_distributionwizard
+from . import test_leadinvoice

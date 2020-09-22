@@ -8,9 +8,12 @@
                 <sheet>
                     <group>
                         <group string="Income/Outcome">
-                            <field name="revenue_invoice_id" readonly="1" />
                             <field name="lead_id" invisible="1" />
                             <field name="participant_ids" invisible="1" />
+                            <field name="company_currency" invisible="1" />
+                            <field name="company_id" invisible="1" />
+                            <field name="revenue_invoice_id" readonly="1" />
+                            <field name="expense_total" />
                         </group>
                         <group string="Commission">
                             <field name="commission_calculation" widget="radio" />
@@ -25,7 +28,11 @@
                                 <span class="oe_inline">%</span>
                             </div>
                         </group>
-                        <field name="distribution_line_ids" nolabel="1">
+                        <field
+                            name="distribution_line_ids"
+                            nolabel="1"
+                            class="col-12 col-lg-8"
+                        >
                             <tree editable="bottom">
                                 <field name="participant_ids" invisible="1" />
                                 <field
@@ -34,9 +41,9 @@
                                 />
                                 <field name="participant_id" required="1" />
                                 <field name="fee_product_id" />
-                                <field name="fee_amount" />
+                                <field name="fee_amount" sum="Total" />
                                 <field name="commission_product_id" />
-                                <field name="commission_amount" />
+                                <field name="commission_amount" sum="Total" />
                             </tree>
                         </field>
                     </group>
