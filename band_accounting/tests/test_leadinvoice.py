@@ -8,7 +8,10 @@ from .common import CommonSetup
 
 class TestLeadInvoice(CommonSetup):
     def test_name_get_invoice(self):
-        name_inv = self.revenue_invoice.with_context(
+        revenue_invoice = self.create_open_invoice(
+            self.festival, self.prod_gig, 2000, "out_invoice"
+        )
+        name_inv = revenue_invoice.with_context(
             {"revenue_income_display_name": True}
         ).name_get()[0][1]
         self.assertTrue(name_inv.startswith("$ 2300.0 - Super Festival - INV/"))

@@ -39,7 +39,7 @@ class ProductProduct(models.Model):
 
     @api.onchange("purchase_ok", "sale_ok", "type")
     def _onchange_restricted_fields(self):
-        vals = {"warning": {"title": "Warning"}}
+        vals = {"warning": {"title": _("Warning")}}
         purchase_categ_ids, saleable_categ_ids = self._get_band_accounting_categ()
 
         for prod in self:
@@ -81,14 +81,15 @@ class ProductProduct(models.Model):
                 return vals
 
     def name_get(self):
-        """Override native name_get to display custom product name in invoice lines"""
+        """Override native name_get to display custom product name with explicit
+        product's category in invoice lines"""
         res = super().name_get()
         if self._context.get("display_name_invoice"):
             newres = []
-            for (id, name) in res:
-                prod_id = self.env["product.product"].browse([id])
+            for (p_id, name) in res:
+                prod_id = self.env["product.product"].browse([p_id])
                 if prod_id.categ_id:
                     name = "[" + prod_id.categ_id.name + "] " + name
-                newres.append((id, name))
+                newres.append((p_id, name))
             res = newres
         return res

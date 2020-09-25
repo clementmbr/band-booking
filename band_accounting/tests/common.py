@@ -106,6 +106,3 @@ class CommonSetup(common.TransactionCase):
         self.lead = self.env["crm.lead"].create(
             {"partner_id": self.festival.id, "name": "Gig opportunity"}
         )
-        self.revenue_invoice = self.create_open_invoice(
-            self.festival, self.prod_gig, 2000, "out_invoice"
-        )

@@ -92,7 +92,7 @@
                     </field>
                     <separator />
                     <button
-                        name="button_add_fees"
+                        name="button_add_fee_distribution"
                         type="object"
                         string="Record Participants Fees"
                         class="oe_highlight"

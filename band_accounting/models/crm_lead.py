@@ -71,6 +71,33 @@ class CrmLead(models.Model):
         "total invoices",
     )
 
+    @api.onchange("participant_invoice_ids")
+    def _onchange_participant_invoice_ids(self):
+        """Avoid removing non-draft invoices.
+        The draft removed ones will be deleted during the current lead's `write`."""
+        self.ensure_one()
+        removed_inv_ids = self._origin.participant_invoice_ids
+
+        for inv in removed_inv_ids:
+            if inv.state != "draft":
+                # Cancel removing this invoice
+                staying_inv_ids = self.participant_invoice_ids | inv
+                staying_tup_list = [(4, inv.id, 0) for inv in staying_inv_ids]
+
+                self.update({"participant_invoice_ids": staying_tup_list})
+
+                return {
+                    "warning": {
+                        "title": _("Warning"),
+                        "message": _(
+                            "You cannot delete an invoice which has been already "
+                            "validated, paid or cancelled.\nIf the invoice is not "
+                            "wanted anymore, you must let it linked to this lead\n but "
+                            "you can still modify it or cancel it and create a new one."
+                        ),
+                    }
+                }
+
     @api.depends("revenue_invoice_ids")
     def _compute_revenue_invoice_id(self):
         """Triggered when an invoice fill its field `invoice_lead_id` and a
@@ -133,16 +160,59 @@ class CrmLead(models.Model):
                         )
                     )
 
-    def button_add_fees(self):
+    def write(self, vals):
+        """Delete draft removed invoices in participant_invoice_ids"""
+        if vals.get("participant_invoice_ids"):
+            inv_tuplets = vals["participant_invoice_ids"]
+
+            ids_removed = [t[1] for t in inv_tuplets if t[0] == 3]
+            invoice_removed_ids = self.env["account.invoice"].browse(ids_removed)
+
+            # Unlink draft removed invoices
+            del_inv_ids = invoice_removed_ids.filtered(lambda inv: inv.state == "draft")
+            del_inv_ids.unlink()
+
+            new_inv_tuplets = [t for t in inv_tuplets if t[1] not in del_inv_ids.ids]
+            vals.update({"participant_invoice_ids": new_inv_tuplets})
+
+        return super().write(vals)
+
+    def _default_distribution_line_ids(self):
+        """Returns a list of o2m tuplets commands in order to default fill the
+        distribution lines of the distribution wizard with the current company users
+        and the vendors from the current participants invoices
+        """
+        self.ensure_one()
+        participant_ids = self.participant_invoice_ids.mapped("partner_id")
+        participant_ids |= self.company_id.user_ids.mapped("partner_id")
+
+        distrib_line_mod = self.env["fee.distribution.line.wizard"]
+        distrib_lines_list = []
+
+        # Create a vals_line dictionary with the values of a new distribution line
+        # for each participant_id (with the default and onchange values)
+        for participant_id in participant_ids:
+            vals_line = {"participant_id": participant_id.id}
+            vals_line.update(
+                distrib_line_mod.default_get(list(distrib_line_mod.fields_get()))
+            )
+            vals_line = distrib_line_mod.play_onchanges(
+                vals_line, list(vals_line.keys())
+            )
+
+            distrib_lines_list.append((0, 0, vals_line))
+
+        return distrib_lines_list
+
+    def button_add_fee_distribution(self):
         self.ensure_one()
         fee_distrib_view_xmlid = "band_accounting.fee_distribution_wizard_view_form"
         return {
+            "name": _("Distribute Fees and Commissions to the participants"),
             "context": {
                 "default_lead_id": self.id,
-                "default_company_id": self.company_id.id,
-                "revenue_income_display_name": True,
+                "default_distribution_line_ids": self._default_distribution_line_ids(),
             },
-            "name": _("Distribute Fees and Commissions to the participants"),
             "view_id": self.env.ref(fee_distrib_view_xmlid).id,
             "view_type": "form",
             "view_mode": "form",

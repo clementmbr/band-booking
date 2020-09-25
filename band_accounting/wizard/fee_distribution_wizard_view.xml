@@ -6,47 +6,79 @@
         <field name="arch" type="xml">
             <form string="">
                 <sheet>
-                    <group>
-                        <group string="Income/Outcome">
-                            <field name="lead_id" invisible="1" />
+                    <field name="distribution_line_ids" nolabel="1" class="col-lg-9">
+                        <tree editable="bottom">
                             <field name="participant_ids" invisible="1" />
-                            <field name="company_currency" invisible="1" />
-                            <field name="company_id" invisible="1" />
-                            <field name="revenue_invoice_id" readonly="1" />
-                            <field name="expense_total" />
+                            <field name="fee_distribution_wizard_id" invisible="1" />
+                            <field name="participant_id" />
+                            <field name="commission_product_id" />
+                            <field name="commission_amount" sum="Total" />
+                            <field name="fee_product_id" />
+                            <field name="fee_amount" sum="Total" />
+                            <control>
+                                <create string="Add a Participant" />
+                            </control>
+                        </tree>
+                    </field>
+                    <separator
+                        string="Information"
+                        style="border-bottom-style: inset;width: 70%;"
+                    />
+                    <div>
+                        <group class="col-sm-5 col-lg-4">
+                            <field name="revenue" />
+                            <field name="income" />
                         </group>
-                        <group string="Commission">
-                            <field name="commission_calculation" widget="radio" />
+                        <group class="col-sm-6 col-lg-4 ">
+                            <field
+                                name="commission_total"
+                                attrs="{'readonly': [('commission_calculation', '!=', 'manual')]}"
+                            />
+                            <field
+                                name="commission_to_distribute"
+                                string="To distribute"
+                                attrs="{'invisible': [('commission_to_distribute', '&lt;', 0)]}"
+                            />
+                            <field
+                                name="commission_to_distribute"
+                                string="To distribute"
+                                style="color: red;"
+                                attrs="{'invisible': [('commission_to_distribute', '&gt;=', 0)]}"
+                            />
+                            <field
+                                name="commission_calculation"
+                                string="Calculation"
+                                widget="selection"
+                            />
                             <label
                                 for="commission_percentage"
-                                attrs="{'invisible': [('commission_calculation', '=', 'manual')]}"
+                                string="Percentage"
+                                attrs="{'invisible': [('commission_calculation', 'not in', ['revenue', 'income'])]}"
                             />
                             <div
-                                attrs="{'invisible': [('commission_calculation', '=', 'manual')]}"
+                                attrs="{'invisible': [('commission_calculation', 'not in', ['revenue', 'income'])]}"
                             >
-                                <field name="commission_percentage" class="oe_inline" />
-                                <span class="oe_inline">%</span>
+                                <field name="commission_percentage" class="col-5" />
+                                <span class="col-1">%</span>
                             </div>
                         </group>
-                        <field
-                            name="distribution_line_ids"
-                            nolabel="1"
-                            class="col-12 col-lg-8"
-                        >
-                            <tree editable="bottom">
-                                <field name="participant_ids" invisible="1" />
-                                <field
-                                    name="fee_distribution_wizard_id"
-                                    invisible="1"
-                                />
-                                <field name="participant_id" required="1" />
-                                <field name="fee_product_id" />
-                                <field name="fee_amount" sum="Total" />
-                                <field name="commission_product_id" />
-                                <field name="commission_amount" sum="Total" />
-                            </tree>
-                        </field>
-                    </group>
+                        <group class="col-sm-5 col-lg-4">
+                            <field name="max_fee" />
+                            <field
+                                name="leftover"
+                                attrs="{'invisible': [('leftover', '&lt;=', 0)]}"
+                            />
+                            <field
+                                name="leftover"
+                                style="color: red;"
+                                attrs="{'invisible': [('leftover', '&gt;', 0)]}"
+                            />
+                        </group>
+                    </div>
+                    <field name="lead_id" invisible="1" />
+                    <field name="participant_ids" invisible="1" />
+                    <field name="company_currency" invisible="1" />
+                    <field name="company_id" invisible="1" />
                     <footer>
                         <button
                             name="action_fill_invoices"
@@ -59,6 +91,64 @@
                     </footer>
                 </sheet>
             </form>
+        </field>
+    </record>
+    <!-- fee_distribution_line form view used to create a line in responsive mode -->
+    <record id="fee_distribution_line_wizard_view_form" model="ir.ui.view">
+        <field name="name">fee.distribution.line.wizard.form</field>
+        <field name="model">fee.distribution.line.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group string="">
+                        <group>
+                            <field name="participant_id" />
+                        </group>
+                        <group>
+                            <field name="commission_product_id" />
+                            <field name="commission_amount" />
+                        </group>
+                        <group>
+                            <field name="fee_product_id" />
+                            <field name="fee_amount" />
+                        </group>
+                    </group>
+                    <field name="participant_ids" invisible="1" />
+                    <field name="fee_distribution_wizard_id" invisible="1" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- fee_distribution_line kanban view used in responsive mode -->
+    <record model="ir.ui.view" id="fee_distribution_line_wizard_view_kanban">
+        <field name="name">fee.distribution.line.wizard.kanban</field>
+        <field name="model">fee.distribution.line.wizard</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <div t-attf-class="oe_kanban_content">
+                                <div class="row">
+                                    <div class="col">
+                                        <strong>
+                                            <field name="participant_id" />
+                                        </strong>
+                                    </div>
+                                    <div class="col">
+                                        Fee <br />
+                                        <field name="fee_amount" />
+                                    </div>
+                                    <div class="col">
+                                        Commission <br />
+                                        <field name="commission_amount" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 </odoo>
