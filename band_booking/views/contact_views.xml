@@ -12,12 +12,6 @@
             <xpath expr="//field[@name='display_name']" position="after">
                 <field name="is_checked" invisible="1" />
             </xpath>
-            <xpath expr="//field[@name='phone']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='phone']" position="after">
-                <field name="display_phone" class="o_force_ltr" />
-            </xpath>
         </field>
     </record>
     <!-- Custom SEARCH partner Views for every kind of partner -->
@@ -25,25 +19,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_res_partner_filter" />
         <field name="arch" type="xml">
-            <!-- Hide filter options -->
-            <xpath expr="//filter[@name='filter_my_partners']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='type_person']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='type_company']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='customer']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='supplier']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//filter[@name='group_company']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
             <!-- Add Filter by Creation date -->
             <xpath expr="//field[@name='parent_id']" position="after">
                 <filter
@@ -95,33 +70,5 @@
             name="fields_lines"
             eval="[(6, 0, [ref('band_booking.contact_not_checked_fields_lines')])]"
         />
-    </record>
-    <!-- Hide Sectores of Activity, Banks and Localization menus when not in debug with assets mode -->
-    <record model="ir.ui.menu" id="contacts.menu_partner_title_contact">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.res_partner_industry_menu">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_localisation">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_partner">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_group">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_country_state_partner">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_config_bank_accounts">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_action_res_bank_form">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
-    <record model="ir.ui.menu" id="contacts.menu_action_res_partner_bank_form">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
     </record>
 </odoo>

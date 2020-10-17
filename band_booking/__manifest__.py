@@ -15,7 +15,7 @@
         # OCA addons
         "crm_stage_type",  # https://github.com/OCA/crm
         "partner_external_map",  # https://github.com/OCA/partner-contact
-        # band-management special addons
+        # band special addons
         "partner_structure",  # https://github.com/clementmbr/band-booking
     ],
     "data": [
@@ -28,7 +28,6 @@
         "views/res_partner_views.xml",
         "views/res_users_views.xml",
         "views/contact_views.xml",
-        "views/calendar_views.xml",
         "views/crm_lead_views.xml",
         "views/event_views.xml",
     ],

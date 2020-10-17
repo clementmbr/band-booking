@@ -62,6 +62,11 @@
                     </div>
                 </group>
             </xpath>
+            <!-- Give a group's name to the group with website, phone, mail information
+          to distinguish these info from the other in related_structure_ids kanban -->
+            <xpath expr="//field[@name='website']/.." position="attributes">
+                <attribute name="name">partner_media</attribute>
+            </xpath>
             <!-- MANY2MANY kanban Related Structure if partner is NOT a structure -->
             <xpath expr="//div[hasclass('oe_title')]" position="after">
                 <group attrs="{'invisible': [('is_structure', '=', True)]}">

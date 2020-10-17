@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+    ==================CUSTOM LEAD FORM VIEW==============================
+  -->
+    <record id="crm_case_form_view_leads" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="band_booking.crm_case_form_view_leads" />
+        <field name="arch" type="xml">
+            <!-- Move priority and company_id under oe_title div with partner's tags -->
+            <xpath expr="//div[@name='subtitle']//field" position="before">
+                <xpath expr="//field[@name='company_id']" position="move" />
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="class">mr8</attribute>
+            </xpath>
+            <xpath expr="//div[@name='subtitle']" position="inside">
+                <xpath expr="//field[@name='priority']" position="move" />
+            </xpath>
+            <!-- Hide CRM lead tags -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide fields Company Name, from the group Contact Name and from the page Extra Info -->
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='message_bounce']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_open']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Customer's related website -->
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide native street field -->
+            <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Extra Info page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='extra']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Lead's Internal Notes page -->
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--
+    =================CUSTOM OPPORTUNITY FORM VIEW========================
+  -->
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
+        <field name="arch" type="xml">
+            <!-- Move priority under title  -->
+            <xpath expr="//div[@name='subtitle']" position="inside">
+                <xpath expr="//field[@name='priority']" position="move" />
+            </xpath>
+            <!-- Hide Meeting smart button -->
+            <xpath
+                expr="//button[@name='action_schedule_meeting']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide CRM lead tags -->
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Customer's phone and mail -->
+            <xpath expr="//label[@for='email_from']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_address_email']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_address_phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide fields from the group Expected closing date, Initial Contact info, -->
+            <xpath expr="//field[@name='date_deadline']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//group[@name='Misc']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide 'Follow Up' page
+            TODO : set to visible if MARKETING options (Tracking group) are needed -->
+            <xpath expr="//page[@name='lead']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- Hide Lead's Internal Notes page -->
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- TODO HIDE Send message if not in debug mode. Following code not working... -->
+            <xpath expr="//field[@name='message_follower_ids']" position="attributes">
+        <!-- <attribute name="groups">base.group_no_one</attribute> -->
+      </xpath>
+        </field>
+    </record>
+    <!-- Hide Lead tags menu as they are related (and readonly) to the Customer's -->
+    <record model="ir.ui.menu" id="crm.menu_crm_lead_categ">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
+    </record>
+</odoo>

@@ -2,20 +2,17 @@
 <odoo>
     <record id="view_partner_form" model="ir.ui.view">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="partner_structure.view_partner_form" />
+        <field name="inherit_id" ref="band_booking.view_partner_form" />
         <field name="arch" type="xml">
             <!-- Move category_id on the top-->
-            <xpath
-                expr="/form/sheet/group/group/field[@name='category_id']"
-                position="attributes"
-            >
-                <attribute name="invisible">True</attribute>
-            </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
-                <xpath expr="//field[@name='category_id']" position="move" />
+                <xpath
+                    expr="//group[@name='partner_media']/field[@name='category_id']"
+                    position="move"
+                />
             </xpath>
-            <!-- Move the address group (including type and vat) together with the structure_fields group
-            inside the same group -->
+            <!-- Create a group for address (and type and vat) and structure fields
+            and move them inside -->
             <xpath expr="//div[hasclass('o_address_format')]/.." position="before">
                 <group name="address_and_structure_fields" />
             </xpath>
@@ -36,6 +33,82 @@
             </xpath>
             <xpath expr="//div[hasclass('o_address_format')]/.." position="attributes">
                 <attribute name="class">w-100</attribute>
+            </xpath>
+            <!-- Move Job Position at the top of the address group-->
+            <xpath
+                expr="(//group[@name='address_and_structure_fields']/group/field)[position() = 1]"
+                position="before"
+            >
+                <xpath expr="//field[@name='function']" position="move" />
+            </xpath>
+            <!-- Set Country field required -->
+            <xpath
+                expr="//div[hasclass('o_address_format')]/field[@name='country_id']"
+                position="attributes"
+            >
+                <attribute name="required">True</attribute>
+            </xpath>
+            <!-- Add social media fields to the partner -->
+            <xpath
+                expr="//group[@name='partner_media']/field[@name='website']"
+                position="after"
+            >
+                <field
+                    name="facebook"
+                    widget="url"
+                    placeholder="e.g. https://www.fb.com/companyname"
+                />
+                <field
+                    name="instagram"
+                    widget="url"
+                    placeholder="e.g. https://www.instagram.com/companyname"
+                />
+            </xpath>
+            <!-- Hide mobile for Structure -->
+            <xpath expr="//label[@for='mobile']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_structure', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile']/.." position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_structure', '=', True)]}</attribute>
+            </xpath>
+            <!-- Hide vat, title and lang field, purchase group and Misc group-->
+            <xpath
+                expr="//group[@name='address_and_structure_fields']//field[@name='vat']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//group[@name='partner_media']/field[@name='title']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//group[@name='partner_media']/field[@name='lang']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//group[@name='purchase']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//page[@name='sales_purchases']/group/group[3]"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!-- HIDE Meeting button -->
+            <xpath
+                expr="//div[hasclass('oe_button_box')]/button[@name='schedule_meeting']"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
             </xpath>
         </field>
     </record>

@@ -7,6 +7,17 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_leads" />
         <field name="arch" type="xml">
+            <!-- Insert partner's tags under title -->
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <div name="subtitle" class="oe_inline">
+                    <field
+                        name="partner_tag_ids"
+                        widget="many2many_tags"
+                        options="{'color_field': 'color', 'no_create_edit': True}"
+                        class="mr8"
+                    />
+                </div>
+            </xpath>
             <!-- Override 'Convert to Opportunity' button to force the creation of a new
             opportunity, always -->
             <xpath
@@ -38,31 +49,6 @@
                     icon="fa-map-marker"
                 />
             </xpath>
-            <!-- Move priority, customer's tag and company_id under oe_title div  -->
-            <field name="priority" position="replace" />
-            <field name="company_id" position="replace" />
-            <xpath expr="//div[hasclass('oe_title')]" position="after">
-                <div class="oe_inline">
-                    <field
-                        name="company_id"
-                        string="Band"
-                        groups="base.group_multi_company"
-                        options="{'no_create': True}"
-                        class="mr8"
-                    />
-                    <field
-                        name="partner_tag_ids"
-                        widget="many2many_tags"
-                        options="{'color_field': 'color', 'no_create_edit': True}"
-                        class="mr8"
-                    />
-                    <field name="priority" widget="priority" class="mr8" />
-                </div>
-            </xpath>
-            <!-- Hide CRM lead tags -->
-            <xpath expr="//field[@name='tag_ids']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
             <!-- Add Structure related Customer's fields -->
             <xpath expr="//field[@name='user_id']/.." position="after">
                 <field name="is_structure" invisible="1" />
@@ -88,53 +74,9 @@
                     </div>
                 </group>
             </xpath>
-            <!-- Hide fields Company Name, from the group Contact Name and from the page Extra Info -->
-            <xpath expr="//field[@name='partner_name']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='message_bounce']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='date_open']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Original Customer field is only visible in debug mode.
-        Set invisible the original Customer field and add another field-->
+            <!-- Original Customer field is only visible in debug mode (base.group_no_one)-->
             <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="after">
-                <field
-                    name="partner_id"
-                    readonly="0"
-                    widget="res_partner_many2one"
-                    context="{'search_default_customer': 1, 'show_vat': True, 'show_address': 1}"
-                    options="{'always_reload': True}"
-                    required="1"
-                />
-            </xpath>
-            <!-- Hide Customer's related website -->
-            <xpath expr="//field[@name='website']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide native street field -->
-            <xpath expr="//div[hasclass('o_address_format')]" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//label[@for='street']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide Extra Info page
-            TODO : set to visible if MARKETING options (Tracking group) are needed -->
-            <xpath expr="//page[@name='extra']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide Lead's Internal Notes page -->
-            <xpath expr="//field[@name='description']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
+                <attribute name="groups">base.group_user</attribute>
             </xpath>
             <!-- Add partner Many2many in Leads-->
             <xpath expr="//page[1]" position="before">
@@ -171,30 +113,9 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />
         <field name="arch" type="xml">
-            <!-- Hide Meeting smart button -->
-            <xpath
-                expr="//button[@name='action_schedule_meeting']"
-                position="attributes"
-            >
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Add external map button in Opportunity view -->
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <button
-                    class="oe_inline oe_stat_button"
-                    name="open_map"
-                    type="object"
-                    string="Map"
-                    icon="fa-map-marker"
-                />
-            </xpath>
-            <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="required">True</attribute>
-            </xpath>
-            <!-- Move priority, customer's tag and company_id under oe_title div  -->
-            <field name="priority" position="replace" />
+            <!-- Insert partner's tags and company_id under title -->
             <xpath expr="//div[hasclass('oe_title')]" position="after">
-                <div class="oe_inline">
+                <div name="subtitle" class="oe_inline">
                     <field
                         name="company_id"
                         string="Band"
@@ -208,12 +129,20 @@
                         options="{'color_field': 'color', 'no_create_edit': True}"
                         class="mr8"
                     />
-                    <field name="priority" widget="priority" class="mr8" />
                 </div>
             </xpath>
-            <!-- Hide CRM lead tags -->
-            <xpath expr="//field[@name='tag_ids']" position="attributes">
-                <attribute name="invisible">True</attribute>
+            <!-- Add external map button in Opportunity view -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    class="oe_inline oe_stat_button"
+                    name="open_map"
+                    type="object"
+                    string="Map"
+                    icon="fa-map-marker"
+                />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">True</attribute>
             </xpath>
             <!-- Add Structure related Customer's fields -->
             <xpath expr="//field[@name='user_id']/.." position="after">
@@ -244,44 +173,6 @@
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="context">{'show_address': 1}</attribute>
                 <attribute name="options">{"always_reload": True}</attribute>
-            </xpath>
-            <!-- Hide Customer's phone and mail -->
-            <xpath expr="//label[@for='email_from']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='email_from']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_address_email']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_address_phone']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='phone']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide fields from the group Expected closing date, Initial Contact info, -->
-            <xpath expr="//field[@name='date_deadline']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='partner_name']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='contact_name']/../.." position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//group[@name='Misc']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide 'Follow Up' page
-            TODO : set to visible if MARKETING options (Tracking group) are needed -->
-            <xpath expr="//page[@name='lead']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <!-- Hide Lead's Internal Notes page -->
-            <xpath expr="//field[@name='description']/.." position="attributes">
-                <attribute name="invisible">True</attribute>
             </xpath>
             <!-- Add Partners MANY2MANY in opportunities-->
             <xpath expr="//page[1]" position="before">
@@ -315,8 +206,15 @@
                         <field
                             name="lead_event_ids"
                             nolabel="1"
-                            context="{'default_lead_id': id, 'default_name': name, 'default_address_id': partner_id, 'default_date_begin': struct_date_begin, 'default_date_end': struct_date_begin}"
+                            context="{
+                                'default_lead_id': id,
+                                'default_name': name,
+                                'default_address_id': partner_id,
+                                'default_date_begin': struct_date_begin,
+                                'default_date_end': struct_date_begin,
+                            }"
                         >
+                            <!-- TODO : When clicking on a line, the stage's event is not computed -->
                             <tree decoration-muted="date_end &lt; current_date">
                                 <field name="name" />
                                 <field name="date_begin" />
@@ -341,14 +239,10 @@
                     <field name="partner_description" />
                 </page>
             </xpath>
-            <!-- TODO HIDE Send message if not in debug mode. Following code not working... -->
-            <xpath expr="//field[@name='message_follower_ids']" position="attributes">
-        <!-- <attribute name="groups">base.group_no_one</attribute> -->
-      </xpath>
         </field>
     </record>
     <!-- ===============TREE, KANBAN, FILTER and MENU VIEWS========================= -->
-    <!-- Custom FILTER and GROUP BY options in Leads SEARCH view -->
+    <!-- Custom Leads SEARCH view -->
     <record model="ir.ui.view" id="view_crm_case_leads_filter">
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
@@ -508,7 +402,7 @@
     <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
         <field
             name="context"
-        >{'search_default_opened' : 1, 'group_by': 'stage_id', 'default_type': 'lead'}</field>
+        >{'search_default_opened' : 1, 'search_default_stage': '1', 'default_type': 'lead'}</field>
     </record>
     <!-- ====================CUSTOM MENU ACTIONS ========================-->
     <!-- Main menu "Leads" direct loading leads tree view -->
@@ -541,10 +435,6 @@
         action="partner_structure.action_venues"
         sequence="5"
     />
-    <!-- Hide Lead tags menu as they are related (and readonly) to the Customer's -->
-    <record model="ir.ui.menu" id="crm.menu_crm_lead_categ">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]" />
-    </record>
     <!-- Display Stage menu for Sales Managers instead of only debug mode-->
     <record model="ir.ui.menu" id="crm.menu_crm_lead_stage_act">
         <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager')])]" />

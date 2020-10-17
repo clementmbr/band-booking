@@ -8,7 +8,13 @@
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "http://akretion.com",
-    "depends": ["partner_structure"],
-    "data": ["views/contact_views.xml", "views/res_partner_views.xml"],
+    "depends": ["band_booking"],
+    "data": [
+        "views/contact_views.xml",
+        "views/res_partner_views.xml",
+        "views/calendar_views.xml",
+        "views/crm_lead_views.xml",
+        "views/event_views.xml",
+    ],
     "demo": [],
 }
