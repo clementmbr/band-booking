@@ -50,14 +50,10 @@
         <field
             name="context"
             eval="{
-                        'default_is_company': False,
-                        'default_is_structure': False,
-                        'category_domain': [
-                              ref('partner_structure.contact_categ_type'),
-                              ref('partner_structure.contact_type_categ_type'),
-                        ],
-                        'default_category_type': ref('partner_structure.contact_categ_type'),
-                      }"
+                'default_partner_type': 'contact',
+                'default_is_structure': False,
+                'default_category_id': [(6, 0, [ref('partner_structure.contact_tag')])],
+            }"
         />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -123,20 +119,15 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,kanban,activity</field>
         <field name="search_view_id" ref="base.view_res_partner_filter" />
-        <field name="domain">[('structure_type', '=', 'festival')]</field>
+        <field name="domain">[('partner_type', '=', 'festival')]</field>
         <field
             name="context"
             eval="{
-                        'default_structure_type': 'festival',
-                        'default_is_company': True,
-                        'default_is_structure': True,
-                        'category_type': 'structure',
-                        'category_domain': [
-                              ref('partner_structure.structure_categ_type'),
-                              ref('partner_structure.structure_type_categ_type'),
-                        ],
-                        'default_category_type': ref('partner_structure.structure_categ_type'),
-                      }"
+              'default_partner_type': 'festival',
+              'default_is_company': True,
+              'default_is_structure': True,
+              'default_category_id': [(6, 0, [ref('partner_structure.festival_tag')])],
+            }"
         />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -206,18 +197,13 @@
         <field
             name="context"
             eval="{
-                        'default_structure_type': 'venue',
-                        'default_is_company': True,
-                        'default_is_structure': True,
-                        'category_type': 'structure',
-                        'category_domain': [
-                              ref('partner_structure.structure_categ_type'),
-                              ref('partner_structure.structure_type_categ_type'),
-                        ],
-                        'default_category_type': ref('partner_structure.structure_categ_type'),
-                      }"
+                'default_partner_type': 'venue',
+                'default_is_company': True,
+                'default_is_structure': True,
+                'default_category_id': [(6, 0, [ref('partner_structure.venue_tag')])],
+            }"
         />
-        <field name="domain">[('structure_type', '=', 'venue')]</field>
+        <field name="domain">[('partner_type', '=', 'venue')]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
         Add a venue in your address book

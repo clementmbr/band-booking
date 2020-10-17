@@ -8,12 +8,17 @@
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
             <!-- ======================== CUSTOM FIELDS ============================= -->
-            <!-- Add a structure_type selection on top -->
+            <xpath expr="//field[@name='company_type']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_structure', '=', True)]}</attribute>
+            </xpath>
+            <!-- Add a partner_type selection on top -->
             <xpath expr="//field[@name='company_type']" position="before">
                 <div>
                     <field name="is_structure" invisible="1" />
                     <field
-                        name="structure_type"
+                        name="partner_type"
                         options="{'horizontal': true}"
                         class="o_field_radio o_horizontal o_field_widget oe_edit_only"
                         widget="radio"
@@ -35,8 +40,7 @@
                     options="{'color_field': 'color'}"
                     placeholder="Tags..."
                     class="col-12"
-                    domain="[('category_type_id', 'in', context.get('category_domain'))]"
-                    context="{'default_category_type_id': context.get('default_category_type')}"
+                    context="{'is_structure': is_structure}"
                 />
             </xpath>
             <!-- ================  Put all the type, address and vat inside a group   ==========================-->
@@ -129,10 +133,10 @@
                         <!-- Festival Date fields not for venues -->
                         <label
                             for="struct_date_begin"
-                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                            attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                         />
                         <div
-                            attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                            attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                             class="o_row"
                         >
                             <field name="struct_date_begin" />
@@ -146,17 +150,6 @@
                     </group>
                 </group>
             </xpath>
-            <!-- Hide mobile for Structure -->
-            <xpath expr="//label[@for='mobile']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('is_structure', '=', True)]}</attribute>
-            </xpath>
-            <xpath expr="//field[@name='mobile']/.." position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('is_structure', '=', True)]}</attribute>
-            </xpath>
             <!--
                 ===================== CUSTOM M2M, PAGE and CHILDS =====================
             -->
@@ -167,7 +160,7 @@
                         name="related_structure_ids"
                         mode="kanban"
                         domain="[('is_structure', '=', True)]"
-                        context="{'default_related_partner_ids': [id], 'default_structure_type': 'festival', 'default_is_structure': True, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_customer': customer, 'default_user_id': user_id}"
+                        context="{'default_related_partner_ids': [id], 'default_partner_type': 'festival', 'default_is_structure': True, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_customer': customer, 'default_user_id': user_id}"
                     >
                         <kanban>
                             <field name="id" />
@@ -260,7 +253,7 @@
                             name="related_partner_ids"
                             nolabel="1"
                             domain="[('is_structure', '=', False )]"
-                            context="{'partner_tag': True}"
+                            context="{'contact_tag': True}"
                         >
                             <tree>
                                 <field name="active" invisible="1" />

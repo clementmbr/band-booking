@@ -1,4 +1,4 @@
-"id","name","is_structure","is_company","structure_type","category_id/id","structure_capacity","city","country_id/id","facebook","instagram","website"
+"id","name","is_structure","is_company","partner_type","category_id/id","structure_capacity","city","country_id/id","facebook","instagram","website"
 "venue_1","Akwaba",1,1,"venue","partner_structure.venue_tag","sup1k","Châteauneuf de Gadagne","base.fr","https://www.facebook.com/cooperative.akwaba/",,
 "venue_2","Espace Julien",1,1,"venue","partner_structure.venue_tag","sup1k","Marseille","base.fr",,,
 "venue_3","Insel der Jugend",1,1,"venue","partner_structure.venue_tag",,"Magdeburg","base.de",,,

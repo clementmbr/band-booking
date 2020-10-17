@@ -48,8 +48,8 @@ class Lead(models.Model):
         store=True,
         default="False",
     )
-    structure_type = fields.Selection(
-        string="Structure Type", related="partner_id.structure_type", store=True
+    partner_type = fields.Selection(
+        string="Structure Type", related="partner_id.partner_type", store=True
     )
     structure_capacity = fields.Selection(
         string="Expected Audience",

@@ -5,25 +5,14 @@
         <field name="model">res.partner.category</field>
         <field name="inherit_id" ref="base.view_partner_category_form" />
         <field name="arch" type="xml">
-            <!-- Use 'is_partner_type_categ' to distinguish categories for partner's type to others -->
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="category_type" />
+            </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
+                <!-- Use 'is_partner_type_categ' to distinguish categories for partner's type to others -->
                 <field name="is_partner_type_categ" invisible="1" />
             </xpath>
-            <xpath expr="//field[@name='parent_id']" position="before">
-                <field
-                    name="category_type_id"
-                    attrs="{'readonly': [('is_partner_type_categ', '=', True)]}"
-                    options="{'no_create_edit': True}"
-                    required="True"
-                    domain="[('is_for_partner_type', '=', False)]"
-                />
-            </xpath>
             <!-- Make all the fields readonly if it's a category for partner's type -->
-            <xpath expr="//field[@name='name']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('is_partner_type_categ', '=', True)]}</attribute>
-            </xpath>
             <xpath expr="//field[@name='active']" position="attributes">
                 <attribute
                     name="attrs"
@@ -53,7 +42,7 @@
             </xpath>
             <!-- Add category type -->
             <xpath expr="//field[@name='display_name']" position="after">
-                <field name="category_type_id" />
+                <field name="category_type" />
             </xpath>
         </field>
     </record>
@@ -63,12 +52,12 @@
         <field name="model">res.partner.category</field>
         <field name="arch" type="xml">
             <search string="Search Categories">
-                <field name="category_type_id" />
+                <field name="category_type" />
                 <group expand="0" string="Group By" colspan="16">
                     <filter
                         string="Type"
                         name="type"
-                        context="{'group_by':'category_type_id'}"
+                        context="{'group_by':'category_type'}"
                     />
                 </group>
             </search>

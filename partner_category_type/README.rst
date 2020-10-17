@@ -17,12 +17,11 @@ Partner Category Type
     :target: https://github.com/clementmbr/band-booking/tree/12.0/partner_category_type
     :alt: clementmbr/band-booking
 
-|badge1| |badge2| |badge3| 
+|badge1| |badge2| |badge3|
 
-Add a "Category type" on partner's categories to differentiate categories for some type
-of partner.
+Add a "Category Type" field on partner's categories to differentiate categories for Structure type partners (festivals and venues) and for Contact type partners (people, companies).
 
-Used in module `partner_structure <../partner_structure>`_ to differentiate Structure partners (festival, venue...) from Contact partners.
+Used in module `partner_structure <../partner_structure>`_.
 
 **Table of contents**
 

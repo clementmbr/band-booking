@@ -371,7 +371,7 @@ msgid "Structure Date End"
 msgstr "Data de fim do Festival"
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_type
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__partner_type
 msgid "Structure Type"
 msgstr "Tipo de Estrutura"
 

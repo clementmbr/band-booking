@@ -68,15 +68,15 @@
                 <field name="is_structure" invisible="1" />
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
                     <field name="structure_capacity" widget="selection" />
-                    <field name="structure_type" invisible="1" />
+                    <field name="partner_type" invisible="1" />
                     <!-- Festival Date fields not for venues -->
                     <label
                         for="struct_date_begin"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                     />
                     <div
                         class="o_row"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                     >
                         <field name="struct_date_begin" />
                         <span
@@ -220,15 +220,15 @@
                 <field name="is_structure" invisible="1" />
                 <group attrs="{'invisible': [('is_structure', '=', False)]}">
                     <field name="structure_capacity" widget="selection" />
-                    <field name="structure_type" invisible="1" />
+                    <field name="partner_type" invisible="1" />
                     <!-- Festival Date fields not for venues -->
                     <label
                         for="struct_date_begin"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                     />
                     <div
                         class="o_row"
-                        attrs="{'invisible': [('structure_type', '=', 'venue')]}"
+                        attrs="{'invisible': [('partner_type', '=', 'venue')]}"
                     >
                         <field name="struct_date_begin" />
                         <span

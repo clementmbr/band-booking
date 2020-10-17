@@ -208,8 +208,8 @@ msgid "Street..."
 msgstr "Rue..."
 
 #. module: partner_structure
-#: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_type
-#: model:ir.model.fields,field_description:partner_structure.field_res_users__structure_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__partner_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__partner_type
 msgid "Structure Type"
 msgstr "Type de structure"
 

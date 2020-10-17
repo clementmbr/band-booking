@@ -1,4 +1,4 @@
-id,is_structure,is_company,structure_type,name,category_id/id,struct_date_begin,struct_date_end,structure_capacity,city,country_id/id,email,mobile,phone,website,facebook,instagram,comment
+id,is_structure,is_company,partner_type,name,category_id/id,struct_date_begin,struct_date_end,structure_capacity,city,country_id/id,email,mobile,phone,website,facebook,instagram,comment
 festival_1,1,1,festival,Les Déferlantes Sud de France,partner_structure.festival_tag,2020-07-19,2020-07-21,sup10k,Argeles sur mer,base.fr,,,,https://festival-lesdeferlantes.com/,https://www.facebook.com/lesdeferlantessuddefrance/,,
 festival_2,1,1,festival,YEAH!,"partner_structure.festival_tag,partner_structure.electro_tag",2020-06-02,2020-06-04,sup10k,Lourmarin,base.fr,,,,https://festivalyeah.fr,https://www.facebook.com/FestivalYEAH,,
 festival_3,1,1,festival,Terre de Couleurs,partner_structure.festival_tag,2020-07-20,2020-07-20,sup1k,Daumazan sur Arize,base.fr,,,,http://www.terredecouleurs.asso.fr/,,,
