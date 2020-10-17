@@ -9,7 +9,6 @@
                 <field name="category_type" />
             </xpath>
             <xpath expr="//field[@name='parent_id']" position="after">
-                <!-- Use 'is_partner_type_categ' to distinguish categories for partner's type to others -->
                 <field name="is_partner_type_categ" invisible="1" />
             </xpath>
             <!-- Make all the fields readonly if it's a category for partner's type -->

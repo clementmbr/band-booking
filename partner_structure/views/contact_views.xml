@@ -103,12 +103,6 @@
                 <field name="struct_short_date" />
                 <field name="structure_capacity" />
             </xpath>
-            <xpath expr="//field[@name='phone']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
-            <xpath expr="//field[@name='email']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
         </field>
     </record>
     <!-- Add a festival action -->

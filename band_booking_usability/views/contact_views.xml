@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- Contacts tree view -->
+    <record id="view_partner_tree_contacts" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_structure.view_partner_tree_contacts" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <!-- TODO : Add tag to contact tree view when there will be enough demo partners with different tags to worth it -->
+                <!-- <field
+                    name="display_category_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                    string="Tags"
+                /> -->
+            </xpath>
+        </field>
+    </record>
+    <!-- Festivals tree view-->
+    <record id="view_partner_tree_festivals" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_structure.view_partner_tree_festivals" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Venues tree view -->
+    <record id="view_partner_tree_venues" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_structure.view_partner_tree_venues" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
