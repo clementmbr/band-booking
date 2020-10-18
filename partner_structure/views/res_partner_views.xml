@@ -17,6 +17,7 @@
             <xpath expr="//field[@name='company_type']" position="before">
                 <div>
                     <field name="is_structure" invisible="1" />
+                    <field name="category_type" invisible="1" />
                     <field
                         name="partner_type"
                         options="{'horizontal': true}"
@@ -31,9 +32,14 @@
                     name="domain"
                 >[('is_structure', '=', False), ('is_company', '=', True)]</attribute>
             </xpath>
-            <!-- Add context to category_id field and allows 'create and edit' option-->
+            <!-- Add context and domain to category_id field and allows 'create and edit' option-->
             <xpath expr="//field[@name='category_id']" position="attributes">
-                <attribute name="context">{'is_structure': is_structure}</attribute>
+                <attribute
+                    name="domain"
+                >[('category_type', '=', category_type)]</attribute>
+                <attribute
+                    name="context"
+                >{'default_category_type': category_type}</attribute>
                 <attribute name="options">{'color_field': 'color'}</attribute>
             </xpath>
             <!-- ============ Add group for Structure fields=========== -->

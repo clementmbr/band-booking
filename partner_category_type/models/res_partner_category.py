@@ -1,7 +1,7 @@
 # Copyright 2020 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
@@ -24,15 +24,6 @@ class PartnerCategory(models.Model):
     # Special bool to distinguish mandatory tags related to "partner type" like
     # 'venue' or 'contact' from the other classic tags
     is_partner_type_categ = fields.Boolean(required=True, default=False)
-
-    @api.model
-    def default_get(self, fields):
-        rec = super().default_get(fields)
-        if self._context.get("is_structure"):
-            rec.update({"category_type": "structure"})
-        else:
-            rec.update({"category_type": "contact"})
-        return rec
 
     def unlink(self):
         if self.filtered("is_partner_type_categ"):

@@ -51,6 +51,8 @@ class Partner(models.Model):
         required=True,
         store=True,
     )
+    # Technical field for dynamic domain and context on category_id
+    category_type = fields.Char(compute="_compute_category_type")
 
     structure_capacity = fields.Selection(
         selection=_get_structure_capacity,
@@ -104,6 +106,12 @@ class Partner(models.Model):
 
     # Sequence integer to handle partner order in m2m tree views
     sequence = fields.Integer()
+
+    @api.depends("is_structure")
+    def _compute_category_type(self):
+        """Dynamic domain on category_id"""
+        for partner in self:
+            partner.category_type = "structure" if partner.is_structure else "contact"
 
     @api.depends("struct_date_begin")
     def _compute_struct_updated_date(self):
@@ -287,18 +295,6 @@ class Partner(models.Model):
                         "is_structure": False,
                     }
                 )
-
-    @api.onchange("is_structure")
-    def onchange_is_structure(self):
-        """Change Tags value and domain when switching from Structure to Contact and
-        vice-versa"""
-        if len(self) == 1:
-            if self.is_structure:
-                return {
-                    "domain": {"category_id": [("category_type", "=", "structure")]}
-                }
-            else:
-                return {"domain": {"category_id": [("category_type", "=", "contact")]}}
 
     # ---------------------------------------------------------------------
     # Festival date fields

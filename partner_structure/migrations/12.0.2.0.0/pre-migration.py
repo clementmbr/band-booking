@@ -52,5 +52,5 @@ def migrate(env, version):
 
     # Rename 'structure_type' field in res.partner
     openupgrade.rename_fields(
-        env, [("res.partner", "res_partner", "structure_type", "partner_type",)]
+        env, [("res.partner", "res_partner", "structure_type", "partner_type")]
     )
