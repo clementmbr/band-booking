@@ -215,11 +215,6 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_partner_tree_venues" />
         <field name="act_window_id" ref="action_venues" />
-        <field name="arch" type="xml">
-            <tree string="Venues">
-                <field name="display_name" string="Name" />
-            </tree>
-        </field>
     </record>
     <record id="action_venues_view_kanban" model="ir.actions.act_window.view">
         <field name="sequence" eval="1" />
