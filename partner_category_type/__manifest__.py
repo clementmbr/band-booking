@@ -8,6 +8,6 @@
     "author": "Akretion",
     "website": "www.akretion.com",
     "depends": ["base"],
-    "data": ["views/res_partner_category_views.xml"],
+    "data": ["views/res_partner_category_views.xml", "data/res_partner_category.xml"],
     "demo": [],
 }

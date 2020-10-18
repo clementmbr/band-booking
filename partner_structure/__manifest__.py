@@ -12,7 +12,6 @@
     ],
     "data": [
         # Data
-        "data/res_partner_category.xml",
         "data/res_partner_category_noupdate.xml",
         # Views
         "views/res_partner_views.xml",

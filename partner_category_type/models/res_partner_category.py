@@ -18,6 +18,7 @@ class PartnerCategory(models.Model):
         string="Category Type",
         selection=[("structure", "Structure"), ("contact", "Contact")],
         store=True,
+        required=True,
     )
 
     # Special bool to distinguish mandatory tags related to "partner type" like

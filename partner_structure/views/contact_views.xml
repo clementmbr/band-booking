@@ -52,7 +52,7 @@
             eval="{
                 'default_partner_type': 'contact',
                 'default_is_structure': False,
-                'default_category_id': [(6, 0, [ref('partner_structure.contact_tag')])],
+                'default_category_id': [(6, 0, [ref('partner_category_type.contact_tag')])],
             }"
         />
         <field name="help" type="html">
@@ -120,7 +120,7 @@
               'default_partner_type': 'festival',
               'default_is_company': True,
               'default_is_structure': True,
-              'default_category_id': [(6, 0, [ref('partner_structure.festival_tag')])],
+              'default_category_id': [(6, 0, [ref('partner_category_type.festival_tag')])],
             }"
         />
         <field name="help" type="html">
@@ -194,7 +194,7 @@
                 'default_partner_type': 'venue',
                 'default_is_company': True,
                 'default_is_structure': True,
-                'default_category_id': [(6, 0, [ref('partner_structure.venue_tag')])],
+                'default_category_id': [(6, 0, [ref('partner_category_type.venue_tag')])],
             }"
         />
         <field name="domain">[('partner_type', '=', 'venue')]</field>

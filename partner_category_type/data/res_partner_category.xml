@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="0">
-    <!-- ================== MANDATORY TAGS ======================== -->
     <!-- 'partner' Tag for Contacts related to a Structure -->
     <record id="contact_tag" model="res.partner.category">
         <field name="name">contact</field>

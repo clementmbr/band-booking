@@ -20,9 +20,9 @@ STRUCTURE_CAPACITY = [
 # Relation between partner_type value and it's related tag's XML_ID defined in
 # "../data/res_partner_category.xml"
 RELATION_PARTNER_TYPE_TAG = {
-    ("festival", "partner_structure.festival_tag"),
-    ("venue", "partner_structure.venue_tag"),
-    ("contact", "partner_structure.contact_tag"),
+    ("festival", "partner_category_type.festival_tag"),
+    ("venue", "partner_category_type.venue_tag"),
+    ("contact", "partner_category_type.contact_tag"),
 }
 
 
