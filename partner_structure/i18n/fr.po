@@ -6,19 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-23 20:29+0000\n"
-"PO-Revision-Date: 2020-07-23 20:29+0000\n"
+"POT-Creation-Date: 2020-10-18 20:16+0000\n"
+"PO-Revision-Date: 2020-10-18 20:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "<b>Company Address:</b>"
-msgstr "<b>Adresse de la société:</b>"
 
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
@@ -42,11 +37,6 @@ msgstr "Ajouter une salle à votre carnet d'adresse"
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Address"
-msgstr "Adresse"
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Avatar"
 msgstr ""
 
@@ -57,12 +47,16 @@ msgid "Average audience expected in this venue or festival"
 msgstr "Public moyen estimé pour cette salle ou ce festival"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "City"
-msgstr "Ville"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__category_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__category_type
+msgid "Category Type"
+msgstr "Type d'Étiquette"
 
 #. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:47
 #: model:ir.model,name:partner_structure.model_res_partner
+#: selection:res.partner,partner_type:0
+#, python-format
 msgid "Contact"
 msgstr ""
 
@@ -72,25 +66,14 @@ msgid "Contacts"
 msgstr ""
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Country"
-msgstr "Pays"
-
-#. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
 msgid "Create a contact in your address book"
-msgstr "Ajouter un contact à votre carnet d'adresse"
+msgstr "Créez un contact dans votre carnet d'adresse"
 
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
 msgid "Create a festival in your address book"
 msgstr "Ajouter un festival à votre carnet d'adresse"
-
-#. module: partner_structure
-#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_short_date
-#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_short_date
-msgid "Date"
-msgstr ""
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_capacity
@@ -99,10 +82,11 @@ msgid "Expected Audience"
 msgstr "Public estimé"
 
 #. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:40
+#: code:addons/partner_structure/models/res_partner.py:45
+#: selection:res.partner,partner_type:0
 #, python-format
 msgid "Festival"
-msgstr "Festival"
+msgstr ""
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_begin
@@ -141,12 +125,6 @@ msgid "Is Structure"
 msgstr "Est une Structure?"
 
 #. module: partner_structure
-#: model:ir.model.fields,help:partner_structure.field_res_partner__is_structure
-#: model:ir.model.fields,help:partner_structure.field_res_users__is_structure
-msgid "Is a Festival or a Venue ?"
-msgstr "Est un Festival ou une Salle ?"
-
-#. module: partner_structure
 #: code:addons/partner_structure/hooks.py:12
 #, python-format
 msgid "Loading partner_structure data..."
@@ -158,6 +136,12 @@ msgid "Logo"
 msgstr ""
 
 #. module: partner_structure
+#: code:addons/partner_structure/migrations/12.0.2.0.0/pre-migration.py:14
+#, python-format
+msgid "Migrating data from 12.0.0.0.1 to 12.0.2.0.0..."
+msgstr ""
+
+#. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Name"
 msgstr "Nom"
@@ -165,7 +149,13 @@ msgstr "Nom"
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
 msgid "Odoo helps you to easily track all activities related to a customer."
-msgstr "Odoo aide à suivre facilement toutes les activités liées à un contact."
+msgstr "Odoo vous aide à facilement suivre toutes les activités liées à un vendeur."
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__partner_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__partner_type
+msgid "Partner Type"
+msgstr "Type de partenaire"
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__related_partner_ids
@@ -193,25 +183,16 @@ msgid "Sequence"
 msgstr "Séquence"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "State"
-msgstr "État"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_short_date
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_short_date
+msgid "Struct Short Date"
+msgstr ""
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Street 2..."
-msgstr "Rue 2..."
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Street..."
-msgstr "Rue..."
-
-#. module: partner_structure
-#: model:ir.model.fields,field_description:partner_structure.field_res_partner__partner_type
-#: model:ir.model.fields,field_description:partner_structure.field_res_users__partner_type
-msgid "Structure Type"
-msgstr "Type de structure"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_updated_date
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_updated_date
+msgid "Struct Updated Date"
+msgstr ""
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_tree_festivals
@@ -226,26 +207,14 @@ msgid "Tags for tree view"
 msgstr "Étiquettes pour la vue liste"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Tags..."
-msgstr "Étiquettes..."
-
-#. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:47
-#, python-format
-msgid "The Struture type {} is not related to any Tag.\n"
-"                        It is necessary to add one before continuing."
-msgstr "Le type de Structure {} n'est lié à aucune Étiquette.\n"
-"                        Il est nécessaire dans ajouter une avant de continuer."
-
-#. module: partner_structure
 #: model:ir.model.fields,help:partner_structure.field_res_partner__struct_date_begin
 #: model:ir.model.fields,help:partner_structure.field_res_users__struct_date_begin
 msgid "The date on which the festival is used to start."
 msgstr "La date à laquelle le festival à l'habitude de commencer."
 
 #. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:40
+#: code:addons/partner_structure/models/res_partner.py:46
+#: selection:res.partner,partner_type:0
 #, python-format
 msgid "Venue"
 msgstr "Salle"
@@ -257,11 +226,36 @@ msgid "Venues"
 msgstr "Salles"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "ZIP"
-msgstr "Code postal"
+#: model:res.partner.category,name:partner_structure.acoustic_tag
+msgid "acoustic"
+msgstr "acoustique"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "e.g. BE0477472701"
+#: model:res.partner.category,name:partner_structure.electro_tag
+msgid "electro"
+msgstr "électro"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.follower_tag
+msgid "follower"
+msgstr "fan"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.influencer_tag
+msgid "influencer"
+msgstr "influenceur"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.jazz_tag
+msgid "jazz"
 msgstr ""
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.municipality_tag
+msgid "municipality"
+msgstr "mairie"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.small_fee_tag
+msgid "small fee"
+msgstr "petit cachet"

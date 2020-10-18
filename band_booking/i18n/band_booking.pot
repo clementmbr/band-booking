@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-11 21:22+0000\n"
-"PO-Revision-Date: 2020-07-11 21:22+0000\n"
+"POT-Creation-Date: 2020-10-18 20:21+0000\n"
+"PO-Revision-Date: 2020-10-18 20:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,6 @@ msgstr ""
 
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__company_id
-#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
 #: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
 #: model_terms:ir.ui.view,arch_db:band_booking.quick_create_opportunity_form
 #: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
@@ -145,11 +144,6 @@ msgid "Customer's Tags"
 msgstr ""
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_short_date
-msgid "Date"
-msgstr ""
-
-#. module: band_booking
 #: model:crm.stage,name:band_booking.stage_done
 #: model:ir.model.fields,field_description:band_booking.field_res_partner__opp_done_count
 #: model:ir.model.fields,field_description:band_booking.field_res_users__opp_done_count
@@ -160,6 +154,11 @@ msgstr ""
 #. module: band_booking
 #: model:ir.model,name:band_booking.model_event_event
 msgid "Event"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__event_count
+msgid "Event Count"
 msgstr ""
 
 #. module: band_booking
@@ -179,6 +178,12 @@ msgid "Events"
 msgstr ""
 
 #. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_capacity
+#: model:ir.model.fields,field_description:band_booking.field_event_event__structure_capacity
+msgid "Expected Audience"
+msgstr ""
+
+#. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__planned_revenue
 msgid "Expected Revenue"
 msgstr ""
@@ -192,6 +197,18 @@ msgstr ""
 #. module: band_booking
 #: model:ir.model.fields,help:band_booking.field_event_event__event_link
 msgid "Facebook event or other web link to the event details"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_begin
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_opportunities_filter
+msgid "Festival Date"
+msgstr ""
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_end
+msgid "Festival Date End"
 msgstr ""
 
 #. module: band_booking
@@ -213,12 +230,6 @@ msgstr ""
 #. module: band_booking
 #: model:crm.stage,name:band_booking.stage_interest
 msgid "Interest"
-msgstr ""
-
-#. module: band_booking
-#: model:ir.model.fields,help:band_booking.field_crm_lead__is_structure
-#: model:ir.model.fields,help:band_booking.field_event_event__is_structure
-msgid "Is a Festival or a Venue ?"
 msgstr ""
 
 #. module: band_booking
@@ -358,21 +369,13 @@ msgid "Stage"
 msgstr ""
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_capacity
-#: model:ir.model.fields,field_description:band_booking.field_event_event__structure_capacity
-msgid "Structure Capacity"
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_short_date
+msgid "Struct Short Date"
 msgstr ""
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_begin
-#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
-#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_opportunities_filter
-msgid "Structure Date"
-msgstr ""
-
-#. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_end
-msgid "Structure Date End"
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_updated_date
+msgid "Struct Updated Date"
 msgstr ""
 
 #. module: band_booking
@@ -457,22 +460,7 @@ msgid "Will never have the budget for the project"
 msgstr ""
 
 #. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. Programmer"
-msgstr ""
-
-#. module: band_booking
 #: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
 msgid "e.g. https://www.facebook.com/events/450471162302496/"
-msgstr ""
-
-#. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. https://www.fb.com/companyname"
-msgstr ""
-
-#. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. https://www.instagram.com/companyname"
 msgstr ""
 

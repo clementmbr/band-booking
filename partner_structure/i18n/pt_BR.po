@@ -6,19 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-23 20:45+0000\n"
-"PO-Revision-Date: 2020-07-23 20:45+0000\n"
+"POT-Creation-Date: 2020-10-18 20:28+0000\n"
+"PO-Revision-Date: 2020-10-18 20:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "<b>Company Address:</b>"
-msgstr "<b>Endereço da Empresa:</b>"
 
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
@@ -42,11 +37,6 @@ msgstr "Adicionar uma Casa de show em seu catálogo de endereços"
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Address"
-msgstr "Endereço"
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Avatar"
 msgstr ""
 
@@ -57,12 +47,16 @@ msgid "Average audience expected in this venue or festival"
 msgstr "Público médio estimado para essa casa ou esse festival"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "City"
-msgstr "Cidade"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__category_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__category_type
+msgid "Category Type"
+msgstr "Tipo de marcador"
 
 #. module: partner_structure
+#: code:addons/partner_structure/models/res_partner.py:47
 #: model:ir.model,name:partner_structure.model_res_partner
+#: selection:res.partner,partner_type:0
+#, python-format
 msgid "Contact"
 msgstr "Contato"
 
@@ -70,11 +64,6 @@ msgstr "Contato"
 #: model:ir.actions.act_window,name:partner_structure.action_contacts
 msgid "Contacts"
 msgstr "Contatos"
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Country"
-msgstr "País"
 
 #. module: partner_structure
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
@@ -87,22 +76,17 @@ msgid "Create a festival in your address book"
 msgstr "Adicionar um Festival em seu catálogo de endereços"
 
 #. module: partner_structure
-#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_short_date
-#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_short_date
-msgid "Date"
-msgstr "Data"
-
-#. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__structure_capacity
 #: model:ir.model.fields,field_description:partner_structure.field_res_users__structure_capacity
 msgid "Expected Audience"
 msgstr "Público estimado"
 
 #. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:40
+#: code:addons/partner_structure/models/res_partner.py:45
+#: selection:res.partner,partner_type:0
 #, python-format
 msgid "Festival"
-msgstr "Festival"
+msgstr ""
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_date_begin
@@ -127,7 +111,7 @@ msgstr "Festivais"
 #: model_terms:ir.actions.act_window,help:partner_structure.action_festivals
 #: model_terms:ir.actions.act_window,help:partner_structure.action_venues
 msgid "From a venue or a festival, you can link a negociation to it, creating a Lead or an Opportunity."
-msgstr ""
+msgstr "A partir de uma casa ou de um festival você pode criar uma negociação relacionada a ela."
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
@@ -141,12 +125,6 @@ msgid "Is Structure"
 msgstr "É uma Estrutura de shows?"
 
 #. module: partner_structure
-#: model:ir.model.fields,help:partner_structure.field_res_partner__is_structure
-#: model:ir.model.fields,help:partner_structure.field_res_users__is_structure
-msgid "Is a Festival or a Venue ?"
-msgstr "É um Festival ou uma Casa de shows?"
-
-#. module: partner_structure
 #: code:addons/partner_structure/hooks.py:12
 #, python-format
 msgid "Loading partner_structure data..."
@@ -158,6 +136,12 @@ msgid "Logo"
 msgstr "Logotipo"
 
 #. module: partner_structure
+#: code:addons/partner_structure/migrations/12.0.2.0.0/pre-migration.py:14
+#, python-format
+msgid "Migrating data from 12.0.0.0.1 to 12.0.2.0.0..."
+msgstr ""
+
+#. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
 msgid "Name"
 msgstr "Nome"
@@ -166,6 +150,12 @@ msgstr "Nome"
 #: model_terms:ir.actions.act_window,help:partner_structure.action_contacts
 msgid "Odoo helps you to easily track all activities related to a customer."
 msgstr "Odoo ajuda você a rastrear facilmente todas as atividades relacionadas a um cliente."
+
+#. module: partner_structure
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__partner_type
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__partner_type
+msgid "Partner Type"
+msgstr "Tipo de parceiro"
 
 #. module: partner_structure
 #: model:ir.model.fields,field_description:partner_structure.field_res_partner__related_partner_ids
@@ -193,25 +183,16 @@ msgid "Sequence"
 msgstr "Seqüência"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "State"
-msgstr "Estado"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_short_date
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_short_date
+msgid "Struct Short Date"
+msgstr ""
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Street 2..."
-msgstr "Rua 2..."
-
-#. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Street..."
-msgstr "Endereço..."
-
-#. module: partner_structure
-#: model:ir.model.fields,field_description:partner_structure.field_res_partner__partner_type
-#: model:ir.model.fields,field_description:partner_structure.field_res_users__partner_type
-msgid "Structure Type"
-msgstr "Tipo de Estrutura"
+#: model:ir.model.fields,field_description:partner_structure.field_res_partner__struct_updated_date
+#: model:ir.model.fields,field_description:partner_structure.field_res_users__struct_updated_date
+msgid "Struct Updated Date"
+msgstr ""
 
 #. module: partner_structure
 #: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_tree_festivals
@@ -226,25 +207,14 @@ msgid "Tags for tree view"
 msgstr "Marcadores para a visualização em lista"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "Tags..."
-msgstr ""
-
-#. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:47
-#, python-format
-msgid "The Struture type {} is not related to any Tag.\n"
-"                        It is necessary to add one before continuing."
-msgstr ""
-
-#. module: partner_structure
 #: model:ir.model.fields,help:partner_structure.field_res_partner__struct_date_begin
 #: model:ir.model.fields,help:partner_structure.field_res_users__struct_date_begin
 msgid "The date on which the festival is used to start."
 msgstr "A data na qual o Festival está acostumado começar."
 
 #. module: partner_structure
-#: code:addons/partner_structure/models/res_partner.py:40
+#: code:addons/partner_structure/models/res_partner.py:46
+#: selection:res.partner,partner_type:0
 #, python-format
 msgid "Venue"
 msgstr "Casa de show"
@@ -256,11 +226,36 @@ msgid "Venues"
 msgstr "Casas de show"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "ZIP"
-msgstr "CEP"
+#: model:res.partner.category,name:partner_structure.acoustic_tag
+msgid "acoustic"
+msgstr "acústico"
 
 #. module: partner_structure
-#: model_terms:ir.ui.view,arch_db:partner_structure.view_partner_form
-msgid "e.g. BE0477472701"
-msgstr "ex: BE0477472701"
+#: model:res.partner.category,name:partner_structure.electro_tag
+msgid "electro"
+msgstr "eletro"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.follower_tag
+msgid "follower"
+msgstr "seguidor"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.influencer_tag
+msgid "influencer"
+msgstr "influenciador"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.jazz_tag
+msgid "jazz"
+msgstr ""
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.municipality_tag
+msgid "municipality"
+msgstr "prefeitura"
+
+#. module: partner_structure
+#: model:res.partner.category,name:partner_structure.small_fee_tag
+msgid "small fee"
+msgstr "cachê pequeno"

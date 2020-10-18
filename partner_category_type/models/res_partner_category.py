@@ -30,7 +30,7 @@ class PartnerCategory(models.Model):
             raise UserError(
                 _(
                     "It is not allowed to unlink Tags related to a partner type like "
-                    "'festival', 'venue' or 'partner'"
+                    "'festival', 'venue' or 'contact'"
                 )
             )
         return super().unlink()

@@ -6,27 +6,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-11 21:22+0000\n"
-"PO-Revision-Date: 2020-07-11 21:22+0000\n"
-"Last-Translator: <clement.mombereau@akretion.com.br>\n"
-"Language-Team: Brazilian (Brazil)\n"
-"Language: pt_BR\n"
+"POT-Creation-Date: 2020-10-18 20:32+0000\n"
+"PO-Revision-Date: 2020-10-18 20:32+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: \n"
 
 #. module: band_booking
 #: code:addons/band_booking/models/res_partner.py:262
 #, python-format
-msgid "\n\nEmails :\n"
-msgstr "\n\nEmails :\n"
+msgid "\n"
+"\n"
+"Emails :\n"
+""
+msgstr ""
 
 #. module: band_booking
 #: code:addons/band_booking/models/res_partner.py:264
 #, python-format
-msgid "\n\nPhone numbers :\n"
-msgstr "\n\nNumeros de telefone :\n"
+msgid "\n"
+"\n"
+"Phone numbers :\n"
+""
+msgstr "\n"
+"\n"
+"Numeros de telefone :\n"
+""
 
 #. module: band_booking
 #: model:crm.stage,name:band_booking.stage_first_contact
@@ -52,7 +60,6 @@ msgstr "Público médio estimado para essa casa ou esse festival"
 
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__company_id
-#: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_leads
 #: model_terms:ir.ui.view,arch_db:band_booking.crm_case_form_view_oppor
 #: model_terms:ir.ui.view,arch_db:band_booking.quick_create_opportunity_form
 #: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
@@ -110,7 +117,7 @@ msgstr "Converter para Oportunidade"
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_crm_lead__country_code
 msgid "Country Code"
-msgstr "Código do país"
+msgstr "Código do País"
 
 #. module: band_booking
 #: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
@@ -120,7 +127,7 @@ msgstr "Criar um Prospecto"
 #. module: band_booking
 #: model_terms:ir.ui.view,arch_db:band_booking.view_res_partner_filter
 msgid "Creation Date"
-msgstr "Data de criação"
+msgstr "Data de Criação"
 
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__company_currency
@@ -140,11 +147,6 @@ msgid "Customer's Tags"
 msgstr "Marcadores do Cliente"
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_short_date
-msgid "Date"
-msgstr "Data"
-
-#. module: band_booking
 #: model:crm.stage,name:band_booking.stage_done
 #: model:ir.model.fields,field_description:band_booking.field_res_partner__opp_done_count
 #: model:ir.model.fields,field_description:band_booking.field_res_users__opp_done_count
@@ -156,6 +158,11 @@ msgstr "Concluído"
 #: model:ir.model,name:band_booking.model_event_event
 msgid "Event"
 msgstr "Evento"
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__event_count
+msgid "Event Count"
+msgstr "Número de eventos"
 
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__subtitle
@@ -174,6 +181,12 @@ msgid "Events"
 msgstr "Eventos"
 
 #. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_capacity
+#: model:ir.model.fields,field_description:band_booking.field_event_event__structure_capacity
+msgid "Expected Audience"
+msgstr "Público estimado"
+
+#. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_event_event__planned_revenue
 msgid "Expected Revenue"
 msgstr "Receita Esperada"
@@ -182,12 +195,24 @@ msgstr "Receita Esperada"
 #: model:ir.model.fields,field_description:band_booking.field_res_partner__facebook
 #: model:ir.model.fields,field_description:band_booking.field_res_users__facebook
 msgid "Facebook"
-msgstr "Facebook"
+msgstr ""
 
 #. module: band_booking
 #: model:ir.model.fields,help:band_booking.field_event_event__event_link
 msgid "Facebook event or other web link to the event details"
 msgstr "Evento Facebook ou outro link da web com os detalhes do evento"
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_begin
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
+#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_opportunities_filter
+msgid "Festival Date"
+msgstr "Data do Festival"
+
+#. module: band_booking
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_end
+msgid "Festival Date End"
+msgstr "Data do fim do Festival"
 
 #. module: band_booking
 #: model:ir.ui.menu,name:band_booking.crm_lead_menu_festivals
@@ -203,18 +228,12 @@ msgstr "Impossível de entrar em contato"
 #: model:ir.model.fields,field_description:band_booking.field_res_partner__instagram
 #: model:ir.model.fields,field_description:band_booking.field_res_users__instagram
 msgid "Instagram"
-msgstr "Instagram"
+msgstr ""
 
 #. module: band_booking
 #: model:crm.stage,name:band_booking.stage_interest
 msgid "Interest"
 msgstr "Interesse"
-
-#. module: band_booking
-#: model:ir.model.fields,help:band_booking.field_crm_lead__is_structure
-#: model:ir.model.fields,help:band_booking.field_event_event__is_structure
-msgid "Is a Festival or a Venue ?"
-msgstr "É um Festival ou uma Casa ?"
 
 #. module: band_booking
 #: code:addons/band_booking/models/crm_stage.py:16
@@ -353,22 +372,14 @@ msgid "Stage"
 msgstr "Estágio"
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__structure_capacity
-#: model:ir.model.fields,field_description:band_booking.field_event_event__structure_capacity
-msgid "Structure Capacity"
-msgstr "Público estimado"
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_short_date
+msgid "Struct Short Date"
+msgstr ""
 
 #. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_begin
-#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_leads_filter
-#: model_terms:ir.ui.view,arch_db:band_booking.view_crm_case_opportunities_filter
-msgid "Structure Date"
-msgstr "Data do Festival"
-
-#. module: band_booking
-#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_date_end
-msgid "Structure Date End"
-msgstr "Data de fim do Festival"
+#: model:ir.model.fields,field_description:band_booking.field_crm_lead__struct_updated_date
+msgid "Struct Updated Date"
+msgstr ""
 
 #. module: band_booking
 #: model:ir.model.fields,field_description:band_booking.field_crm_lead__partner_type
@@ -424,7 +435,7 @@ msgstr "Contatar"
 #. module: band_booking
 #: model:ir.model.fields,help:band_booking.field_event_event__lead_type
 msgid "Type is used to separate Leads and Opportunities"
-msgstr "O 'tipo' está usado para diferenciar os Prospectos das Oportunidades"
+msgstr "Tipo é utilizado para separar Prospectos e Oportunidades"
 
 #. module: band_booking
 #: model:ir.actions.server,name:band_booking.action_contact_not_checked
@@ -434,13 +445,12 @@ msgstr "Contatos não-verificados"
 #. module: band_booking
 #: model:ir.ui.menu,name:band_booking.crm_lead_menu_venues
 msgid "Venues"
-msgstr "Casas"
+msgstr "Casas de show"
 
 #. module: band_booking
 #: model:ir.model.fields,help:band_booking.field_event_event__team_id
 msgid "When sending mails, the default email address is taken from the Sales Team."
-msgstr ""
-
+msgstr "Ao enviar e-mails, o endereço de e-mail padrão é retirado da Equipe de Vendas."
 
 #. module: band_booking
 #: model:crm.lost.reason,name:band_booking.lost_reason_2
@@ -453,21 +463,6 @@ msgid "Will never have the budget for the project"
 msgstr "Jamais terá o orçamento para o projeto"
 
 #. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. Programmer"
-msgstr "e.g. Curador"
-
-#. module: band_booking
 #: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
 msgid "e.g. https://www.facebook.com/events/450471162302496/"
-msgstr "e.g. https://www.facebook.com/events/450471162302496/"
-
-#. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. https://www.fb.com/companyname"
-msgstr "e.g. https://www.fb.com/companyname"
-
-#. module: band_booking
-#: model_terms:ir.ui.view,arch_db:band_booking.view_partner_form
-msgid "e.g. https://www.instagram.com/companyname"
-msgstr "e.g. https://www.instagram.com/companyname"
+msgstr ""

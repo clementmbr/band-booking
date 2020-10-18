@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_category_type
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-18 20:11+0000\n"
+"PO-Revision-Date: 2020-10-18 20:11+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_category_type
+#: model:ir.model.fields,field_description:partner_category_type.field_res_partner_category__category_type
+msgid "Category Type"
+msgstr ""
+
+#. module: partner_category_type
+#: selection:res.partner.category,category_type:0
+msgid "Contact"
+msgstr ""
+
+#. module: partner_category_type
+#: model:ir.model,name:partner_category_type.model_res_partner_category_type
+msgid "Distinguish categories for Contacts or for Structures"
+msgstr ""
+
+#. module: partner_category_type
+#: model_terms:ir.ui.view,arch_db:partner_category_type.view_partner_category_filter
+msgid "Group By"
+msgstr ""
+
+#. module: partner_category_type
+#: model:ir.model.fields,field_description:partner_category_type.field_res_partner_category__is_partner_type_categ
+msgid "Is Partner Type Categ"
+msgstr ""
+
+#. module: partner_category_type
+#: code:addons/partner_category_type/models/res_partner_category.py:31
+#, python-format
+msgid "It is not allowed to unlink Tags related to a partner type like 'festival', 'venue' or 'contact'"
+msgstr ""
+
+#. module: partner_category_type
+#: model:ir.model,name:partner_category_type.model_res_partner_category
+msgid "Partner Tags"
+msgstr ""
+
+#. module: partner_category_type
+#: model_terms:ir.ui.view,arch_db:partner_category_type.view_partner_category_filter
+msgid "Search Categories"
+msgstr ""
+
+#. module: partner_category_type
+#: model:ir.model.fields,field_description:partner_category_type.field_res_partner_category__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: partner_category_type
+#: selection:res.partner.category,category_type:0
+msgid "Structure"
+msgstr ""
+
+#. module: partner_category_type
+#: model:ir.model.fields,help:partner_category_type.field_res_partner_category__sequence
+msgid "The order a Tag will be displayed when searching"
+msgstr ""
+
+#. module: partner_category_type
+#: model_terms:ir.ui.view,arch_db:partner_category_type.view_partner_category_filter
+msgid "Type"
+msgstr ""
+
+#. module: partner_category_type
+#: model:res.partner.category,name:partner_category_type.contact_tag
+msgid "contact"
+msgstr ""
+
+#. module: partner_category_type
+#: model:res.partner.category,name:partner_category_type.festival_tag
+msgid "festival"
+msgstr ""
+
+#. module: partner_category_type
+#: model:res.partner.category,name:partner_category_type.venue_tag
+msgid "venue"
+msgstr ""
+
