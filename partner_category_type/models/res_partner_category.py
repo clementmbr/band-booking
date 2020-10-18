@@ -9,9 +9,6 @@ class PartnerCategory(models.Model):
     _inherit = "res.partner.category"
     _order = "sequence"
 
-    # Set to translate=False by `base_usability` module, force to translate=True
-    name = fields.Char(translate=True)
-
     sequence = fields.Integer(
         "Sequence", help="The order a Tag will be displayed when searching"
     )
