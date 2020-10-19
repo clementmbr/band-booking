@@ -51,6 +51,7 @@
             name="context"
             eval="{
                 'default_partner_type': 'contact',
+                'default_category_type': 'contact',
                 'default_is_structure': False,
                 'default_category_id': [(6, 0, [ref('partner_category_type.contact_tag')])],
             }"
@@ -118,6 +119,7 @@
             name="context"
             eval="{
               'default_partner_type': 'festival',
+              'default_category_type': 'structure',
               'default_is_company': True,
               'default_is_structure': True,
               'default_category_id': [(6, 0, [ref('partner_category_type.festival_tag')])],
@@ -192,6 +194,7 @@
             name="context"
             eval="{
                 'default_partner_type': 'venue',
+                'default_category_type': 'structure',
                 'default_is_company': True,
                 'default_is_structure': True,
                 'default_category_id': [(6, 0, [ref('partner_category_type.venue_tag')])],
