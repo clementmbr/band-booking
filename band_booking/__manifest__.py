@@ -30,6 +30,7 @@
         "views/contact_views.xml",
         "views/crm_lead_views.xml",
         "views/event_views.xml",
+        "views/assets.xml",
     ],
     "demo": [],
     "post_init_hook": "post_init_hook",

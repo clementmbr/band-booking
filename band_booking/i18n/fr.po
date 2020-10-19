@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-18 20:21+0000\n"
-"PO-Revision-Date: 2020-10-18 20:21+0000\n"
+"POT-Creation-Date: 2020-10-19 17:03+0000\n"
+"PO-Revision-Date: 2020-10-19 17:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -75,14 +75,24 @@ msgid "CRM Stages"
 msgstr "Étapes CRM"
 
 #. module: band_booking
+#. openerp-web
+#: code:addons/band_booking/static/src/js/band_booking_translation.js:11
+#, python-format
+msgid "Check"
+msgstr "Marquer vérifié"
+
+#. module: band_booking
 #: model:ir.actions.server,name:band_booking.action_contact_checked
 msgid "Check Contacts"
 msgstr "Contacts Vérifiés"
 
 #. module: band_booking
+#. openerp-web
+#: code:addons/band_booking/static/src/js/band_booking_translation.js:8
 #: model:ir.model.fields,field_description:band_booking.field_res_partner__is_checked
 #: model:ir.model.fields,field_description:band_booking.field_res_users__is_checked
 #: model_terms:ir.ui.view,arch_db:band_booking.view_res_partner_filter
+#, python-format
 msgid "Checked"
 msgstr "Vérifié"
 
@@ -447,9 +457,23 @@ msgid "Type is used to separate Leads and Opportunities"
 msgstr "Le type est utilisé pour différencier les pistes des opportunités"
 
 #. module: band_booking
+#. openerp-web
+#: code:addons/band_booking/static/src/js/band_booking_translation.js:9
+#, python-format
+msgid "Uncheck"
+msgstr "Marquer non-vérifié"
+
+#. module: band_booking
 #: model:ir.actions.server,name:band_booking.action_contact_not_checked
 msgid "Uncheck Contacts"
 msgstr "Contacts non-vérifiés"
+
+#. module: band_booking
+#. openerp-web
+#: code:addons/band_booking/static/src/js/band_booking_translation.js:10
+#, python-format
+msgid "Unchecked"
+msgstr "Non-vérifié"
 
 #. module: band_booking
 #: model:ir.ui.menu,name:band_booking.crm_lead_menu_venues
@@ -475,3 +499,4 @@ msgstr "N'aura jamais le budget pour le projet"
 #: model_terms:ir.ui.view,arch_db:band_booking.view_event_form_booking
 msgid "e.g. https://www.facebook.com/events/450471162302496/"
 msgstr "p.ex. https://www.facebook.com/events/450471162302496/"
+
