@@ -79,13 +79,13 @@
                         string="Band"
                         groups="base.group_multi_company"
                         options="{'no_create': True}"
-                        class="mr8"
+                        class="mr-3"
                     />
                     <field
                         name="partner_tag_ids"
                         widget="many2many_tags"
                         options="{'color_field': 'color', 'no_create_edit': True}"
-                        class="mr8"
+                        class="mr-3"
                     />
                 </div>
             </xpath>

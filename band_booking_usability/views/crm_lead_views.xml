@@ -12,7 +12,7 @@
                 <xpath expr="//field[@name='company_id']" position="move" />
             </xpath>
             <xpath expr="//field[@name='company_id']" position="attributes">
-                <attribute name="class">mr8</attribute>
+                <attribute name="class">mr-3</attribute>
             </xpath>
             <xpath expr="//div[@name='subtitle']" position="inside">
                 <xpath expr="//field[@name='priority']" position="move" />

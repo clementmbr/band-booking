@@ -11,6 +11,9 @@
                     position="move"
                 />
             </xpath>
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="class">mr-3</attribute>
+            </xpath>
             <!-- Create a group for address (and type and vat) and structure fields
             and move them inside -->
             <xpath expr="//div[hasclass('o_address_format')]/.." position="before">
